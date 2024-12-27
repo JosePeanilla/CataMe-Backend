@@ -1,5 +1,5 @@
 # Wine Application (Backend) - Grupo Rojo
-This project contains the final degree project for the "*Full-Stack Developer*" master.  
+This project contains the backend part of the final ("*Full-Stack Developer*") master's work.  
 It has been developed with all gathered information and knowledge learnt from the master (Express and JS).
 
 ## Table of Contents
