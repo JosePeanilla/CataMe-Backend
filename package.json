@@ -1,0 +1,25 @@
+{
+  "author": "Grupo Rojo (from 06-fsdesp-1024)",
+  "bugs": {
+    "url": "https://github.com/FSDSTR1024/TFM-backend-rojo/issues"
+  },
+  "description": "Backend of the Wine Application, as part of the FSD TFM.",
+  "homepage": "https://github.com/FSDSTR1024/TFM-backend-rojo#readme",
+  "keywords": [
+    "backend",
+    "rojo",
+    "wine"
+  ],
+  "license": "ISC",
+  "main": "./src/server.js",
+  "name": "tfm-backend-rojo",
+  "private": false,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FSDSTR1024/TFM-backend-rojo.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "0.0.0"
+}
