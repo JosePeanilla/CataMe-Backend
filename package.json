@@ -3,7 +3,16 @@
   "bugs": {
     "url": "https://github.com/FSDSTR1024/TFM-backend-rojo/issues"
   },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "mongoose": "^8.9.2"
+  },
   "description": "Backend of the Wine Application, as part of the FSD TFM.",
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  },
   "homepage": "https://github.com/FSDSTR1024/TFM-backend-rojo#readme",
   "keywords": [
     "backend",
