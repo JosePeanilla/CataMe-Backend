@@ -20,7 +20,20 @@ app.use(express.json())  /* Parse the incoming requests/responses in JSON payloa
 
 /* Place here the routes */
 
-/* Place here the Error-Handling Middlewares */
+/* Error-Handling Middlewares */
+const { statusCodes } = require("./constants/statusCodes.js")
+/* Route Not Found Error */
+app.use((req, res) => {
+  logger.error(`Not found route: [${req.method}] ${req.originalUrl}`)
+  res.status(statusCodes.NotFound)
+    .send({ type: "error", msg: `[ERROR] Route could not be found! ([${req.method}] ${req.originalUrl})` })
+})
+/* Uncontrolled Error */
+app.use((err, req, res, next) => {
+  logger.error("Uncontrolled internal error:", err)
+  res.status(statusCodes.InternalServerError)
+    .send({ type: "error", msg: `[ERROR] Some uncontrolled internal error happened! (${err.message})` })
+})
 
 /* Express (HTTP) server listening for incoming requests */
 const server = app.listen(port, (error) => {
