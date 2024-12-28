@@ -9,48 +9,48 @@ class Logger {
     return moment().format('YYYY/MM/DD HH:mm:ss')
   }
 
-  #getFormattedMessage({ message, level }) {
+  #getFormattedLogStart(level) {
     const formattedDateTime = this.#getFormattedDateTime()
     const formattedFileName = this.fileName
     const formattedLevel = level.toUpperCase()
-    return `[${formattedDateTime}][${formattedFileName}][${formattedLevel}] ${message}`
+    return `[${formattedDateTime}][${formattedFileName}][${formattedLevel}]`
   }
 
-  #log({ message, level = "info" }) {
-    const formattedMessage = this.#getFormattedMessage({ message, level })
+  #log(level = "info", message, ...additionalParams) {
+    const formattedLogStart = this.#getFormattedLogStart(level)
     switch (level) {
       case "debug":
-        console.debug(formattedMessage)
+        console.debug(formattedLogStart, message, ...additionalParams)
         break
       case "info":
-        console.info(formattedMessage)
+        console.info(formattedLogStart, message, ...additionalParams)
         break
       case "warning":
-        console.warn(formattedMessage)
+        console.warn(formattedLogStart, message, ...additionalParams)
         break
       case "error":
-        console.error(formattedMessage)
+        console.error(formattedLogStart, message, ...additionalParams)
         break
       default:
-        console.error(formattedMessage)
+        console.error(formattedLogStart, message, ...additionalParams)
         break
     }
   }
 
-  debug(message) {
-    this.#log({ message, level: "debug" })
+  debug(message, ...additionalParams) {
+    this.#log("debug", message, ...additionalParams)
   }
 
-  info(message) {
-    this.#log({ message, level: "info" })
+  info(message, ...additionalParams) {
+    this.#log("info", message, ...additionalParams)
   }
 
-  warning(message) {
-    this.#log({ message, level: "warning" })
+  warning(message, ...additionalParams) {
+    this.#log("warning", message, ...additionalParams)
   }
 
-  error(message) {
-    this.#log({ message, level: "error" })
+  error(message, ...additionalParams) {
+    this.#log("error", message, ...additionalParams)
   }
 }
 
