@@ -11,7 +11,8 @@ const cors = require("cors")  /* Node module used to permit CORS (Cross-Origin R
 const app = express()
 const port = process.env.PORT || 3000
 
-/* Place here DB initialization */
+const { dbConnection } = require("./data/dbConnection.js")  /* Import the database connection configuration ... */
+dbConnection()  /* ... and connect to the (MongoDB) database */
 
 /* Common Middlewares (to be executed at the very beggining of all endpoints) */
 app.use(cors())  /* Enable CORS for all requests */
