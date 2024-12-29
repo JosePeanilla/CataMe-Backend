@@ -18,7 +18,9 @@ dbConnection()  /* ... and connect to the (MongoDB) database */
 app.use(cors())  /* Enable CORS for all requests */
 app.use(express.json())  /* Parse the incoming requests/responses in JSON payloads */
 
-/* Place here the routes */
+/* Routes */
+const { usersRouter } = require("./users/usersRouter.js")
+app.use("/users", usersRouter)
 
 /* Error-Handling Middlewares */
 const { statusCodes } = require("./constants/statusCodes.js")
