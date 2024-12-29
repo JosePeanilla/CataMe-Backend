@@ -25,7 +25,7 @@ class Logger {
       case "info":
         console.info(formattedLogStart, message, ...additionalParams)
         break
-      case "warning":
+      case "warn":
         console.warn(formattedLogStart, message, ...additionalParams)
         break
       case "error":
@@ -45,8 +45,8 @@ class Logger {
     this.#log("info", message, ...additionalParams)
   }
 
-  warning(message, ...additionalParams) {
-    this.#log("warning", message, ...additionalParams)
+  warn(message, ...additionalParams) {
+    this.#log("warn", message, ...additionalParams)
   }
 
   error(message, ...additionalParams) {
