@@ -9,7 +9,7 @@ const dbConnection = async () => {
   const dbName = process.env.DB_NAME
   const dbUsername = process.env.DB_USERNAME
   const dbPassword = process.env.DB_PASSWORD
-  const dbConnectionURI = `mongodb+srv://${dbUsername}:${dbPassword}@${dbCluster.toLowerCase()}.kvg2u.mongodb.net/${dbName}?retryWrites=true&w=majority&appName=${dbCluster}`
+  const dbConnectionURI = `mongodb+srv://${dbUsername}:${dbPassword}@${dbCluster.toLowerCase()}.qdd0s.mongodb.net/${dbName}?retryWrites=true&w=majority&appName=${dbCluster}`
 
   try {
     const dbConnection = await mongoose.connect(dbConnectionURI)
