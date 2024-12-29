@@ -5,6 +5,6 @@ const userSchema = new mongoose.Schema({
   lastname: { required: true, type: String }
 }, { timestamps: true })
 
-const UserModel = mongoose.model("User", userSchema)
+const UserModel = mongoose.model("user", userSchema)
 
 module.exports = { UserModel }
