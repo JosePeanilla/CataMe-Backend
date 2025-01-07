@@ -1,0 +1,37 @@
+{
+  "author": "Grupo Rojo (from 06-fsdesp-1024)",
+  "bugs": {
+    "url": "https://github.com/FSDSTR1024/TFM-backend-rojo/issues"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "mongoose": "^8.9.2"
+  },
+  "description": "Backend of the Wine Application, as part of the FSD TFM.",
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  },
+  "homepage": "https://github.com/FSDSTR1024/TFM-backend-rojo#readme",
+  "keywords": [
+    "backend",
+    "rojo",
+    "wine"
+  ],
+  "license": "ISC",
+  "main": "./src/server.js",
+  "name": "tfm-backend-rojo",
+  "private": false,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FSDSTR1024/TFM-backend-rojo.git"
+  },
+  "scripts": {
+    "dev": "npx nodemon ./src/server.js",
+    "start": "node ./src/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "type":"commonjs",
+  "version": "1.0.0"
+}
