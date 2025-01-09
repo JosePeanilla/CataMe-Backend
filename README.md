@@ -162,8 +162,6 @@ Este proyecto es el backend de una aplicación de vinos diseñada para ofrecer u
     2. **Store**
        
        Record:
-
-         Registro:
          Debe ser mayor de 18 años.
          Se envía un correo de confirmación al registrarse.
 
