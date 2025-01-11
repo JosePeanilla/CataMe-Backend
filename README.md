@@ -3,38 +3,86 @@ This project contains the backend part of the final ("*Full-Stack Developer*") m
 It has been developed with all gathered information and knowledge learnt from the master (Express and JS).
 
 ## Table of Contents
-1. [How it was created](#how-it-was-created)
-2. [Additional dependencies installed](#additional-dependencies-installed)
+1. [Description](#description)
+2. [Content](#content)
+    1. [Endpoints](#endpoints)
+        1. [Topics](#topics)
+    2. [Database entities/collections](#Database-entities/collections)
+3. [How it was created](#how-it-was-created)
+4. [Additional dependencies installed](#additional-dependencies-installed)
     1. [Express](#express)
     2. [Nodemon (dev)](#nodemon)
     3. [Dotenv](#dotenv)
     3. [Cors](#cors)
     3. [Mongoose](#mongoose)
-3. [How to run the project](#how-to-run-the-project)
-
-4. [Description](#description)
-
-5. [List of functions](#list-of-functions)
-   1. [Users](#users)
-      1. [Consumer](#consumer)
-      2. [Store](#store)
-      3. [Administrator](#administrator)
-      4. [Visitors](#visitors)
-      5. [Registered users](#registered-users)
-
-   2. [Product](#product) 
-      1. [Wine bottles](#wine-bottles)
-
-   3. [General](#general)
-
-6. [Endpoints](#endpoints)
-   1. [Login and logout](#login-and-logout)
-   2. [Users](#users)
-   3. [Store](#store)
-   4. [Administrator](#administrator)
-   5. [Wine bottles](#wine-bottles)
+5. [How to run the project](#how-to-run-the-project)
 
 ---
+
+## Description
+
+This project is the backend of a wine application designed to offer a personalized experience to consumers, wineries and administrators. It provides registration, authentication, information filtering, and content management features related to wines, wine regions, and appellations of origin.
+
+## Content
+
+The project contains the following:
+
+- Endpoint Structure: Routes organized to handle users, authentication, wine bottles, and administration.
+- Database Models: Schemas defined with Mongoose for users, wine bottles, orders, and administrators.
+- Server Configuration: Use of Express and middleware for handling requests, authentication, and CORS.
+- Additional Dependencies: Tools such as Nodemon, Dotenv, and Cors to streamline development and deployment.
+- Startup Scripts: Commands configured to facilitate execution in development and production environments.
+
+### **[Endpoints]**
+
+The server is designed to accept HTTP requests, which allow interaction with the information stored in the database. Currently, endpoints have been implemented for the following entities:
+
+- Users: Allows obtaining information from registered users.
+- Wines: Provides a list of wines stored in the database.
+
+As the server progresses in development, more endpoints will be added to cover additional functionalities.
+
+#### **[Topics]**
+
+Users
+
+- GET /users/:id: Gets information about a user by ID.
+- POST /users: Creates a new user.
+- PATCH /users/:id: Updates a user's profile.
+- DELETE /users/:id: Deletes a user's account.
+
+Wine Bottles
+
+- GET /wines: List of wine bottles (with optional filters).
+- POST /wines: Registers a new wine bottle (requires administrator approval).
+
+### **[Database-entities/collections]**
+
+The data model is organized into MongoDB collections, including:
+
+Users: This collection stores basic information about users registered on the platform.
+
+Properties:
+
+- id (String, unique): Unique identifier of the user.
+- name (String): Full name of the user.
+- email (String, unique): Email address.
+- password (String): Encrypted password for authentication.
+- role (String): User role, can be "user" or "admin".
+- createdAt (Date): Date the user was created.
+
+Wine Bottles: This collection contains information about registered wine bottles.
+
+Properties:
+
+- id (String, unique): Unique identifier of the bottle.
+- name (String): Name of the wine.
+- winery (String): Name of the winery that produces the wine.
+- region (String): Wine region of origin.
+- price (Number): Price of the bottle.
+- stock (Number): Quantity available in inventory.
+- description (String): Brief description of the wine.
+- createdAt (Date): Date of registration in the system.
 
 ## How it was created
 
@@ -122,153 +170,3 @@ npm run start
 during deployment.
 
 Backend (server) should be running at **http://localhost:3000/**.
-
-
-## Description
-
-Este proyecto es el backend de una aplicación de vinos diseñada para ofrecer una experiencia personalizada a consumidores, bodegas y administradores. Proporciona funcionalidades de registro, autenticación, filtrado de información, y gestión de contenido relacionado con vinos, regiones vitivinícolas, y denominaciones de origen.
-
-
-## List of functions
-
-   **Users**
-
-   1. **Consumer**
-
-      Record:
-
-        Debe ser mayor de 18 años.
-        Definir geolocalización.
-        Listado obligatorio de experiencia: Novato, Aprendiz, Experto, Master, Profesional.
-        Texto descriptivo opcional (con ejemplos en los placeholders).
-        Se envía un correo de confirmación al registrarse.
-
-      Actions:
-
-        Login y Logout.
-        Valorar botellas de vino.
-        Filtrar botellas y bodegas con información detallada.
-        Estado de verificación.
-        Logros internos (años de experiencia, botellas reseñadas, tiempo en el sistema).
-        Estatus de usuario (por ejemplo, "TOP").
-        Contactar con administradores.
-        Modificar perfil.
-        Eliminar cuenta.
-        Suscripción a avisos de nuevas botellas de vino que cumplan ciertos parámetros:
-        Se envía un correo cuando hay un nuevo "match".
-        Recepción de un correo mensual con un newsletter informativo.
-
-
-    2. **Store**
-       
-       Record:
-         Debe ser mayor de 18 años.
-         Se envía un correo de confirmación al registrarse.
-
-       Actions:
-
-         Login y Logout.
-         Pedir aprobación para registrar botellas de vino.
-         Pedir aprobación para ofrecer información sobre la bodega:
-         Página web.
-         Ubicación.
-         Filtrar botellas y bodegas con información detallada.
-         Estado de verificación.
-         Contactar con administradores.
-
-
-    3. **Administrator**
-
-       Record:
-
-         Los integrantes del equipo pueden registrarse como administradores.
-
-       Actions:
-
-         Login y Logout.
-         Aceptar o denegar solicitudes de registro de botellas por parte de bodegas.
-         Aceptar o denegar solicitudes de ofrecer información de bodegas.
-         Eliminar cuentas de usuarios consumidores o bodegas.
-         Contactar con usuarios consumidores y bodegas.
- 
-
-    4. **Visitors**
-
-       Actions:
-
-         Filtrar botellas y bodegas con información limitada.
-
-
-    5. **Registered users**
-
-       Actions:
-         
-         Filtrar botellas y bodegas con información completa.
-
-
-
-    **Product**
-
-    1. **Wine bottles**
-
-       Actions:
-
-         Valoradas por usuarios consumidores.
-         Asociadas a:
-         Regiones vitivinícolas (que ofrecen información adicional).
-         Denominaciones de Origen (DO), si aplica.
-         Registro solicitado por usuarios bodega y aprobado por administradores.
-         Base de datos inicial incluye:
-         Datos de Europa, América y Oceanía.
-         Filtrado
-
-
-    **General**
-
-       Actions:
-
-         Confirmación de mayoría de edad al entrar a la aplicación.
-         Confirmación de aceptación de cookies.
-         Aplicación completamente en castellano.
-         Tecnologías Utilizadas
-         Framework Backend: [Nombre del framework, por ejemplo, Django, Express.js, etc.]
-         Base de Datos: [Nombre de la base de datos, por ejemplo, PostgreSQL, MongoDB, etc.]
-         Autenticación: [JWT, OAuth2, etc.]
-         Correo Electrónico: [Servicio de correo, por ejemplo, SendGrid, Nodemailer, etc.]
-         Geolocalización: [API utilizada, por ejemplo, Google Maps, OpenStreetMap, etc.]
-         DO/Regiones: [Fuente de datos, por ejemplo, bases de datos externas, manual, etc.]
-     
-
-## Endpoints
-
-    1. **Login and logout**
-   
-        POST /auth/register - Registro de usuarios.
-        POST /auth/login - Inicio de sesión.
-        POST /auth/logout - Cierre de sesión.
-
-    2. **Users**
-
-        GET /users/:id - Información del usuario.
-        PATCH /users/:id - Modificar perfil.
-        DELETE /users/:id - Eliminar cuenta.
-
-    3. **Wine bottles**
-
-        GET /wines - Lista de botellas (con filtro).
-        POST /wines - Registrar botella (requiere aprobación).
-
-    4. **Store**
-
-        GET /wineries - Lista de bodegas (con filtro).
-        POST /wineries/info-request - Solicitar agregar información.
-
-    5. **Administrator**
-
-        POST /admin/approve-wine - Aprobar botella.
-        POST /admin/approve-winery-info - Aprobar información de bodega.
-        DELETE /admin/delete-user - Eliminar usuario.
-         
-
-
-
