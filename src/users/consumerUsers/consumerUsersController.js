@@ -17,6 +17,11 @@ const consumerUsersController = {
       res.status(statusCodes.InternalServerError)
         .send({ msg: error.message })
     }
+  },
+  getAllConsumerUsers: async (req, res) => {
+    const allConsumerUsers = await consumerUsersService.getAllConsumerUsers()
+    res.status(statusCodes.OK)
+      .send(allConsumerUsers)
   }
 }
 

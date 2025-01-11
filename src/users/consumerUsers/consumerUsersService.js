@@ -10,6 +10,10 @@ const consumerUsersService = {
     } catch (error) {
       throw error
     }
+  },
+  getAllConsumerUsers: async () => {
+    const allConsumerUsers = await ConsumerUserModel.find()
+    return allConsumerUsers
   }
 }
 

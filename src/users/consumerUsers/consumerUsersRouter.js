@@ -8,6 +8,8 @@ const {
 
 /* Endpoints */
 const { consumerUsersController } = require("./consumerUsersController.js")
+consumerUsersRouter.get('/',
+  consumerUsersController.getAllConsumerUsers)
 consumerUsersRouter.post('/',
   checkRequiredArgsAreProvided,
   consumerUsersController.createConsumerUser
