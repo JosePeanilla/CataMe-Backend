@@ -6,14 +6,17 @@ const checkRequiredArgsAreProvided = (req, res, next) => {
     surname: req.body.surname
   }
   // Check that all required arguments are provided
+  let missingArgs = []
   for (const arg in res.locals.providedConsumerUserArgs) {
     if (!res.locals.providedConsumerUserArgs[arg]) {
-      res.status(statusCodes.BadRequest)
-        .send({ msg: `Missing required parameter: '${arg}'` })
-      return
+      missingArgs.push(arg)
     }
   }
-  next()
+  if (missingArgs.length === 0) next()
+  else {
+    return res.status(statusCodes.BadRequest)
+      .send({ msg: `Missing required arguments: ${missingArgs.join(", ")}` })
+  }
 }
 
 module.exports = {
