@@ -1,0 +1,23 @@
+/* Internal logger */
+const { Logger } = require("../../utils/Logger.js")
+const logger = new Logger(__filename)
+
+const { statusCodes } = require("../../constants/statusCodes.js")
+const { consumerUsersService } = require("./consumerUsersService.js")
+
+/* Controller of the 'consumer users' requests and responses handling */
+const consumerUsersController = {
+  createConsumerUser: async (req, res) => {
+    try {
+      const newConsumerUser = await consumerUsersService.createConsumerUser(res.locals.providedConsumerUserArgs)
+      res.status(statusCodes.Created)
+        .send({ msg: "Consumer user created successfully!", ID: newConsumerUser._id })
+    } catch (error) {
+      logger.error("Consumer user could not be created!\n", error)
+      res.status(statusCodes.InternalServerError)
+        .send({ msg: error.message })
+    }
+  }
+}
+
+module.exports = { consumerUsersController }
