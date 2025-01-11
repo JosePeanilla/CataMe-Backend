@@ -1,8 +1,8 @@
-const mongoose = require("mongoose")
-
 /* Internal logger */
 const { Logger } = require("../utils/Logger.js")
 const logger = new Logger(__filename)
+
+const mongoose = require("mongoose")
 
 const dbConnection = async () => {
   const dbCluster = process.env.DB_CLUSTER
