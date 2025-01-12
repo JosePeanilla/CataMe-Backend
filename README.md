@@ -7,42 +7,41 @@ It has been developed with all gathered information and knowledge learnt from th
 2. [Content](#content)
     1. [Endpoints](#endpoints)
         1. [Topics](#topics)
-    2. [Database entities/collections](#Database-entities/collections)
-3. [How it was created](#how-it-was-created)
-4. [Additional dependencies installed](#additional-dependencies-installed)
+3. [Database collections](#Database-collections)
+4. [How it was created](#how-it-was-created)
+5. [Additional dependencies installed](#additional-dependencies-installed)
     1. [Express](#express)
     2. [Nodemon (dev)](#nodemon)
     3. [Dotenv](#dotenv)
     3. [Cors](#cors)
     3. [Mongoose](#mongoose)
-5. [How to run the project](#how-to-run-the-project)
+6. [How to run the project](#how-to-run-the-project)
 
 ---
 
 ## Description
 
-This project is the backend of a wine application designed to offer a personalized experience to consumers, wineries and administrators. It provides registration, authentication, information filtering, and content management features related to wines, wine regions, and appellations of origin.
+This project is the backend server of a **wine application**, designed to offer a personalized experience to consumers and wineries.  
+It provides registration, authentication, information filtering, and content management features related to wines, wine regions, and designations of origin.
 
 ## Content
 
 The project contains the following:
+Below are listed the different endpoints the server is able to accept (so possible requests to make to), and the different entities/collections the database stores:
 
-- Endpoint Structure: Routes organized to handle users, authentication, wine bottles, and administration.
-- Database Models: Schemas defined with Mongoose for users, wine bottles, orders, and administrators.
-- Server Configuration: Use of Express and middleware for handling requests, authentication, and CORS.
-- Additional Dependencies: Tools such as Nodemon, Dotenv, and Cors to streamline development and deployment.
-- Startup Scripts: Commands configured to facilitate execution in development and production environments.
+### Endpoints
 
-### **[Endpoints]**
+The server is designed to accept HTTP requests, which allow interaction with the information stored in the database.  
+Below can be found the current implemented endpoints, divided by topic:
 
-The server is designed to accept HTTP requests, which allow interaction with the information stored in the database. Currently, endpoints have been implemented for the following entities:
+#### Users
 
-- Users: Allows obtaining information from registered users.
-- Wines: Provides a list of wines stored in the database.
+These endpoints allow obtaining information from the registered users:
 
-As the server progresses in development, more endpoints will be added to cover additional functionalities.
+- ```GET /users```: Get the list of all the registered users.
+- ```POST /users```: Creates a new registered user.
 
-#### **[Topics]**
+#### Topics
 
 Users
 
@@ -56,33 +55,31 @@ Wine Bottles
 - GET /wines: List of wine bottles (with optional filters).
 - POST /wines: Registers a new wine bottle (requires administrator approval).
 
-### **[Database-entities/collections]**
+## Database-collections
 
 The data model is organized into MongoDB collections, including:
 
-Users: This collection stores basic information about users registered on the platform.
+This collection stores basic information about users registered in the platform, and their properties are:
+
+Users
 
 Properties:
 
-- id (String, unique): Unique identifier of the user.
-- name (String): Full name of the user.
-- email (String, unique): Email address.
-- password (String): Encrypted password for authentication.
-- role (String): User role, can be "user" or "admin".
-- createdAt (Date): Date the user was created.
+- _id (String, unique): Unique identifier of the user.
+- full_name (String): User's full name.
+- email (String, unique): User's email address. Must not be repeated among the database.
 
-Wine Bottles: This collection contains information about registered wine bottles.
+Wine Bottles
 
 Properties:
 
-- id (String, unique): Unique identifier of the bottle.
+- _id (String, unique): Unique identifier of the bottle.
 - name (String): Name of the wine.
 - winery (String): Name of the winery that produces the wine.
 - region (String): Wine region of origin.
 - price (Number): Price of the bottle.
 - stock (Number): Quantity available in inventory.
 - description (String): Brief description of the wine.
-- createdAt (Date): Date of registration in the system.
 
 ## How it was created
 
