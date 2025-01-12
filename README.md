@@ -13,8 +13,8 @@ It has been developed with all gathered information and knowledge learnt from th
     1. [Express](#express)
     2. [Nodemon (dev)](#nodemon)
     3. [Dotenv](#dotenv)
-    3. [Cors](#cors)
-    3. [Mongoose](#mongoose)
+    4. [Cors](#cors)
+    5. [Mongoose](#mongoose)
 6. [How to run the project](#how-to-run-the-project)
 
 ---
