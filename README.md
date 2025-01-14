@@ -6,8 +6,11 @@ It has been developed with all gathered information and knowledge learnt from th
 1. [Description](#description)
 2. [Content](#content)
     1. [Endpoints](#endpoints)
-        1. [Topics](#topics)
-3. [Database collections](#Database-collections)
+        1. [Users](#users)
+        2. [Wine bottles](#wine-bottles)
+    2. [Database collections](#database-collections)
+        1. [Users collection](#users-collection)
+        2. [Wine bottles collection](#wine-bottles-collection)
 4. [How it was created](#how-it-was-created)
 5. [Additional dependencies installed](#additional-dependencies-installed)
     1. [Express](#express)
@@ -26,7 +29,6 @@ It provides registration, authentication, information filtering, and content man
 
 ## Content
 
-The project contains the following:
 Below are listed the different endpoints the server is able to accept (so possible requests to make to), and the different entities/collections the database stores:
 
 ### Endpoints
@@ -38,42 +40,39 @@ Below can be found the current implemented endpoints, divided by topic:
 
 These endpoints allow obtaining information from the registered users:
 
-- ```GET /users```: Get the list of all the registered users.
-- ```POST /users```: Creates a new registered user.
-
-#### Topics
-
-Users
-
 - GET /users/:id: Gets information about a user by ID.
 - POST /users: Creates a new user.
 - PATCH /users/:id: Updates a user's profile.
 - DELETE /users/:id: Deletes a user's account.
 
-Wine Bottles
+#### Wine bottles
+
+These endpoints allow information to be obtained from wine bottles:
 
 - GET /wines: List of wine bottles (with optional filters).
 - POST /wines: Registers a new wine bottle (requires administrator approval).
 
-## Database-collections
+### Database collections
 
-The data model is organized into MongoDB collections, including:
+The data model is organized into MongoDB collections, which are:
+
+#### Users collection
 
 This collection stores basic information about users registered in the platform, and their properties are:
 
-Users
-
 Properties:
 
-- _id (String, unique): Unique identifier of the user.
+- _id (String, unique): Unique identifier of the user.  Provided automatically by MongoDB when creating the item.
 - full_name (String): User's full name.
 - email (String, unique): User's email address. Must not be repeated among the database.
 
-Wine Bottles
+#### Wine bottles collection
+
+This collection stores the information about the bottles of wine which belong to any of the registered wineries, and their properties are:
 
 Properties:
 
-- _id (String, unique): Unique identifier of the bottle.
+- _id (String, unique): Unique identifier of the bottle.  Provided automatically by MongoDB when creating the item.
 - name (String): Name of the wine.
 - winery (String): Name of the winery that produces the wine.
 - region (String): Wine region of origin.
