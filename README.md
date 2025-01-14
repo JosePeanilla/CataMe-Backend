@@ -40,15 +40,15 @@ Below can be found the current implemented endpoints, divided by topic:
 
 These endpoints allow obtaining information from the registered users:
 
-- GET /users : Get the list of all registered users.
-- GET /users/:id: Gets information about a user by ID.
-- POST /users: Creates a new user.
-- PATCH /users/:id: Updates a user's profile.
-- DELETE /users/:id: Deletes a user's account.
+- `GET /users` - Get the list of all registered users.
+- `GET /users/:id` - Gets information about a specific user.
+- `POST /users` - Creates a new user.
+- `PATCH /users/:id` - Updates a user's profile.
+- `DELETE /users/:id` - Deletes a user's account.
 
 #### Wine bottles
 
-These endpoints allow information to be obtained from wine bottles:
+These endpoints allow obtaining information from the wine bottles:
 
 - GET /wines: Get the list of all the wine bottles.
 - POST /wines: Registers a new wine bottle (requires administrator approval).
@@ -68,8 +68,6 @@ This collection stores basic information about users registered in the platform,
 #### Wine bottles collection
 
 This collection stores the information about the bottles of wine which belong to any of the registered wineries, and their properties are:
-
-Properties:
 
 - description (String): Brief description of the wine.
 - _id (String, unique): Unique identifier of the bottle.  Provided automatically by MongoDB when creating the item.
