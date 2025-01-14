@@ -40,6 +40,7 @@ Below can be found the current implemented endpoints, divided by topic:
 
 These endpoints allow obtaining information from the registered users:
 
+- GET /users : Get the list of all registered users.
 - GET /users/:id: Gets information about a user by ID.
 - POST /users: Creates a new user.
 - PATCH /users/:id: Updates a user's profile.
@@ -49,7 +50,7 @@ These endpoints allow obtaining information from the registered users:
 
 These endpoints allow information to be obtained from wine bottles:
 
-- GET /wines: List of wine bottles (with optional filters).
+- GET /wines: Get the list of all the wine bottles.
 - POST /wines: Registers a new wine bottle (requires administrator approval).
 
 ### Database collections
@@ -60,9 +61,7 @@ The data model is organized into MongoDB collections, which are:
 
 This collection stores basic information about users registered in the platform, and their properties are:
 
-Properties:
-
-- _id (String, unique): Unique identifier of the user.  Provided automatically by MongoDB when creating the item.
+- _id (String, unique): Unique identifier of the user. Provided automatically by MongoDB when creating the item.
 - full_name (String): User's full name.
 - email (String, unique): User's email address. Must not be repeated among the database.
 
@@ -72,13 +71,10 @@ This collection stores the information about the bottles of wine which belong to
 
 Properties:
 
+- description (String): Brief description of the wine.
 - _id (String, unique): Unique identifier of the bottle.  Provided automatically by MongoDB when creating the item.
 - name (String): Name of the wine.
-- winery (String): Name of the winery that produces the wine.
-- region (String): Wine region of origin.
 - price (Number): Price of the bottle.
-- stock (Number): Quantity available in inventory.
-- description (String): Brief description of the wine.
 
 ## How it was created
 
