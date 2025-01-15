@@ -50,8 +50,8 @@ These endpoints allow obtaining information from the registered users:
 
 These endpoints allow obtaining information from the wine bottles:
 
-- GET /wines: Get the list of all the wine bottles.
-- POST /wines: Registers a new wine bottle (requires administrator approval).
+- `GET /wines` - Get the list of all the wine bottles.
+- `POST /wines` - Registers a new wine bottle (requires administrator approval).
 
 ### Database collections
 
