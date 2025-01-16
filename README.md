@@ -24,8 +24,8 @@ It has been developed with all gathered information and knowledge learnt from th
 
 ## Description
 
-This project is the backend server of a **wine application**, designed to offer a personalized experience to consumers and wineries.  
-It provides registration, authentication, information filtering, and content management features related to wines, wine regions, and designations of origin.
+This project is the backend server of a **wine application**, designed to offer a personalized experience to consumers, approach them to different bottles' reviews by other customers, and visibility to wineries to promote their products.  
+It provides registration, authentication, information filtering, and content management features related to types of wine, and wine regions, among others.
 
 ## Content
 
@@ -70,7 +70,7 @@ This collection stores basic information about users registered in the platform,
 This collection stores the information about the bottles of wine which belong to any of the registered wineries, and their properties are:
 
 - description (String): Brief description of the wine.
-- _id (String, unique): Unique identifier of the bottle.  Provided automatically by MongoDB when creating the item.
+- _id (String, unique): Unique identifier of the bottle. Provided automatically by MongoDB when creating the item.
 - name (String): Name of the wine.
 - price (Number): Price of the bottle.
 
