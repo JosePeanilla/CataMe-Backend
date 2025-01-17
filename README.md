@@ -3,16 +3,76 @@ This project contains the backend part of the final ("*Full-Stack Developer*") m
 It has been developed with all gathered information and knowledge learnt from the master (Express and JS).
 
 ## Table of Contents
-1. [How it was created](#how-it-was-created)
-2. [Additional dependencies installed](#additional-dependencies-installed)
+1. [Description](#description)
+2. [Content](#content)
+    1. [Endpoints](#endpoints)
+        1. [Users](#users)
+        2. [Wine bottles](#wine-bottles)
+    2. [Database collections](#database-collections)
+        1. [Users collection](#users-collection)
+        2. [Wine bottles collection](#wine-bottles-collection)
+4. [How it was created](#how-it-was-created)
+5. [Additional dependencies installed](#additional-dependencies-installed)
     1. [Express](#express)
     2. [Nodemon (dev)](#nodemon)
     3. [Dotenv](#dotenv)
-    3. [Cors](#cors)
-    3. [Mongoose](#mongoose)
-3. [How to run the project](#how-to-run-the-project)
+    4. [Cors](#cors)
+    5. [Mongoose](#mongoose)
+6. [How to run the project](#how-to-run-the-project)
 
 ---
+
+## Description
+
+This project is the backend server of a **wine application**, designed to offer a personalized experience to consumers, approach them to different bottles' reviews by other customers, and visibility to wineries to promote their products.  
+It provides registration, authentication, information filtering, and content management features related to types of wine, and wine regions, among others.
+
+## Content
+
+Below are listed the different endpoints the server is able to accept (so possible requests to make to), and the different entities/collections the database stores:
+
+### Endpoints
+
+The server is designed to accept HTTP requests, which allow interaction with the information stored in the database.  
+Below can be found the current implemented endpoints, divided by topic:
+
+#### Users
+
+These endpoints allow obtaining information from the registered users:
+
+- `GET /users` - Get the list of all registered users.
+- `GET /users/:id` - Gets information about a specific user.
+- `POST /users` - Creates a new user.
+- `PATCH /users/:id` - Updates a user's profile.
+- `DELETE /users/:id` - Deletes a user's account.
+
+#### Wine bottles
+
+These endpoints allow obtaining information from the wine bottles:
+
+- `GET /wines` - Get the list of all the wine bottles.
+- `POST /wines` - Registers a new wine bottle (requires administrator approval).
+
+### Database collections
+
+The data model is organized into MongoDB collections, which are:
+
+#### Users collection
+
+This collection stores basic information about users registered in the platform, and their properties are:
+
+- _id (String, unique): Unique identifier of the user. Provided automatically by MongoDB when creating the item.
+- full_name (String): User's full name.
+- email (String, unique): User's email address. Must not be repeated among the database.
+
+#### Wine bottles collection
+
+This collection stores the information about the bottles of wine which belong to any of the registered wineries, and their properties are:
+
+- description (String): Brief description of the wine.
+- _id (String, unique): Unique identifier of the bottle. Provided automatically by MongoDB when creating the item.
+- name (String): Name of the wine.
+- price (Number): Price of the bottle.
 
 ## How it was created
 
