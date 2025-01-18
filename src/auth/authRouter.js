@@ -1,10 +1,10 @@
 const express = require("express");
 const authRouter = express.Router();
 
-/* Controller of the 'auth' requests and responses handling */
+/* Authentication Request and Response Handling Controller Route */
 const { authController } = require("./authController.js");
 
-/* Endpoint for logging */
+/* Endpoint for loging */
 authRouter.post("/login", authController.login);
 
 module.exports = { authRouter };

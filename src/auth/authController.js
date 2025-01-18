@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 const { authService } = require("./authService.js");
 const { statusCodes } = require("../constants/statusCodes.js");
 
-/* Controller of the 'auth' requests and responses handling */
+/* Controller for handling authentication requests and responses */
 const authController = {
   login: async (req, res) => {
     try {
@@ -10,7 +10,6 @@ const authController = {
 
       // Validate credentials
       const user = await authService.validateUser(email, password);
-
       if (!user) {
         return res.status(statusCodes.BadRequest).send({
           type: "error",
