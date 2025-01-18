@@ -145,6 +145,14 @@ This package is used to provide schemas for the database models.
 npm install mongoose
 ```
 
+### **[Moment](https://momentjs.com/)**:
+
+This package is used to get date and time with specific format in a simpler way.
+
+```bash
+npm install moment
+```
+
 ## How to run the project
 
 As this is an Express (back-end) application, it is set to be launched simply with:
