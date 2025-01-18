@@ -12,6 +12,8 @@ It has been developed with all gathered information and knowledge learnt from th
         1. [Users collection](#users-collection)
         2. [Wine bottles collection](#wine-bottles-collection)
 4. [How to run the project](#how-to-run-the-project)
+    1. [Prerequisites](#prerequisites)
+    2. [Execution](#execution)
 5. [How it was created](#how-it-was-created)
 6. [Additional dependencies installed](#additional-dependencies-installed)
     1. [Express](#express)
@@ -75,6 +77,29 @@ This collection stores the information about the bottles of wine which belong to
 - price (Number): Price of the bottle.
 
 ## How to run the project
+
+### Prerequisites
+
+These are the steps needed to be **executed only once**, to set the environment:
+
+1. Install the Node packages:
+    ```bash
+    npm install
+    ```
+2. Create a .env file at the root of the project:
+    ```bash
+    touch .env
+    ```
+3. Fill the created .env file with:
+    ```env
+    DB_CLUSTER=<db_cluster_name>
+    DB_NAME=<db_name>
+    DB_PASSWORD=<db_user_password>
+    DB_USERNAME=<db_username>
+    PORT=<server_port>
+    ```
+
+### Execution
 
 As this is an Express (back-end) application, it is set to be launched simply with:
 - During development - ```npm run dev```.
