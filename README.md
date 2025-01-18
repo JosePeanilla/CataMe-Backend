@@ -6,11 +6,11 @@ It has been developed with all gathered information and knowledge learnt from th
 1. [Description](#description)
 2. [Content](#content)
     1. [Endpoints](#endpoints)
-        1. [Users](#users)
-        2. [Wine bottles](#wine-bottles)
+        1. [Users](#users---endpoints)
+        2. [Wine bottles](#wine-bottles---endpoints)
     2. [Database collections](#database-collections)
-        1. [Users collection](#users-collection)
-        2. [Wine bottles collection](#wine-bottles-collection)
+        1. [Users](#users---collection)
+        2. [Wine bottles](#wine-bottles---collection)
 4. [How to run the project](#how-to-run-the-project)
     1. [Prerequisites](#prerequisites)
     2. [Execution](#execution)
@@ -39,7 +39,7 @@ Below are listed the different endpoints the server is able to accept (so possib
 The server is designed to accept HTTP requests, which allow interaction with the information stored in the database.  
 Below can be found the current implemented endpoints, divided by topic:
 
-#### Users
+#### Users - Endpoints
 
 These endpoints allow obtaining information from the registered users:
 
@@ -49,7 +49,7 @@ These endpoints allow obtaining information from the registered users:
 - `PATCH /users/:id` - Update a user's profile.
 - `DELETE /users/:id` - Delete a user's account.
 
-#### Wine bottles
+#### Wine bottles - Endpoints
 
 These endpoints allow obtaining information from the wine bottles:
 
@@ -60,7 +60,7 @@ These endpoints allow obtaining information from the wine bottles:
 
 The data model is organized into MongoDB collections, which are:
 
-#### Users collection
+#### Users - Collection
 
 This collection stores basic information about users registered in the platform, and their properties are:
 
@@ -68,7 +68,7 @@ This collection stores basic information about users registered in the platform,
 - `email` *(String, unique)*: User's email address. Must not be repeated among the database.
 - `full_name` *(String)*: User's full name.
 
-#### Wine bottles collection
+#### Wine bottles - Collection
 
 This collection stores the information about the bottles of wine which belong to any of the registered wineries, and their properties are:
 
