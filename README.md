@@ -16,11 +16,11 @@ It has been developed with all gathered information and knowledge learnt from th
     2. [Execution](#execution)
 5. [How it was created](#how-it-was-created)
 6. [Additional dependencies installed](#additional-dependencies-installed)
-    1. [Express](#express)
-    2. [Nodemon (dev)](#nodemon)
-    3. [Dotenv](#dotenv)
-    4. [Cors](#cors)
-    5. [Mongoose](#mongoose)
+    1. [Cors](#cors)
+    2. [Dotenv](#dotenv)
+    3. [Express](#express)
+    4. [Mongoose](#mongoose)
+    5. [Nodemon (dev)](#nodemon)
 
 ---
 
@@ -138,20 +138,12 @@ To initialize the project, below steps were followed:
 
 ## Additional dependencies installed
 
-### **[Express](https://expressjs.com/es/)**:
+### **[Cors](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing)**:
 
-This package is the most important and sets up the infrastructure for the web aplication.
-
-```bash
-npm install express
-```
-
-### **[Nodemon](https://nodemon.io/)**:
-
-This (developer) package is used to restart the server once changes are saved.
+This package is used to enable the *Cross-Origin Resource Sharing*, and permit others to connect the server.
 
 ```bash
-npm install nodemon --save-dev
+npm install cors
 ```
 
 ### **[Dotenv](https://www.dotenv.org/)**:
@@ -162,12 +154,20 @@ This package is used to load *environmental variables* from **.env** files.
 npm install dotenv
 ```
 
-### **[Cors](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing)**:
+### **[Express](https://expressjs.com/es/)**:
 
-This package is used to enable the *Cross-Origin Resource Sharing*, and permit others to connect the server.
+This package is the most important and sets up the infrastructure for the web aplication.
 
 ```bash
-npm install cors
+npm install express
+```
+
+### **[Moment](https://momentjs.com/)**:
+
+This package is used to get date and time with specific format in a simpler way.
+
+```bash
+npm install moment
 ```
 
 ### **[Mongoose](https://mongoosejs.com/)**:
@@ -178,10 +178,10 @@ This package is used to provide schemas for the database models.
 npm install mongoose
 ```
 
-### **[Moment](https://momentjs.com/)**:
+### **[Nodemon](https://nodemon.io/)**:
 
-This package is used to get date and time with specific format in a simpler way.
+This (developer) package is used to restart the server once changes are saved.
 
 ```bash
-npm install moment
+npm install nodemon --save-dev
 ```
