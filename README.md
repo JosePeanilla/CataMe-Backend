@@ -115,7 +115,7 @@ As this is an Express (back-end) application, it is set to be launched simply wi
 - During development - ```npm run dev```.
 - During deployment - ```npm run start```.
 
-Backend (server) should be running at **http://localhost:3000/**.
+Backend (server) should be running, by default, at **http://localhost:3000/**.
 
 ## How it was created
 
