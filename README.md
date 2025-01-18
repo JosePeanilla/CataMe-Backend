@@ -6,10 +6,11 @@ It has been developed with all gathered information and knowledge learnt from th
 1. [Description](#description)
 2. [Content](#content)
     1. [Endpoints](#endpoints)
-        1. [Users](#users---endpoints)
-        2. [Wine bottles](#wine-bottles---endpoints)
+        1. [Consumers](#consumer-users---endpoints)
+        2. [Users](#users---endpoints)
+        3. [Wine bottles](#wine-bottles---endpoints)
     2. [Database collections](#database-collections)
-        1. [Users](#users---collection)
+        1. [Consumers](#consumer-users---collection)
         2. [Wine bottles](#wine-bottles---collection)
 4. [How to run the project](#how-to-run-the-project)
     1. [Prerequisites](#prerequisites)
@@ -39,13 +40,19 @@ Below are listed the different endpoints the server is able to accept (so possib
 The server is designed to accept HTTP requests, which allow interaction with the information stored in the database.  
 Below can be found the current implemented endpoints, divided by topic:
 
+#### Consumer users - Endpoints
+
+These endpoints allow obtaining information from ALL the registered consumers:
+
+- `GET /users/consumers` - Get the list of all registered consumers.
+- `POST /users/consumers` - Create a new consumer user.
+
 #### Users - Endpoints
 
-These endpoints allow obtaining information from the registered users:
+These endpoints allow obtaining information from ALL the registered users (consumers and wineries):
 
 - `GET /users` - Get the list of all registered users.
 - `GET /users/:id` - Get the information about a specific user.
-- `POST /users` - Create a new user.
 - `PATCH /users/:id` - Update a user's profile.
 - `DELETE /users/:id` - Delete a user's account.
 
@@ -60,9 +67,9 @@ These endpoints allow obtaining information from the wine bottles:
 
 The data model is organized into MongoDB collections, which are:
 
-#### Users - Collection
+#### **[Consumer Users](https://cloud.mongodb.com/v2/67712e8d74ee353776ed51a7#/metrics/replicaSet/677133a831c8bf6d5272e506/explorer/Database/consumer_users/find)** - Collection
 
-This collection stores basic information about users registered in the platform, and their properties are:
+This collection stores basic information about consumers registered in the platform, and their properties are:
 
 - `_id` *(String, unique)*: Unique identifier of the user. Provided automatically by MongoDB when creating the item.
 - `email` *(String, unique)*: User's email address. Must not be repeated among the database.
