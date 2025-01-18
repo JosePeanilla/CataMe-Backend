@@ -27,7 +27,7 @@ It has been developed with all gathered information and knowledge learnt from th
 
 ## Description
 
-This project is the backend server of a **wine application**, designed to offer a personalized experience to consumers, approach them to different bottles' reviews by other customers, and visibility to wineries to promote their products.  
+This project is the backend server of a **wine application**, designed to offer a personalized experience to consumers, approach them to different bottles' reviews made by other users, and give visibility to wineries to promote their products.  
 It provides registration, authentication, information filtering, and content management features related to types of wine, and wine regions, among others.
 
 ## Content
@@ -44,17 +44,17 @@ Below can be found the current implemented endpoints, divided by topic:
 These endpoints allow obtaining information from the registered users:
 
 - `GET /users` - Get the list of all registered users.
-- `GET /users/:id` - Gets information about a specific user.
-- `POST /users` - Creates a new user.
-- `PATCH /users/:id` - Updates a user's profile.
-- `DELETE /users/:id` - Deletes a user's account.
+- `GET /users/:id` - Get the information about a specific user.
+- `POST /users` - Create a new user.
+- `PATCH /users/:id` - Update a user's profile.
+- `DELETE /users/:id` - Delete a user's account.
 
 #### Wine bottles
 
 These endpoints allow obtaining information from the wine bottles:
 
 - `GET /wines` - Get the list of all the wine bottles.
-- `POST /wines` - Registers a new wine bottle (requires administrator approval).
+- `POST /wines` - Register a new wine bottle (requires administrator approval).
 
 ### Database collections
 
@@ -64,18 +64,18 @@ The data model is organized into MongoDB collections, which are:
 
 This collection stores basic information about users registered in the platform, and their properties are:
 
-- _id (String, unique): Unique identifier of the user. Provided automatically by MongoDB when creating the item.
-- full_name (String): User's full name.
-- email (String, unique): User's email address. Must not be repeated among the database.
+- `_id` *(String, unique)*: Unique identifier of the user. Provided automatically by MongoDB when creating the item.
+- `email` *(String, unique)*: User's email address. Must not be repeated among the database.
+- `full_name` *(String)*: User's full name.
 
 #### Wine bottles collection
 
 This collection stores the information about the bottles of wine which belong to any of the registered wineries, and their properties are:
 
-- description (String): Brief description of the wine.
-- _id (String, unique): Unique identifier of the bottle. Provided automatically by MongoDB when creating the item.
-- name (String): Name of the wine.
-- price (Number): Price of the bottle.
+- `_id` *(String, unique)*: Unique identifier of the bottle. Provided automatically by MongoDB when creating the item.
+- `description` *(String)*: Brief description of the wine.
+- `name` *(String)*: Name of the wine.
+- `price` *(Number)*: Price of the bottle.
 
 ## How to run the project
 
