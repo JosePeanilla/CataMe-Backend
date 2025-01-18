@@ -11,14 +11,14 @@ It has been developed with all gathered information and knowledge learnt from th
     2. [Database collections](#database-collections)
         1. [Users collection](#users-collection)
         2. [Wine bottles collection](#wine-bottles-collection)
-4. [How it was created](#how-it-was-created)
-5. [Additional dependencies installed](#additional-dependencies-installed)
+4. [How to run the project](#how-to-run-the-project)
+5. [How it was created](#how-it-was-created)
+6. [Additional dependencies installed](#additional-dependencies-installed)
     1. [Express](#express)
     2. [Nodemon (dev)](#nodemon)
     3. [Dotenv](#dotenv)
     4. [Cors](#cors)
     5. [Mongoose](#mongoose)
-6. [How to run the project](#how-to-run-the-project)
 
 ---
 
@@ -73,6 +73,14 @@ This collection stores the information about the bottles of wine which belong to
 - _id (String, unique): Unique identifier of the bottle. Provided automatically by MongoDB when creating the item.
 - name (String): Name of the wine.
 - price (Number): Price of the bottle.
+
+## How to run the project
+
+As this is an Express (back-end) application, it is set to be launched simply with:
+- During development - ```npm run dev```.
+- During deployment - ```npm run start```.
+
+Backend (server) should be running at **http://localhost:3000/**.
 
 ## How it was created
 
@@ -152,19 +160,3 @@ This package is used to get date and time with specific format in a simpler way.
 ```bash
 npm install moment
 ```
-
-## How to run the project
-
-As this is an Express (back-end) application, it is set to be launched simply with:
-```bash
-npm run dev
-```
-during development.
-
-And with:
-```bash
-npm run start
-```
-during deployment.
-
-Backend (server) should be running at **http://localhost:3000/**.
