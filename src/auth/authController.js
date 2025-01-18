@@ -2,43 +2,33 @@ const jwt = require("jsonwebtoken");
 const { authService } = require("./authService.js");
 const { statusCodes } = require("../constants/statusCodes.js");
 
-/* Controller for handling authentication requests and responses */
 const authController = {
   login: async (req, res) => {
     try {
       const { email, password } = req.body;
 
-      // Validate credentials
-      const user = await authService.validateUser(email, password);
-      if (!user) {
-        return res.status(statusCodes.BadRequest).send({
-          type: "error",
-          msg: "Invalid email or password",
-        });
-      }
+      const result = await authService.validateUser(email, password);
 
-      if (!user.isActive) {
+      // If it does not validate correctly (user not found, incorrect password or inactive)
+      if (!result.success) {
         return res.status(statusCodes.Forbidden).send({
           type: "error",
-          msg: "User account is inactive",
+          msg: result.msg,
         });
       }
 
-      // Generate a JWT token
+      // Valid user, generate token
+      const user = result.user;
       const token = jwt.sign(
-        {
-          id: user._id,
-          email: user.email,
-          fullName: user.full_name,
-        },
-        process.env.JWT_SECRET, 
-        { expiresIn: "1h" } 
+        { id: user._id, email: user.email, fullName: `${user.name} ${user.surname}` },
+        process.env.JWT_SECRET,
+        { expiresIn: "1h" }
       );
 
       res.status(statusCodes.OK).send({
         type: "success",
         msg: "Login successful",
-        token, 
+        token,
       });
     } catch (error) {
       res.status(statusCodes.InternalServerError).send({
