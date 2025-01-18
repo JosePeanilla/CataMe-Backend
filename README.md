@@ -55,7 +55,7 @@ These endpoints allow obtaining information from ALL the registered users (consu
 
 - `GET /users` - Get the list of all registered users.
 - `GET /users/:id` - Get the information about a specific user.
-- `PATCH /users/:id` - Update a user's profile.
+- `PUT /users/:id` - Update a user's profile.
 - `DELETE /users/:id` - Delete a user's account.
 
 #### Wine bottles - Endpoints
