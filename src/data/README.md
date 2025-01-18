@@ -1,16 +1,20 @@
 # Wine Application - Data
+
 Here it is explained the different data the server uses, the reason of usage, and how it was created (if it applies).
 
 ## Table of Contents
+
 1. [MongoDB Database](#mongodb-database)
     1. [How it was created](#how-it-was-created)
 
 ---
 
 ## MongoDB Database
+
 To allow the server work with some data, it has been decided to use a **MongoDB cluster** to store the that information.  
 
 ### How it was created
+
 To initialize the database, below steps were followed:
 
 1. **Create** an organization inside *[MongoDB Atlas](https://cloud.mongodb.com/)* webpage: ```06-fsdesp-1024-equipo-rojo```
