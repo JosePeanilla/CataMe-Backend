@@ -55,3 +55,4 @@ To initialize the database, below steps were followed:
     ```
     mongodb+srv://<db_username>:<db_password>@<db_cluster>.qdd0s.mongodb.net/<db_name>?retryWrites=true&w=majority&appName=<db_cluster>
     ```
+    Notice that all of these `<param>` parameters shall be defined in `.env` file from the root of the project.
