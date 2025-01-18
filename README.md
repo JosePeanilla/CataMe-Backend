@@ -19,8 +19,9 @@ It has been developed with all gathered information and knowledge learnt from th
     1. [Cors](#cors)
     2. [Dotenv](#dotenv)
     3. [Express](#express)
-    4. [Mongoose](#mongoose)
-    5. [Nodemon (dev)](#nodemon)
+    4. [Moment](#moment)
+    5. [Mongoose](#mongoose)
+    6. [Nodemon (dev)](#nodemon)
 
 ---
 
