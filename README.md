@@ -9,11 +9,12 @@ It has been developed with all gathered information and knowledge learnt from th
 2. [Content](#content)
     1. [Endpoints](#endpoints)
         1. [Consumers](#consumer-users---endpoints)
-        2. [Users](#users---endpoints)
-        3. [Wine bottles](#wine-bottles---endpoints)
+        2. [Wine bottles](#wine-bottles---endpoints)
+        3. [Wineries](#winery-users---endpoints)
     2. [Database collections](#database-collections)
         1. [Consumers](#consumer-users---collection)
         2. [Wine bottles](#wine-bottles---collection)
+        3. [Wineries](#winery-users---collection)
 3. [How to run the project](#how-to-run-the-project)
     1. [Prerequisites](#prerequisites)
     2. [Execution](#execution)
@@ -67,6 +68,24 @@ These endpoints allow obtaining information from the wine bottles:
 - `GET /wines` - Get the list of all the wine bottles.
 - `POST /wines` - Register a new wine bottle (requires administrator approval).
 
+#### Winery users - Endpoints
+
+These endpoints allow obtaining information from ALL the registered wineries:
+
+- `GET /users/wineries` - Get the list of all registered wineries.
+- `GET /users/wineries/:id` - Get the information about a specific winery user.  
+    A winery user with given ID must exist in the database.
+- `POST /users/wineries` - Create a new winery user.  
+    It requires that all necessary arguments are passed in the request body.
+- `PUT /users/wineries/:id` - Update a winery user's profile.  
+    A winery user with given ID must exist in the database.
+    It requires that all necessary arguments are passed in the request body.
+- `PATCH /users/wineries/:id/:field` - Update a winery user's profile specific field.  
+    A winery user with given ID must exist in the database.
+    The given field must be from a winery user entity.
+- `DELETE /users/wineries/:id` - Delete a winery user's account.  
+    A winery user with given ID must exist in the database.
+
 ### Database collections
 
 The data model is organized into MongoDB collections, which are:
@@ -87,6 +106,19 @@ This collection stores the information about the bottles of wine which belong to
 - `description` *(String)*: Brief description of the wine.
 - `name` *(String)*: Name of the wine.
 - `price` *(Number)*: Price of the bottle.
+
+#### **[Winery Users](https://cloud.mongodb.com/v2/67712e8d74ee353776ed51a7#/metrics/replicaSet/677133a831c8bf6d5272e506/explorer/Database/wineries/find)** - Collection
+
+This collection stores basic information about wineries registered in the platform, and their properties are:
+
+- `_id` *(String, unique)*: Unique identifier of the winery user. Provided automatically by MongoDB when creating the item.
+- `contact_email` *(String)*: Email address to contact the winery.
+- `contact_telephone` *(String)*: Telephone number to contact the winery.
+- `description` *(String)*: Brief information about the winery.
+- `email` *(String, unique)*: Winery user's account email address. Must not be repeated among the database.
+- `name` *(String)*: Winery name.
+- `password` *(String)*: Winery user's account password.
+- `web_page` *(String)*: URL of the winery web page.
 
 ## How to run the project
 
