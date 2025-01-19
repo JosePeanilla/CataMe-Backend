@@ -7,4 +7,4 @@ const consumerUserSchema = new mongoose.Schema({
 
 const ConsumerUserModel = mongoose.model("consumer_user", consumerUserSchema)
 
-module.exports = { ConsumerUserModel }
+module.exports = { ConsumerUserModel, consumerUserSchema }

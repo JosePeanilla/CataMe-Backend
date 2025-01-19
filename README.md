@@ -47,16 +47,18 @@ Below can be found the current implemented endpoints, divided by topic:
 These endpoints allow obtaining information from ALL the registered consumers:
 
 - `GET /users/consumers` - Get the list of all registered consumers.
-- `POST /users/consumers` - Create a new consumer user.
-
-#### Users - Endpoints
-
-These endpoints allow obtaining information from ALL the registered users (consumers and wineries):
-
-- `GET /users` - Get the list of all registered users.
-- `GET /users/:id` - Get the information about a specific user.
-- `PUT /users/:id` - Update a user's profile.
-- `DELETE /users/:id` - Delete a user's account.
+- `GET /users/consumers/:id` - Get the information about a specific user.  
+    A consumer user with given ID must exist in the database.
+- `POST /users/consumers` - Create a new consumer user.  
+    It requires that all necessary arguments are passed in the request body.
+- `PUT /users/consumers/:id` - Update a consumer user's profile.  
+    A consumer user with given ID must exist in the database.
+    It requires that all necessary arguments are passed in the request body.
+- `PATCH /users/consumers/:id/:field` - Update a consumer user's profile specific field.  
+    A consumer user with given ID must exist in the database.
+    The given field must be from a consumer user entity.
+- `DELETE /users/consumers/:id` - Delete a consumer user's account.  
+    A consumer user with given ID must exist in the database.
 
 #### Wine bottles - Endpoints
 

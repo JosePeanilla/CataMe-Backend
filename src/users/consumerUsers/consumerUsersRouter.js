@@ -3,16 +3,34 @@ const consumerUsersRouter = express.Router()  /* ExpressJS router object */
 
 /* Middlewares */
 const {
-  checkRequiredArgsAreProvided,
+  checkAllConsumerUserArgsAreProvided,
+  checkProvidedConsumerUserExists,
+  checkProvidedConsumerUserFieldIsValid
 } = require("./consumerUsersMiddlewares.js")
 
 /* Endpoints */
 const { consumerUsersController } = require("./consumerUsersController.js")
-consumerUsersRouter.get('/',
-  consumerUsersController.getAllConsumerUsers)
+
+/* /users/consumers/ */
+consumerUsersRouter.get('/', consumerUsersController.getAllConsumerUsers)
 consumerUsersRouter.post('/',
-  checkRequiredArgsAreProvided,
+  checkAllConsumerUserArgsAreProvided,
   consumerUsersController.createConsumerUser
+)
+
+/* /users/consumers/<id>/ */
+consumerUsersRouter.use("/:id", checkProvidedConsumerUserExists)  /* Check that it exists a consumer user in the database with the ID provided in the request params */
+consumerUsersRouter.get('/:id', consumerUsersController.getConsumerUserDetails)
+consumerUsersRouter.put('/:id',
+  checkAllConsumerUserArgsAreProvided,
+  consumerUsersController.updateConsumerUser
+)
+consumerUsersRouter.delete('/:id', consumerUsersController.deleteConsumerUser)
+
+/* /users/<id>/<field>/ */
+consumerUsersRouter.patch('/:id/:field',
+  checkProvidedConsumerUserFieldIsValid,
+  consumerUsersController.updateConsumerUserField
 )
 
 module.exports = { consumerUsersRouter }

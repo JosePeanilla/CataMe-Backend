@@ -5,6 +5,7 @@ const usersRouter = express.Router()  /* ExpressJS router object */
 
 /* Endpoints */
 const { usersController } = require("./usersController.js")
+
 /* /users/ */
 usersRouter.get('/', usersController.getAllUsers)
 
