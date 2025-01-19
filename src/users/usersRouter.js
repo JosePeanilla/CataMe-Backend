@@ -9,6 +9,7 @@ usersRouter.use("/consumers", consumerUsersRouter)
 
 /* Endpoints */
 const { usersController } = require("./usersController.js")
+/* /users/ */
 usersRouter.get('/', usersController.getAllUsers)
 
 module.exports = { usersRouter }
