@@ -1,7 +1,9 @@
 const mongoose = require("mongoose")
 
 const ConsumerSchema = new mongoose.Schema({
+  email: { required: true, type: String, unique: true },
   name: { required: true, type: String },
+  password: { required: true, type: String },
   surname: { required: true, type: String }
 }, { timestamps: true })
 
