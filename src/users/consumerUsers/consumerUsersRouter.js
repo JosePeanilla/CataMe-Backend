@@ -16,7 +16,6 @@ consumerUsersRouter.get("/",
   consumerUsersController.getAllConsumerUsers 
 );
 consumerUsersRouter.post("/",
-  authMiddleware.verifyToken, 
   checkRequiredArgsAreProvided, 
   consumerUsersController.createConsumerUser
 );
