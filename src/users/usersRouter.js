@@ -9,7 +9,6 @@ usersRouter.use("/consumers", consumerUsersRouter)
 
 /* Endpoints */
 const { usersController } = require("./usersController.js")
-usersRouter.get('/',
-  usersController.getAllUsers)
+usersRouter.get('/', usersController.getAllUsers)
 
 module.exports = { usersRouter }
