@@ -3,13 +3,13 @@ const usersRouter = express.Router()  /* ExpressJS router object */
 
 /* Place here Middlewares */
 
-/* Sub-Routes */
-const { consumerUsersRouter } = require("./consumerUsers/consumerUsersRouter.js")
-usersRouter.use("/consumers", consumerUsersRouter)
-
 /* Endpoints */
 const { usersController } = require("./usersController.js")
 /* /users/ */
 usersRouter.get('/', usersController.getAllUsers)
+
+/* Sub-Routes */
+const { consumerUsersRouter } = require("./consumerUsers/consumerUsersRouter.js")
+usersRouter.use("/consumers", consumerUsersRouter)
 
 module.exports = { usersRouter }
