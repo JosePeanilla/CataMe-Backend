@@ -1,9 +1,9 @@
-const { ConsumerUserModel } = require("./consumerUsers/ConsumerUserModel.js")  /* Model of 'consumer users' entity */
+const { ConsumerModel } = require("./consumers/ConsumerModel.js")  /* Model of 'consumer users' entity */
 
 /* Service which interacts with the 'user' database */
 const usersService = {
   getAllUsers: async () => {
-    return { consumers: await ConsumerUserModel.find() }
+    return { consumers: await ConsumerModel.find() }
   }
 }
 

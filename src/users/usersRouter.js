@@ -10,7 +10,7 @@ const { usersController } = require("./usersController.js")
 usersRouter.get('/', usersController.getAllUsers)
 
 /* Sub-Routes */
-const { consumerUsersRouter } = require("./consumerUsers/consumerUsersRouter.js")
-usersRouter.use("/consumers", consumerUsersRouter)
+const { consumersRouter } = require("./consumers/consumersRouter.js")
+usersRouter.use("/consumers", consumersRouter)
 
 module.exports = { usersRouter }
