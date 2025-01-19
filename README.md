@@ -48,7 +48,7 @@ Below can be found the current implemented endpoints, divided by topic:
 These endpoints allow obtaining information from ALL the registered consumers:
 
 - `GET /users/consumers` - Get the list of all registered consumers.
-- `GET /users/consumers/:id` - Get the information about a specific user.  
+- `GET /users/consumers/:id` - Get the information about a specific consumer user.  
     A consumer user with given ID must exist in the database.
 - `POST /users/consumers` - Create a new consumer user.  
     It requires that all necessary arguments are passed in the request body.
@@ -90,13 +90,15 @@ These endpoints allow obtaining information from ALL the registered wineries:
 
 The data model is organized into MongoDB collections, which are:
 
-#### **[Consumer Users](https://cloud.mongodb.com/v2/67712e8d74ee353776ed51a7#/metrics/replicaSet/677133a831c8bf6d5272e506/explorer/Database/consumer_users/find)** - Collection
+#### **[Consumer Users](https://cloud.mongodb.com/v2/67712e8d74ee353776ed51a7#/metrics/replicaSet/677133a831c8bf6d5272e506/explorer/Database/consumers/find)** - Collection
 
 This collection stores basic information about consumers registered in the platform, and their properties are:
 
-- `_id` *(String, unique)*: Unique identifier of the user. Provided automatically by MongoDB when creating the item.
-- `email` *(String, unique)*: User's email address. Must not be repeated among the database.
-- `full_name` *(String)*: User's full name.
+- `_id` *(String, unique)*: Unique identifier of the consumer user. Provided automatically by MongoDB when creating the item.
+- `email` *(String, unique)*: Consumer user's account email address. Must not be repeated among the database.
+- `name` *(String)*: Consumer name.
+- `password` *(String)*: Consumer user's account password.
+- `surname` *(String)*: Consumer surname.
 
 #### Wine bottles - Collection
 
