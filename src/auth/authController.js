@@ -1,6 +1,6 @@
-const jsonwebtoken = require("jsonwebtoken");
-const { authService } = require("./authService.js");
+const jsonwebtoken = require("jsonwebtoken"); /* Node module used to ... (to fill) */
 const { statusCodes } = require("../constants/statusCodes.js");
+const { authService } = require("./authService.js");
 
 const authController = {
   login: async (req, res) => {
