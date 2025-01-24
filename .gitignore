@@ -1,8 +1,6 @@
 # Folders
 node_modules
+.vscode
 
 # Files
 .env
-
-#settings.json
-.vscode/settings.json
