@@ -27,10 +27,11 @@ const authController = {
 
       res.status(statusCodes.OK).send({
         type: "success",
-        msg: "Login successful",
-        token,
+        msg: "User logged in successfully!",
+        token
       });
     } catch (error) {
+      logger.error("User could not be logged in!\n", error)
       res.status(statusCodes.InternalServerError).send({
         type: "error",
         msg: "An error occurred during login",

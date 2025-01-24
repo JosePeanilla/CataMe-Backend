@@ -10,7 +10,7 @@ const authService = {
     }
 
     // Check if the profile is active
-    if (!user.isActive) {
+    if (!user.is_active) {
       return { success: false, msg: "User account is inactive" };
     }
     

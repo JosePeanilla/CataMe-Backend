@@ -16,7 +16,7 @@ const authMiddleware = {
 
     try {
       const decoded = jsonwebtoken.verify(token, process.env.jsonwebtoken_SECRET);
-      req.user = decoded; 
+      req.user = decoded;
       next();
     } catch (error) {
       res.status(statusCodes.Forbidden).send({
@@ -24,6 +24,19 @@ const authMiddleware = {
         msg: "Invalid or expired token.",
       });
     }
+  },
+
+  validateLoginRequest: (req, res, next) => {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      return res.status(statusCodes.BadRequest).send({
+        type: "error",
+        msg: "Missing required fields: email and/or password.",
+      });
+    }
+
+    next(); 
   },
 };
 

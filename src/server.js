@@ -20,14 +20,12 @@ app.use(express.json())  /* Parse the incoming requests/responses in JSON payloa
 
 /* Routes */
 const { usersRouter } = require("./users/usersRouter.js")
-const { authRouter } = require("./auth/authRouter.js")
 app.use("/users", usersRouter)
 
-// It is used to configure all the routes related to authentication (such as login or user registration) and specify that they do not require prior authentication to access them.
-app.use("/", authRouter);
-
-// It is used to configure routes related to users (consumerUsers) and specify that these routes are protected by jsonwebtoken authentication.
-app.use("/users", usersRouter);
+/* Authentication Route */
+const { authMiddleware } = require("./auth/authMiddleware.js");
+const { authController } = require("./auth/authController.js");
+app.post("/login", authMiddleware.validateLoginRequest, authController.login);
 
 /* Error-Handling Middlewares */
 const { statusCodes } = require("./constants/statusCodes.js")

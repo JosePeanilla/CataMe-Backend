@@ -6,7 +6,7 @@ const checkRequiredArgsAreProvided = (req, res, next) => {
     surname: req.body.surname,
     email: req.body.email,
     password: req.body.password,
-    isActive: req.body.isActive !== undefined ? req.body.isActive : true
+    is_active: req.body.is_active !== undefined ? req.body.is_active : true
   }
   // Check that all required arguments are provided
   let missingArgs = []
