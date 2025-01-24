@@ -66,7 +66,7 @@ This collection stores basic information about users registered in the platform,
 - surname (String): User's surname.
 - email (String, unique): User's email address. Must not be repeated among the database.
 - password (String): User password.
-- isActive (Boolean): Indicates whether the user is active. Default is `true`.
+- is_active (Boolean): Indicates whether the user is active. Default is `true`.
 
 #### Wine bottles collection
 
@@ -154,6 +154,14 @@ This package is used to get date and time with specific format in a simpler way.
 
 ```bash
 npm install moment
+```
+
+### **[Jsonwebtoken](https://github.com/auth0/node-jsonwebtoken)**:
+
+This package is used to generate and verify tokens, which is essential for handling authentication and authorization in the application.
+
+```bash
+npm install jsonwebtoken
 ```
 
 ## How to run the project
