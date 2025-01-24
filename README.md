@@ -62,7 +62,8 @@ The data model is organized into MongoDB collections, which are:
 This collection stores basic information about users registered in the platform, and their properties are:
 
 - _id (String, unique): Unique identifier of the user. Provided automatically by MongoDB when creating the item.
-- full_name (String): User's full name.
+- name (String): User's name.
+- surname (String): User's surname.
 - email (String, unique): User's email address. Must not be repeated among the database.
 - password (String): User password.
 - isActive (Boolean): Indicates whether the user is active. Default is `true`.
