@@ -26,7 +26,7 @@ app.use("/users", usersRouter)
 // It is used to configure all the routes related to authentication (such as login or user registration) and specify that they do not require prior authentication to access them.
 app.use("/", authRouter);
 
-// It is used to configure routes related to users (consumerUsers) and specify that these routes are protected by JWT authentication.
+// It is used to configure routes related to users (consumerUsers) and specify that these routes are protected by jsonwebtoken authentication.
 app.use("/users", usersRouter);
 
 /* Error-Handling Middlewares */

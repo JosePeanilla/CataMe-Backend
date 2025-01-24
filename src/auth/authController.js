@@ -1,4 +1,4 @@
-const jwt = require("jsonwebtoken");
+const jsonwebtoken = require("jsonwebtoken");
 const { authService } = require("./authService.js");
 const { statusCodes } = require("../constants/statusCodes.js");
 
@@ -19,9 +19,9 @@ const authController = {
 
       // Valid user, generate token
       const user = result.user;
-      const token = jwt.sign(
+      const token = jsonwebtoken.sign(
         { id: user._id, email: user.email, fullName: `${user.name} ${user.surname}` },
-        process.env.JWT_SECRET,
+        process.env.jsonwebtoken_SECRET,
         { expiresIn: "1h" }
       );
 

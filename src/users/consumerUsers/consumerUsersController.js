@@ -1,7 +1,7 @@
 /* Internal logger */
 const { Logger } = require("../../utils/Logger.js")
 const logger = new Logger(__filename)
-const jwt = require("jsonwebtoken");
+const jsonwebtoken = require("jsonwebtoken");
 
 
 const { statusCodes } = require("../../constants/statusCodes.js")
@@ -13,9 +13,9 @@ const consumerUsersController = {
     try {
       const newConsumerUser = await consumerUsersService.createConsumerUser(res.locals.providedConsumerUserArgs)
       
-      const token = jwt.sign(
+      const token = jsonwebtoken.sign(
         { id: newConsumerUser._id, email: newConsumerUser.email },
-        process.env.JWT_SECRET,
+        process.env.jsonwebtoken_SECRET,
         { expiresIn: "1h" }
       );
 
