@@ -33,10 +33,11 @@ const authMiddleware = {
       return res.status(statusCodes.BadRequest).send({
         type: "error",
         msg: "Missing required fields: email and/or password.",
-      });
+      })
     }
 
-    next(); 
+    res.locals.loginData = { email, password }
+    next()
   },
 }
 

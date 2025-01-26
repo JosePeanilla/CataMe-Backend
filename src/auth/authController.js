@@ -5,7 +5,7 @@ const { authService } = require("./authService.js");
 const authController = {
   login: async (req, res) => {
     try {
-      const { email, password } = req.body;
+      const { email, password } = res.locals.loginData;
 
       const result = await authService.validateUser(email, password);
 
