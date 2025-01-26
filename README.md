@@ -96,6 +96,7 @@ This collection stores basic information about consumers registered in the platf
 
 - `_id` *(String, unique)*: Unique identifier of the consumer user. Provided automatically by MongoDB when creating the item.
 - `email` *(String, unique)*: Consumer user's account email address. Must not be repeated among the database.
+- `is_active` *(Boolean)*: Indicates wheter the user is active or not. Default value is `true`.
 - `name` *(String)*: Consumer name.
 - `password` *(String)*: Consumer user's account password.
 - `surname` *(String)*: Consumer surname.
