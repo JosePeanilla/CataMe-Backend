@@ -115,13 +115,13 @@ This collection stores the information about the bottles of wine which belong to
 This collection stores basic information about wineries registered in the platform, and their properties are:
 
 - `_id` *(String, unique)*: Unique identifier of the winery user. Provided automatically by MongoDB when creating the item.
-- `contact_email` *(String)*: Email address to contact the winery.
-- `contact_telephone` *(String)*: Telephone number to contact the winery.
-- `description` *(String)*: Brief information about the winery.
+- `description` *(String, optional)*: Brief information about the winery.
 - `email` *(String, unique)*: Winery user's account email address. Must not be repeated among the database.
+- `location` *(String)*: Location (city, country, etc) where it is located the winery.
 - `name` *(String)*: Winery name.
 - `password` *(String)*: Winery user's account password.
-- `web_page` *(String)*: URL of the winery web page.
+- `phone` *(String, optional)*: Telephone number to contact the winery.
+- `web_page` *(String, optional)*: URL of the winery web page.
 
 ## How to run the project
 
