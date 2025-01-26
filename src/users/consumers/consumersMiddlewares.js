@@ -7,8 +7,8 @@ const checkAllConsumerArgsAreProvided = (req, res, next) => {
   res.locals.providedConsumerArgs = {}
   let missingArgs = []
   for (const arg in ConsumerSchema.obj) {
-    if (!req.body[arg]) missingArgs.push(arg)
-    else res.locals.providedConsumerArgs[arg] = req.body[arg]
+    if (req.body[arg]) res.locals.providedConsumerArgs[arg] = req.body[arg]
+    else if (ConsumerSchema.obj[arg].required) missingArgs.push(arg)
   }
   if (missingArgs.length === 0) next()
   else return res.status(statusCodes.BadRequest)

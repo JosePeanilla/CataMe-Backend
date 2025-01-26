@@ -7,8 +7,8 @@ const checkAllWineryArgsAreProvided = (req, res, next) => {
   res.locals.providedWineryArgs = {}
   let missingArgs = []
   for (const arg in WinerySchema.obj) {
-    if (!req.body[arg]) missingArgs.push(arg)
-    else res.locals.providedWineryArgs[arg] = req.body[arg]
+    if (req.body[arg]) res.locals.providedWineryArgs[arg] = req.body[arg]
+    else if (WinerySchema.obj[arg].required) missingArgs.push(arg)
   }
   if (missingArgs.length === 0) next()
   else return res.status(statusCodes.BadRequest)
