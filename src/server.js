@@ -36,15 +36,17 @@ app.use("/users", usersRouter)
 const { statusCodes } = require("./constants/statusCodes.js")
 /* Route Not Found Error */
 app.use((req, res) => {
-  logger.error(`Not found route: [${req.method}] ${req.originalUrl}`)
+  const errorText = `Route '[${req.method}] ${req.originalUrl}' could not be found!`
+  logger.error(errorText)
   res.status(statusCodes.NotFound)
-    .send({ type: "error", msg: `[ERROR] Route could not be found! ([${req.method}] ${req.originalUrl})` })
+    .send({ error: errorText })
 })
 /* Uncontrolled Error */
 app.use((err, req, res, next) => {
-  logger.error("Uncontrolled internal error:", err)
+  const errorText = "Some uncontrolled internal error happened!"
+  logger.error(errorText, err)
   res.status(statusCodes.InternalServerError)
-    .send({ type: "error", msg: `[ERROR] Some uncontrolled internal error happened! (${err.message})` })
+    .send({ msg: errorText, error: err.message })
 })
 
 /* Express (HTTP) server listening for incoming requests */

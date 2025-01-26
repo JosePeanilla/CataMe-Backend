@@ -1,3 +1,6 @@
+/* Internal logger */
+const { Logger } = require("../../utils/Logger.js")
+const logger = new Logger(__filename)
 const { statusCodes } = require("../../constants/statusCodes.js")
 
 const { WinerySchema } = require("./WineryModel.js")
@@ -11,8 +14,12 @@ const checkAllWineryArgsAreProvided = (req, res, next) => {
     else if (WinerySchema.obj[arg].required) missingArgs.push(arg)
   }
   if (missingArgs.length === 0) next()
-  else return res.status(statusCodes.BadRequest)
-    .send({ type: "error", msg: `Missing required arguments: ${missingArgs.join(", ")}` })
+  else {
+    const errorText = `Missing required arguments: ${missingArgs.join(", ")}.`
+    logger.error(errorText)
+    res.status(statusCodes.BadRequest)
+      .send({ error: errorText })
+  }
 }
 
 const checkProvidedWineryExists = async (req, res, next) => {
@@ -20,19 +27,31 @@ const checkProvidedWineryExists = async (req, res, next) => {
   const allWineries = await wineriesService.getAllWineries()
   res.locals.matchingWinery = allWineries.find(winery => winery._id.toString() === id)
   if (res.locals.matchingWinery) next()
-  else res.status(statusCodes.NotFound)
-    .send({ type: "error", msg: `Winery user with ID '${id}' could not be found!` })
+  else {
+    const errorText = `Winery user with ID '${id}' could not be found!`
+    logger.error(errorText)
+    res.status(statusCodes.NotFound)
+      .send({ error: errorText })
+  }
 }
 
 const checkProvidedWineryFieldIsValid = (req, res, next) => {
   const { field } = req.params
   if (WinerySchema.obj[field]) {
     if (req.body[field]) next()
-    else return res.status(statusCodes.BadRequest)
-      .send({ type: "error", msg: `Missing '${field}' field value!` })
+    else {
+      const errorText = `Missing '${field}' field value!`
+      logger.error(errorText)
+      res.status(statusCodes.BadRequest)
+        .send({ error: errorText })
+    }
   }
-  else return res.status(statusCodes.BadRequest)
-    .send({ type: "error", msg: `'${field}' is not valid field for a winery user!` })
+  else {
+    const errorText = `'${field}' is not valid field for a winery user!`
+    logger.error(errorText)
+    res.status(statusCodes.BadRequest)
+      .send({ error: errorText })
+  }
 }
 
 module.exports = {
