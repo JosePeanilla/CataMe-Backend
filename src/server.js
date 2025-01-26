@@ -21,7 +21,7 @@ app.use(express.json())  /* Parse the incoming requests/responses in JSON payloa
 const logRoute = (req, res, next) => {  /* Log the route (useful for debugging purposes) */
   logger.debug(
     `Received request route: ${req.method} ${req.originalUrl}`,
-    "\n  - Body:", req.body,
+    " - Body:", req.body,
     "\n  - Params:", req.params,
     "\n  - Query:", req.query)
   next()
