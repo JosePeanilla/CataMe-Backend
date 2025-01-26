@@ -1,4 +1,4 @@
-const jsonwebtoken = require("jsonwebtoken"); /* Node module used to ... (to fill) */
+const jsonwebtoken = require("jsonwebtoken"); /* Node module used to manage JSON Web Tokens (JWT) for authentication and authorization */
 const { statusCodes } = require("../constants/statusCodes.js");
 const { authService } = require("./authService.js");
 
