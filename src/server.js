@@ -23,9 +23,9 @@ const { usersRouter } = require("./users/usersRouter.js")
 app.use("/users", usersRouter)
 
 /* Authentication Route */
-const { authMiddleware } = require("./auth/authMiddleware.js");
-const { authController } = require("./auth/authController.js");
-app.post("/login", authMiddleware.validateLoginRequest, authController.login);
+const { authMiddleware } = require("./auth/authMiddleware.js")
+const { authController } = require("./auth/authController.js")
+app.post("/login", authMiddleware.validateLoginRequest, authController.login)
 
 /* Error-Handling Middlewares */
 const { statusCodes } = require("./constants/statusCodes.js")
