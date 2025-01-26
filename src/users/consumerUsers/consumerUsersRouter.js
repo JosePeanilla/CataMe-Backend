@@ -20,4 +20,4 @@ consumerUsersRouter.post("/",
   consumerUsersController.createConsumerUser
 );
 
-module.exports = { consumerUsersRouter };
+module.exports = { consumerUsersRouter }

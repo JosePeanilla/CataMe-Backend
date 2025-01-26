@@ -1,6 +1,8 @@
-const jsonwebtoken = require("jsonwebtoken"); /* Node module used to manage JSON Web Tokens (JWT) for authentication and authorization */
-const { statusCodes } = require("../constants/statusCodes.js");
-const { authService } = require("./authService.js");
+const jsonwebtoken = require("jsonwebtoken") /* Node module used to manage JSON Web Tokens (JWT) for authentication and authorization */
+const { statusCodes } = require("../constants/statusCodes.js")
+const { authService } = require("./authService.js")
+const { Logger } = require("../utils/Logger.js")
+const logger = new Logger(__filename)
 
 const authController = {
   login: async (req, res) => {
@@ -23,13 +25,13 @@ const authController = {
         { id: user._id, email: user.email, fullName: `${user.name} ${user.surname}` },
         process.env.jsonwebtoken_SECRET,
         { expiresIn: "1h" }
-      );
+      )
 
       res.status(statusCodes.OK).send({
         type: "success",
         msg: "User logged in successfully!",
         token
-      });
+      })
     } catch (error) {
       logger.error("User could not be logged in!\n", error)
       res.status(statusCodes.InternalServerError).send({

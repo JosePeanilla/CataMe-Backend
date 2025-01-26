@@ -12,4 +12,4 @@ const { usersController } = require("./usersController.js")
 usersRouter.get('/',
   usersController.getAllUsers)
 
-module.exports = { usersRouter };
+module.exports = { usersRouter }
