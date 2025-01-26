@@ -158,7 +158,7 @@ This package is used to get date and time with specific format in a simpler way.
 npm install moment
 ```
 
-### **[Jsonwebtoken](https://github.com/auth0/node-jsonwebtoken)**:
+### **[Jsonwebtoken](https://jwt.io/)**:
 
 This package is used to generate and verify tokens, which is essential for handling authentication and authorization in the application.
 
