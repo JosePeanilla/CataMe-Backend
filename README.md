@@ -18,6 +18,8 @@ It has been developed with all gathered information and knowledge learnt from th
     3. [Dotenv](#dotenv)
     4. [Cors](#cors)
     5. [Mongoose](#mongoose)
+    6. [Moment](#moment)
+    7. [Jsonwebtoken)](#jsonwebtoken)
 6. [How to run the project](#how-to-run-the-project)
 
 ---
