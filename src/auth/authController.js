@@ -14,7 +14,7 @@ const authController = {
         return res.status(statusCodes.Forbidden).send({
           type: "error",
           msg: result.msg,
-        });
+        })
       }
 
       // Valid user, generate token
@@ -35,9 +35,9 @@ const authController = {
       res.status(statusCodes.InternalServerError).send({
         type: "error",
         msg: "An error occurred during login",
-      });
+      })
     }
   },
-};
+}
 
-module.exports = { authController };
+module.exports = { authController }
