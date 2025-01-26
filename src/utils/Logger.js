@@ -11,8 +11,10 @@ class Logger {
 
   #getFormattedLogStart(level) {
     const formattedDateTime = this.#getFormattedDateTime()
-    const formattedFileName = this.fileName
-    const formattedLevel = level.toUpperCase()
+    const maxFileNameLength = 0
+    const formattedFileName = this.fileName.padStart(maxFileNameLength, ' ')
+    const maxLevelLength = 0
+    const formattedLevel = level.toUpperCase().padEnd(maxLevelLength, ' ')
     return `[${formattedDateTime}][${formattedFileName}][${formattedLevel}]`
   }
 
