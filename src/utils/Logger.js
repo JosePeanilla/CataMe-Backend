@@ -20,21 +20,22 @@ class Logger {
 
   #log(level = "info", message, ...additionalParams) {
     const formattedLogStart = this.#getFormattedLogStart(level)
+    const formattedMessage = additionalParams?`${message}\n`:message
     switch (level) {
       case "debug":
-        console.debug(formattedLogStart, message, ...additionalParams)
+        console.debug(formattedLogStart, formattedMessage, ...additionalParams)
         break
       case "info":
-        console.info(formattedLogStart, message, ...additionalParams)
+        console.info(formattedLogStart, formattedMessage, ...additionalParams)
         break
       case "warn":
-        console.warn(formattedLogStart, message, ...additionalParams)
+        console.warn(formattedLogStart, formattedMessage, ...additionalParams)
         break
       case "error":
-        console.error(formattedLogStart, message, ...additionalParams)
+        console.error(formattedLogStart, formattedMessage, ...additionalParams)
         break
       default:
-        console.error(formattedLogStart, message, ...additionalParams)
+        console.error(formattedLogStart, formattedMessage, ...additionalParams)
         break
     }
   }
