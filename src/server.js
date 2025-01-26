@@ -18,6 +18,16 @@ dbConnection()  /* ... and connect to the (MongoDB) database */
 app.use(cors())  /* Enable CORS for all requests */
 app.use(express.json())  /* Parse the incoming requests/responses in JSON payloads */
 
+const logRoute = (req, res, next) => {  /* Log the route (useful for debugging purposes) */
+  logger.debug(
+    `Received request route: ${req.method} ${req.originalUrl}`,
+    "\n  - Body:", req.body,
+    "\n  - Params:", req.params,
+    "\n  - Query:", req.query)
+  next()
+}
+// app.use(logRoute)
+
 /* Routes */
 const { usersRouter } = require("./users/usersRouter.js")
 app.use("/users", usersRouter)
