@@ -3,7 +3,10 @@ const { statusCodes } = require("../../constants/statusCodes.js")
 const checkRequiredArgsAreProvided = (req, res, next) => {
   res.locals.providedConsumerUserArgs = {
     name: req.body.name,
-    surname: req.body.surname
+    surname: req.body.surname,
+    email: req.body.email,
+    password: req.body.password,
+    is_active: req.body.is_active !== undefined ? req.body.is_active : true
   }
   // Check that all required arguments are provided
   let missingArgs = []

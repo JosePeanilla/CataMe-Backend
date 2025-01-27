@@ -18,6 +18,8 @@ It has been developed with all gathered information and knowledge learnt from th
     3. [Dotenv](#dotenv)
     4. [Cors](#cors)
     5. [Mongoose](#mongoose)
+    6. [Moment](#moment)
+    7. [Jsonwebtoken)](#jsonwebtoken)
 6. [How to run the project](#how-to-run-the-project)
 
 ---
@@ -62,8 +64,11 @@ The data model is organized into MongoDB collections, which are:
 This collection stores basic information about users registered in the platform, and their properties are:
 
 - _id (String, unique): Unique identifier of the user. Provided automatically by MongoDB when creating the item.
-- full_name (String): User's full name.
+- name (String): User's name.
+- surname (String): User's surname.
 - email (String, unique): User's email address. Must not be repeated among the database.
+- password (String): User password.
+- is_active (Boolean): Indicates whether the user is active. Default is `true`.
 
 #### Wine bottles collection
 
@@ -151,6 +156,14 @@ This package is used to get date and time with specific format in a simpler way.
 
 ```bash
 npm install moment
+```
+
+### **[Jsonwebtoken](https://jwt.io/)**:
+
+This package is used to generate and verify tokens, which is essential for handling authentication and authorization in the application.
+
+```bash
+npm install jsonwebtoken
 ```
 
 ## How to run the project

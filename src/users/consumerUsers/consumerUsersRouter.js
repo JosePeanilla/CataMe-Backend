@@ -3,16 +3,21 @@ const consumerUsersRouter = express.Router()  /* ExpressJS router object */
 
 /* Middlewares */
 const {
-  checkRequiredArgsAreProvided,
+  checkRequiredArgsAreProvided
 } = require("./consumerUsersMiddlewares.js")
+const { authMiddleware } = require("../../auth/authMiddleware.js");
 
 /* Endpoints */
 const { consumerUsersController } = require("./consumerUsersController.js")
-consumerUsersRouter.get('/',
-  consumerUsersController.getAllConsumerUsers)
-consumerUsersRouter.post('/',
-  checkRequiredArgsAreProvided,
+
+/* Protected Routes */
+consumerUsersRouter.get("/",
+  authMiddleware.verifyToken, 
+  consumerUsersController.getAllConsumerUsers 
+);
+consumerUsersRouter.post("/",
+  checkRequiredArgsAreProvided, 
   consumerUsersController.createConsumerUser
-)
+);
 
 module.exports = { consumerUsersRouter }
