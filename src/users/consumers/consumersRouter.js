@@ -1,26 +1,34 @@
-const express = require("express")  /* Node module used to create an ExpressJS router */
-const consumersRouter = express.Router()  /* ExpressJS router object */
+/************************************************ Node modules needed *************************************************/
+/* Used to create an ExpressJS router */
+const express = require("express")
 
-/* Middlewares */
+/********************************************** ExpressJS router object ***********************************************/
+const consumersRouter = express.Router()
+
+/**************************************************** Middlewares *****************************************************/
 const {
   checkAllConsumerArgsAreProvided,
   checkProvidedConsumerExists,
   checkProvidedConsumerFieldIsValid
 } = require("./consumersMiddlewares.js")
+const { checkProvidedTokenIsValid } = require("../../auth/authMiddlewares.js")
 
-/* Endpoints */
+/***************************************************** Endpoints ******************************************************/
 const { consumersController } = require("./consumersController.js")
 
 /* /users/consumers/ */
-consumersRouter.get('/', consumersController.getAllConsumers)
+consumersRouter.get('/',
+  checkProvidedTokenIsValid,
+  consumersController.getAllConsumers
+)
 consumersRouter.post('/',
   checkAllConsumerArgsAreProvided,
   consumersController.createConsumer
 )
 
 /* /users/consumers/<id>/ */
-consumersRouter.use("/:id", checkProvidedConsumerExists)  /* Check that it exists a consumer user in the database with the ID provided in the request params */
-consumersRouter.get('/:id', consumersController.getConsumerDetails)
+consumersRouter.use("/:id", checkProvidedConsumerExists)
+consumersRouter.get('/:id', consumersController.getConsumer)
 consumersRouter.put('/:id',
   checkAllConsumerArgsAreProvided,
   consumersController.updateConsumer
@@ -33,4 +41,5 @@ consumersRouter.patch('/:id/:field',
   consumersController.updateConsumerField
 )
 
+/*************************************************** Module export ****************************************************/
 module.exports = { consumersRouter }

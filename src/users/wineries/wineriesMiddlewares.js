@@ -1,10 +1,11 @@
-/* Internal logger */
+/************************************************** Internal logger ***************************************************/
 const { Logger } = require("../../utils/Logger.js")
 const logger = new Logger(__filename)
-const { statusCodes } = require("../../constants/statusCodes.js")
 
-const { WinerySchema } = require("./WineryModel.js")
+/************************************************* Internal libraries *************************************************/
+const { statusCodes } = require("../../constants/statusCodes.js")
 const { wineriesService } = require("./wineriesService.js")
+const { WinerySchema } = require("./WineryModel.js")
 
 const checkAllWineryArgsAreProvided = (req, res, next) => {
   res.locals.providedWineryArgs = {}
@@ -15,13 +16,14 @@ const checkAllWineryArgsAreProvided = (req, res, next) => {
   }
   if (missingArgs.length === 0) next()
   else {
-    const errorText = `Missing required arguments: ${missingArgs.join(", ")}.`
+    const errorText = `Missing required arguments: ${missingArgs.join(", ")}!`
     logger.error(errorText)
     res.status(statusCodes.BadRequest)
       .send({ error: errorText })
   }
 }
 
+/* Check that it exists a winery user in the database with the ID provided in the request params */
 const checkProvidedWineryExists = async (req, res, next) => {
   const { id } = req.params
   const allWineries = await wineriesService.getAllWineries()
@@ -54,6 +56,7 @@ const checkProvidedWineryFieldIsValid = (req, res, next) => {
   }
 }
 
+/*************************************************** Module export ****************************************************/
 module.exports = {
   checkAllWineryArgsAreProvided,
   checkProvidedWineryExists,

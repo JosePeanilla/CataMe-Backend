@@ -1,10 +1,11 @@
-/* Internal logger */
+/************************************************** Internal logger ***************************************************/
 const { Logger } = require("../../utils/Logger.js")
 const logger = new Logger(__filename)
-const { statusCodes } = require("../../constants/statusCodes.js")
 
+/************************************************* Internal libraries *************************************************/
 const { ConsumerSchema } = require("./ConsumerModel.js")
 const { consumersService } = require("./consumersService.js")
+const { statusCodes } = require("../../constants/statusCodes.js")
 
 const checkAllConsumerArgsAreProvided = (req, res, next) => {
   res.locals.providedConsumerArgs = {}
@@ -15,13 +16,14 @@ const checkAllConsumerArgsAreProvided = (req, res, next) => {
   }
   if (missingArgs.length === 0) next()
   else {
-    const errorText = `Missing required arguments: ${missingArgs.join(", ")}.`
+    const errorText = `Missing required arguments: ${missingArgs.join(", ")}!`
     logger.error(errorText)
     res.status(statusCodes.BadRequest)
       .send({ error: errorText })
   }
 }
 
+/* Check that it exists a consumer user in the database with the ID provided in the request params */
 const checkProvidedConsumerExists = async (req, res, next) => {
   const { id } = req.params
   const allConsumers = await consumersService.getAllConsumers()
@@ -54,6 +56,7 @@ const checkProvidedConsumerFieldIsValid = (req, res, next) => {
   }
 }
 
+/*************************************************** Module export ****************************************************/
 module.exports = {
   checkAllConsumerArgsAreProvided,
   checkProvidedConsumerExists,

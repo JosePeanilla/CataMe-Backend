@@ -1,18 +1,31 @@
-const express = require("express")  /* Node module used to create an ExpressJS router */
-const usersRouter = express.Router()  /* ExpressJS router object */
+/************************************************ Node modules needed *************************************************/
+/* Used to create an ExpressJS router */
+const express = require("express")
 
-/* Place here Middlewares */
+/********************************************** ExpressJS router object ***********************************************/
+const usersRouter = express.Router()
 
-/* Endpoints */
+/**************************************************** Middlewares *****************************************************/
+const { checkAllLoginCredentialsAreProvided } = require("../auth/authMiddlewares.js")
+
+/***************************************************** Sub-Routes *****************************************************/
+const { consumersRouter } = require("./consumers/consumersRouter.js")
+const { wineriesRouter } = require("./wineries/wineriesRouter.js")
+usersRouter.use("/consumers", consumersRouter)
+usersRouter.use("/wineries", wineriesRouter)
+
+/***************************************************** Endpoints ******************************************************/
+const { authController } = require("../auth/authController.js")
 const { usersController } = require("./usersController.js")
 
 /* /users/ */
 usersRouter.get('/', usersController.getAllUsers)
 
-/* Sub-Routes */
-const { consumersRouter } = require("./consumers/consumersRouter.js")
-usersRouter.use("/consumers", consumersRouter)
-const { wineriesRouter } = require("./wineries/wineriesRouter.js")
-usersRouter.use("/wineries", wineriesRouter)
+/* /users/login/ */
+usersRouter.post("/login",
+  checkAllLoginCredentialsAreProvided,
+  authController.login
+)
 
+/*************************************************** Module export ****************************************************/
 module.exports = { usersRouter }

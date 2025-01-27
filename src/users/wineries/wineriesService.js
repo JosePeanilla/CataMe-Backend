@@ -1,4 +1,6 @@
-const { WineryModel } = require("./WineryModel.js")  /* Model of 'winery users' entity */
+/************************************************* Internal libraries *************************************************/
+/* Model of 'winery users' entity */
+const { WineryModel } = require("./WineryModel.js")
 
 /* Service which interacts with the 'winery user' database */
 const wineriesService = {
@@ -43,4 +45,5 @@ const wineriesService = {
   }
 }
 
+/*************************************************** Module export ****************************************************/
 module.exports = { wineriesService }

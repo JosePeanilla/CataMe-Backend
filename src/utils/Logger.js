@@ -1,3 +1,5 @@
+/************************************************ Node modules needed *************************************************/
+/* Handle date and time with desired format */
 const moment = require('moment')
 
 class Logger {
@@ -57,4 +59,5 @@ class Logger {
   }
 }
 
+/*************************************************** Module export ****************************************************/
 module.exports = { Logger }

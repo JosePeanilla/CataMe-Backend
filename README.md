@@ -23,9 +23,10 @@ It has been developed with all gathered information and knowledge learnt from th
     1. [Cors](#cors)
     2. [Dotenv](#dotenv)
     3. [Express](#express)
-    4. [Moment](#moment)
-    5. [Mongoose](#mongoose)
-    6. [Nodemon (dev)](#nodemon)
+    4. [JSON Web Token](#json-web-token)
+    5. [Moment](#moment)
+    6. [Mongoose](#mongoose)
+    7. [Nodemon (dev)](#nodemon)
 
 ---
 
@@ -99,6 +100,7 @@ This collection stores basic information about consumers registered in the platf
 - `is_active` *(Boolean)*: Indicates wheter the user is active or not. Default value is `true`.
 - `name` *(String)*: Consumer name.
 - `password` *(String)*: Consumer user's account password.
+- `role` *(String, immutable)*: User role. Constant default value of `consumer`.
 - `surname` *(String)*: Consumer surname.
 
 #### Wine bottles - Collection
@@ -117,10 +119,12 @@ This collection stores basic information about wineries registered in the platfo
 - `_id` *(String, unique)*: Unique identifier of the winery user. Provided automatically by MongoDB when creating the item.
 - `description` *(String, optional)*: Brief information about the winery. Default value is a `null`.
 - `email` *(String, unique)*: Winery user's account email address. Must not be repeated among the database.
+- `is_active` *(Boolean)*: Indicates wheter the user is active or not. Default value is `false`.
 - `location` *(String)*: Location (city, country, etc) where it is located the winery.
 - `name` *(String)*: Winery name.
 - `password` *(String)*: Winery user's account password.
 - `phone` *(String, optional)*: Telephone number to contact the winery. Default value is a `null`.
+- `role` *(String, immutable)*: User role. Constant default value of `winery`.
 - `web_page` *(String, optional)*: URL of the winery web page. Default value is a `null`.
 
 ## How to run the project
@@ -207,6 +211,14 @@ This package is the most important and sets up the infrastructure for the web ap
 
 ```bash
 npm install express
+```
+
+### **[JSON Web Token](https://jwt.io/)**:
+
+This package is used to generate and verify tokens, which is essential for handling authentication and authorization in the application.
+
+```bash
+npm install jsonwebtoken
 ```
 
 ### **[Moment](https://momentjs.com/)**:

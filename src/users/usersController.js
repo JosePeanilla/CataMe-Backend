@@ -1,8 +1,9 @@
-/* Internal logger */
+/************************************************** Internal logger ***************************************************/
 const { Logger } = require("../utils/Logger.js")
 const logger = new Logger(__filename)
-const { statusCodes } = require("../constants/statusCodes.js")
 
+/************************************************* Internal libraries *************************************************/
+const { statusCodes } = require("../constants/statusCodes.js")
 const { usersService } = require("./usersService.js")
 
 /* Controller of the 'users' requests and responses handling */
@@ -20,7 +21,22 @@ const usersController = {
       res.status(statusCodes.InternalServerError)
         .send({ msg: errorText, error: error.message })
     }
+  },
+  getLoggedUser: async (req, res) => {
+    try {
+      const loggedUser = await usersService.getLoggedUser(res.locals.loggedUserToken)
+      const successText = "Logged user retrieved successfully!"
+      logger.debug(successText)
+      res.status(statusCodes.OK)
+        .send({ msg: successText, data: loggedUser })
+    } catch (error) {
+      const errorText = "Logged user could not be retrieved!"
+      logger.error(errorText, error)
+      res.status(statusCodes.InternalServerError)
+        .send({ msg: errorText, error: error.message })
+    }
   }
 }
 
+/*************************************************** Module export ****************************************************/
 module.exports = { usersController }

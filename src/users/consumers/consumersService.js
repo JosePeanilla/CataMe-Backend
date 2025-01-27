@@ -1,4 +1,6 @@
-const { ConsumerModel } = require("./ConsumerModel.js")  /* Model of 'consumer users' entity */
+/************************************************* Internal libraries *************************************************/
+/* Model of 'consumer users' entity */
+const { ConsumerModel } = require("./ConsumerModel.js")
 
 /* Service which interacts with the 'consumer user' database */
 const consumersService = {
@@ -43,4 +45,5 @@ const consumersService = {
   }
 }
 
+/*************************************************** Module export ****************************************************/
 module.exports = { consumersService }

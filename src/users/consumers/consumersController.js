@@ -1,9 +1,14 @@
-/* Internal logger */
+/************************************************** Internal logger ***************************************************/
 const { Logger } = require("../../utils/Logger.js")
 const logger = new Logger(__filename)
-const { statusCodes } = require("../../constants/statusCodes.js")
 
+/************************************************ Node modules needed *************************************************/
+/* Manage JSON Web Tokens (JWT) for authentication and authorization */
+const jsonwebtoken = require("jsonwebtoken")
+
+/************************************************* Internal libraries *************************************************/
 const { consumersService } = require("./consumersService.js")
+const { statusCodes } = require("../../constants/statusCodes.js")
 
 /* Controller of the 'consumer users' requests and responses handling */
 const consumersController = {
@@ -49,7 +54,7 @@ const consumersController = {
         .send({ msg: errorText, error: error.message })
     }
   },
-  getConsumerDetails: async (req, res) => {
+  getConsumer: async (req, res) => {
     try {
       const successText = "Information regarding consumer user retrieved successfully!"
       logger.debug(successText)
@@ -71,7 +76,7 @@ const consumersController = {
       const successText = "Consumer user updated successfully!"
       logger.debug(successText)
       res.status(statusCodes.OK)
-        .send({ msg: successText, data: updatedConsumer._id })
+        .send({ msg: successText, data: updatedConsumer })
     } catch (error) {
       const errorText = "Consumer user could not be updated!"
       logger.error(errorText, error)
@@ -89,7 +94,7 @@ const consumersController = {
       const successText = "Consumer user field updated successfully!"
       logger.debug(successText)
       res.status(statusCodes.OK)
-        .send({ msg: successText, data: updatedConsumer._id })
+        .send({ msg: successText, data: updatedConsumer })
     } catch (error) {
       const errorText = "Consumer user field could not be updated!"
       logger.error(errorText, error)
@@ -99,4 +104,5 @@ const consumersController = {
   }
 }
 
+/*************************************************** Module export ****************************************************/
 module.exports = { consumersController }

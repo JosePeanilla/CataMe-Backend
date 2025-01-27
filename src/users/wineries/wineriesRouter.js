@@ -1,14 +1,18 @@
-const express = require("express")  /* Node module used to create an ExpressJS router */
-const wineriesRouter = express.Router()  /* ExpressJS router object */
+/************************************************ Node modules needed *************************************************/
+/* Used to create an ExpressJS router */
+const express = require("express")
 
-/* Middlewares */
+/********************************************** ExpressJS router object ***********************************************/
+const wineriesRouter = express.Router()
+
+/**************************************************** Middlewares *****************************************************/
 const {
   checkAllWineryArgsAreProvided,
   checkProvidedWineryExists,
   checkProvidedWineryFieldIsValid
 } = require("./wineriesMiddlewares.js")
 
-/* Endpoints */
+/***************************************************** Endpoints ******************************************************/
 const { wineriesController } = require("./wineriesController.js")
 
 /* /users/wineries/ */
@@ -19,8 +23,8 @@ wineriesRouter.post('/',
 )
 
 /* /users/wineries/<id>/ */
-wineriesRouter.use("/:id", checkProvidedWineryExists)  /* Check that it exists a winery user in the database with the ID provided in the request params */
-wineriesRouter.get('/:id', wineriesController.getWineryDetails)
+wineriesRouter.use("/:id", checkProvidedWineryExists)
+wineriesRouter.get('/:id', wineriesController.getWinery)
 wineriesRouter.put('/:id',
   checkAllWineryArgsAreProvided,
   wineriesController.updateWinery
@@ -33,4 +37,5 @@ wineriesRouter.patch('/:id/:field',
   wineriesController.updateWineryField
 )
 
+/*************************************************** Module export ****************************************************/
 module.exports = { wineriesRouter }
