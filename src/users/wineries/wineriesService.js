@@ -8,7 +8,7 @@ const wineriesService = {
     try {
       const newWinery = await WineryModel.create(providedWineryArgs)
       if (newWinery) return newWinery
-      else throw new Error(`Database returned '${newWinery}' when trying to create a Winery user with provided args!`)
+      else throw `Database returned '${newWinery}' when trying to create a Winery user with provided args!`
     } catch (error) {
       throw error
     }
@@ -17,7 +17,7 @@ const wineriesService = {
     try {
       const deletedWinery = await WineryModel.findByIdAndDelete(id)
       if (deletedWinery) return deletedWinery
-      else throw new Error(`Database returned '${deletedWinery}' when trying to delete a Winery user with '${id}' ID!`)
+      else throw `Database returned '${deletedWinery}' when trying to delete a Winery user with '${id}' ID!`
     } catch (error) {
       throw error
     }
@@ -29,7 +29,7 @@ const wineriesService = {
     try {
       const updatedWinery = await WineryModel.findByIdAndUpdate(id, wineryArgs, { new: true })
       if (updatedWinery) return updatedWinery
-      else throw new Error(`Database returned '${updatedWinery}' when trying to update a Winery user with '${id}' ID!`)
+      else throw `Database returned '${updatedWinery}' when trying to update a Winery user with '${id}' ID!`
     } catch (error) {
       throw error
     }
@@ -38,7 +38,7 @@ const wineriesService = {
     try {
       const updatedWinery = await WineryModel.findByIdAndUpdate(id, { [field_name]: field_value }, { new: true })
       if (updatedWinery) return updatedWinery
-      else throw new Error(`Database returned '${updatedWinery}' when trying to update a Winery user '${field_name}' field with '${id}' ID!`)
+      else throw `Database returned '${updatedWinery}' when trying to update a Winery user '${field_name}' field with '${id}' ID!`
     } catch (error) {
       throw error
     }

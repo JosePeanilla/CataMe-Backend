@@ -8,7 +8,7 @@ const consumersService = {
     try {
       const newConsumer = await ConsumerModel.create(providedConsumerArgs)
       if (newConsumer) return newConsumer
-      else throw new Error(`Database returned '${newConsumer}' when trying to create a Consumer user with provided args!`)
+      else throw `Database returned '${newConsumer}' when trying to create a Consumer user with provided args!`
     } catch (error) {
       throw error
     }
@@ -17,7 +17,7 @@ const consumersService = {
     try {
       const deletedConsumer = await ConsumerModel.findByIdAndDelete(id)
       if (deletedConsumer) return deletedConsumer
-      else throw new Error(`Database returned '${deletedConsumer}' when trying to delete a Consumer user with '${id}' ID!`)
+      else throw `Database returned '${deletedConsumer}' when trying to delete a Consumer user with '${id}' ID!`
     } catch (error) {
       throw error
     }
@@ -29,7 +29,7 @@ const consumersService = {
     try {
       const updatedConsumer = await ConsumerModel.findByIdAndUpdate(id, consumerArgs, { new: true })
       if (updatedConsumer) return updatedConsumer
-      else throw new Error(`Database returned '${updatedConsumer}' when trying to update a Consumer user with '${id}' ID!`)
+      else throw `Database returned '${updatedConsumer}' when trying to update a Consumer user with '${id}' ID!`
     } catch (error) {
       throw error
     }
@@ -38,7 +38,7 @@ const consumersService = {
     try {
       const updatedConsumer = await ConsumerModel.findByIdAndUpdate(id, { [field_name]: field_value }, { new: true })
       if (updatedConsumer) return updatedConsumer
-      else throw new Error(`Database returned '${updatedConsumer}' when trying to update a Consumer user '${field_name}' field with '${id}' ID!`)
+      else throw `Database returned '${updatedConsumer}' when trying to update a Consumer user '${field_name}' field with '${id}' ID!`
     } catch (error) {
       throw error
     }
