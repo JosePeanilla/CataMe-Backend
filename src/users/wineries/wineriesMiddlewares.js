@@ -11,6 +11,7 @@ const checkAllWineryArgsAreProvided = (req, res, next) => {
   res.locals.providedWineryArgs = {}
   let missingArgs = []
   for (const arg in WinerySchema.obj) {
+    if (arg === "email" || arg === "password") continue;
     if (req.body[arg]) res.locals.providedWineryArgs[arg] = req.body[arg]
     else if (WinerySchema.obj[arg].required) missingArgs.push(arg)
   }

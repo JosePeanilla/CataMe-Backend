@@ -27,7 +27,7 @@ consumersRouter.post('/',
 )
 
 /* /users/consumers/<id>/ */
-consumersRouter.use("/:id", checkProvidedConsumerExists)
+consumersRouter.use("/:id", checkProvidedTokenIsValid, checkProvidedConsumerExists)
 consumersRouter.get('/:id', consumersController.getConsumer)
 consumersRouter.put('/:id',
   checkAllConsumerArgsAreProvided,
