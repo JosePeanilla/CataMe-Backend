@@ -1,7 +1,9 @@
-/* Internal logger */
+/************************************************** Internal logger ***************************************************/
 const { Logger } = require("../utils/Logger.js")
 const logger = new Logger(__filename)
 
+/************************************************ Node modules needed *************************************************/
+/* Manage MongoDB database accesses */
 const mongoose = require("mongoose")
 
 const dbConnection = async () => {
@@ -13,15 +15,17 @@ const dbConnection = async () => {
 
   try {
     const dbConnection = await mongoose.connect(dbConnectionURI)
-    logger.debug(
+    logger.info(
       "Connected to the MongoDB database!",
-      "\n  - readyState:", dbConnection.connection.readyState,
-      "\n  - host:", dbConnection.connection.host)
+      " - host:", dbConnection.connection.host,
+      "\n  - readyState:", dbConnection.connection.readyState)
   } catch (error) {
-    logger.error("It could not be connected to the database!\n", error)
-    await mongoose.disconnect()  /* Ensure that the client is closed when there's an error */
+    logger.error("It could not be connected to the database!", error)
+    /* Ensure that the client is closed when there's an error */
+    await mongoose.disconnect()
     process.exit(1)
   }
 }
 
+/*************************************************** Module export ****************************************************/
 module.exports = { dbConnection }

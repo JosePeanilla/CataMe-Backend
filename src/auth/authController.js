@@ -1,45 +1,44 @@
-const jsonwebtoken = require("jsonwebtoken") /* Node module used to manage JSON Web Tokens (JWT) for authentication and authorization */
-const { statusCodes } = require("../constants/statusCodes.js")
-const { authService } = require("./authService.js")
+/************************************************** Internal logger ***************************************************/
 const { Logger } = require("../utils/Logger.js")
 const logger = new Logger(__filename)
 
+/************************************************ Node modules needed *************************************************/
+/* Manage JSON Web Tokens (JWT) for authentication and authorization */
+const jsonwebtoken = require("jsonwebtoken")
+
+/************************************************* Internal libraries *************************************************/
+const { authService } = require("./authService.js")
+const { statusCodes } = require("../constants/statusCodes.js")
+
+/* Controller of the 'authentication and authorization' requests and responses handling */
 const authController = {
   login: async (req, res) => {
     try {
-      const { email, password } = res.locals.loginData;
-
-      const result = await authService.validateUser(email, password);
-
-      // If it does not validate correctly (user not found, incorrect password or inactive)
-      if (!result.success) {
-        return res.status(statusCodes.Forbidden).send({
-          type: "error",
-          msg: result.msg,
-        })
+      const loggedUser = await authService.login(res.locals.loginData)
+      if (!loggedUser) {
+        return res.status(statusCodes.Forbidden)
+          .send({ error: "User could not be logged in!" })
       }
-
-      // Valid user, generate token
-      const user = result.user;
-      const token = jsonwebtoken.sign(
-        { id: user._id, email: user.email, fullName: `${user.name} ${user.surname}` },
-        process.env.jsonwebtoken_SECRET,
-        { expiresIn: "1h" }
-      )
-
-      res.status(statusCodes.OK).send({
-        type: "success",
-        msg: "User logged in successfully!",
-        token
-      })
+      else {
+        /* Valid user, generate token */
+        const token = jsonwebtoken.sign(
+          { id: loggedUser._id, role: loggedUser.role },
+          process.env.JWT_SECRET,
+          { expiresIn: process.env.JWT_DEFAULT_EXPIRATION }
+        )
+        const successText = `User (${loggedUser.role}) logged in successfully!`
+        logger.debug(successText)
+        res.status(statusCodes.OK)
+          .send({ msg: successText, data: token })
+      }
     } catch (error) {
-      logger.error("User could not be logged in!\n", error)
-      res.status(statusCodes.InternalServerError).send({
-        type: "error",
-        msg: "An error occurred during login",
-      })
+      const errorText = "User could not be logged in!"
+      logger.error(errorText, error)
+      res.status(statusCodes.InternalServerError)
+        .send({ msg: errorText, error: error.message })
     }
   },
 }
 
+/*************************************************** Module export ****************************************************/
 module.exports = { authController }
