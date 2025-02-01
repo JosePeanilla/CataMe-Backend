@@ -11,7 +11,7 @@ const {
   checkProvidedWineryExists,
   checkProvidedWineryFieldIsValid
 } = require("./wineriesMiddlewares.js")
-const { checkProvidedTokenIsValid } = require("../../auth/authMiddlewares.js")
+const { checkProvidedTokenIsValid, checkUserIsAuthorized } = require("../../auth/authMiddlewares.js")
 
 /***************************************************** Endpoints ******************************************************/
 const { wineriesController } = require("./wineriesController.js")
@@ -27,6 +27,7 @@ wineriesRouter.post('/',
 wineriesRouter.use("/:id", checkProvidedTokenIsValid, checkProvidedWineryExists)
 wineriesRouter.get('/:id', wineriesController.getWinery)
 wineriesRouter.put('/:id',
+  checkUserIsAuthorized,
   checkAllWineryArgsAreProvided,
   wineriesController.updateWinery
 )

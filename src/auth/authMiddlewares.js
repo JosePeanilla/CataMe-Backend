@@ -46,8 +46,22 @@ const checkProvidedTokenIsValid = (req, res, next) => {
   }
 }
 
+const checkUserIsAuthorized = (req, res, next) => {
+  const { id } = req.params
+  const { id: loggedUserId, role } = res.locals.loggedUserToken
+
+  if (id !== loggedUserId) {
+    const errorText = "You are not authorized to modify this profile!"
+    logger.error(errorText)
+    return res.status(statusCodes.Forbidden).send({ error: errorText })
+  }
+
+  next()
+}
+
 /*************************************************** Module export ****************************************************/
 module.exports = {
   checkAllLoginCredentialsAreProvided,
-  checkProvidedTokenIsValid
+  checkProvidedTokenIsValid,
+  checkUserIsAuthorized
 }

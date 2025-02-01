@@ -11,7 +11,7 @@ const {
   checkProvidedConsumerExists,
   checkProvidedConsumerFieldIsValid
 } = require("./consumersMiddlewares.js")
-const { checkProvidedTokenIsValid } = require("../../auth/authMiddlewares.js")
+const { checkProvidedTokenIsValid, checkUserIsAuthorized } = require("../../auth/authMiddlewares.js")
 
 /***************************************************** Endpoints ******************************************************/
 const { consumersController } = require("./consumersController.js")
@@ -30,6 +30,7 @@ consumersRouter.post('/',
 consumersRouter.use("/:id", checkProvidedTokenIsValid, checkProvidedConsumerExists)
 consumersRouter.get('/:id', consumersController.getConsumer)
 consumersRouter.put('/:id',
+  checkUserIsAuthorized,
   checkAllConsumerArgsAreProvided,
   consumersController.updateConsumer
 )
