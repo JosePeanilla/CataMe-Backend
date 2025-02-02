@@ -1,31 +1,36 @@
 /************************************************ Node modules needed *************************************************/
 /* Used to create an ExpressJS router */
-const express = require("express")
+const express = require("express");
 
 /********************************************** ExpressJS router object ***********************************************/
-const usersRouter = express.Router()
+const usersRouter = express.Router();
 
 /**************************************************** Middlewares *****************************************************/
-const { checkAllLoginCredentialsAreProvided } = require("../auth/authMiddlewares.js")
+const {
+  checkAllLoginCredentialsAreProvided,
+} = require("../auth/authMiddlewares.js");
 
 /***************************************************** Sub-Routes *****************************************************/
-const { consumersRouter } = require("./consumers/consumersRouter.js")
-const { wineriesRouter } = require("./wineries/wineriesRouter.js")
-usersRouter.use("/consumers", consumersRouter)
-usersRouter.use("/wineries", wineriesRouter)
+const { consumersRouter } = require("./consumers/consumersRouter.js");
+const { wineriesRouter } = require("./wineries/wineriesRouter.js");
+const { wineRouter } = require("./wines/wineRouter.js");
+usersRouter.use("/consumers", consumersRouter);
+usersRouter.use("/wineries", wineriesRouter);
+usersRouter.use("/wines", wineRouter);
 
 /***************************************************** Endpoints ******************************************************/
-const { authController } = require("../auth/authController.js")
-const { usersController } = require("./usersController.js")
+const { authController } = require("../auth/authController.js");
+const { usersController } = require("./usersController.js");
 
 /* /users/ */
-usersRouter.get('/', usersController.getAllUsers)
+usersRouter.get("/", usersController.getAllUsers);
 
 /* /users/login/ */
-usersRouter.post("/login",
+usersRouter.post(
+  "/login",
   checkAllLoginCredentialsAreProvided,
   authController.login
-)
+);
 
 /*************************************************** Module export ****************************************************/
-module.exports = { usersRouter }
+module.exports = { usersRouter };
