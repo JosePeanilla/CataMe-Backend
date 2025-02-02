@@ -10,8 +10,9 @@ const { statusCodes } = require("../../constants/statusCodes.js")
 const checkAllConsumerArgsAreProvided = (req, res, next) => {
   res.locals.providedConsumerArgs = {}
   let missingArgs = []
+  const isUpdateRequest = req.method === "PUT"
   for (const arg in ConsumerSchema.obj) {
-    if (arg === "email" || arg === "password") continue;
+    if (isUpdateRequest && (arg === "email" || arg === "password")) continue
     if (req.body[arg]) res.locals.providedConsumerArgs[arg] = req.body[arg]
     else if (ConsumerSchema.obj[arg].required) missingArgs.push(arg)
   }
