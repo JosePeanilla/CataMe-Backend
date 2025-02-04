@@ -39,5 +39,11 @@ wineriesRouter.patch('/:id/:field',
   wineriesController.updateWineryField
 )
 
+wineriesRouter.patch('/:id/email',
+  checkProvidedTokenIsValid,
+  checkUserIsAuthorized, 
+  wineriesController.updateWineryEmail
+)
+
 /*************************************************** Module export ****************************************************/
 module.exports = { wineriesRouter }

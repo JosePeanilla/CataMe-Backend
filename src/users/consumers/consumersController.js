@@ -84,6 +84,30 @@ const consumersController = {
         .send({ msg: errorText, error: error.message })
     }
   },
+
+  updateConsumerEmail: async (req, res) => {
+    const { id } = req.params
+    const { email } = req.body
+
+    try {
+      const updatedConsumer = await consumersService.updateConsumerField({
+        id,
+        field_name: "email",
+        field_value: email
+      })
+
+      if (!updatedConsumer) throw new Error("Error updating consumer email!")
+
+      const successText = "Consumer email updated successfully!"
+      logger.info(successText)
+      res.status(statusCodes.OK).send({ msg: successText, data: updatedConsumer })
+    } catch (error) {
+      const errorText = "Error updating consumer email!"
+      logger.error(errorText, error)
+      res.status(statusCodes.InternalServerError).send({ msg: errorText, error: error.message })
+    }
+  },
+
   updateConsumerField: async (req, res) => {
     try {
       const updatedConsumer = await consumersService.updateConsumerField({

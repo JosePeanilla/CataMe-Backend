@@ -80,6 +80,30 @@ const wineriesController = {
         .send({ msg: errorText, error: error.message })
     }
   },
+
+  updateWineryEmail: async (req, res) => {
+    const { id } = req.params
+    const { email } = req.body
+
+    try {
+      const updatedWinery = await wineriesService.updateWineryField({
+        id,
+        field_name: "email",
+        field_value: email
+      })
+
+      if (!updatedWinery) throw new Error("Error updating winery email!")
+
+      const successText = "Winery email updated successfully!"
+      logger.info(successText)
+      res.status(statusCodes.OK).send({ msg: successText, data: updatedWinery })
+    } catch (error) {
+      const errorText = "Error updating winery email!"
+      logger.error(errorText, error)
+      res.status(statusCodes.InternalServerError).send({ msg: errorText, error: error.message })
+    }
+  },
+  
   updateWineryField: async (req, res) => {
     try {
       const updatedWinery = await wineriesService.updateWineryField({
