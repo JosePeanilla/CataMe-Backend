@@ -49,5 +49,12 @@ consumersRouter.patch('/:id/email',
   consumersController.updateConsumerEmail
 )
 
+/* /users/consumers/:id/password */
+consumersRouter.patch('/:id/password',
+  checkProvidedTokenIsValid,
+  checkUserIsAuthorized, 
+  consumersController.updateConsumerPassword
+)
+
 /*************************************************** Module export ****************************************************/
 module.exports = { consumersRouter }

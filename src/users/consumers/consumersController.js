@@ -108,6 +108,29 @@ const consumersController = {
     }
   },
 
+  updateConsumerPassword: async (req, res) => {
+    const { id } = req.params
+    const { password } = req.body
+
+    try {
+      const updatedConsumer = await consumersService.updateConsumerField({
+        id,
+        field_name: "password",
+        field_value: password
+      })
+
+      if (!updatedConsumer) throw new Error("Error updating consumer password!")
+
+      const successText = "Consumer password updated successfully!"
+      logger.info(successText)
+      res.status(statusCodes.OK).send({ msg: successText, data: updatedConsumer })
+    } catch (error) {
+      const errorText = "Error updating consumer password!"
+      logger.error(errorText, error)
+      res.status(statusCodes.InternalServerError).send({ msg: errorText, error: error.message })  
+    }
+  },
+
   updateConsumerField: async (req, res) => {
     try {
       const updatedConsumer = await consumersService.updateConsumerField({

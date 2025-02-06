@@ -103,6 +103,29 @@ const wineriesController = {
       res.status(statusCodes.InternalServerError).send({ msg: errorText, error: error.message })
     }
   },
+
+  updateWineryPassword: async (req, res) => {
+    const { id } = req.params
+    const { password } = req.body
+
+    try {
+      const updatedWinery = await wineriesService.updateWineryField({
+        id,
+        field_name: "password",
+        field_value: password
+      })
+
+      if (!updatedWinery) throw new Error("Error updating winery password!")
+
+      const successText = "Winery password updated successfully!"
+      logger.info(successText)
+      res.status(statusCodes.OK).send({ msg: successText, data: updatedWinery })
+    } catch (error) {
+      const errorText = "Error updating winery password!"
+      logger.error(errorText, error)
+      res.status(statusCodes.InternalServerError).send({ msg: errorText, error: error.message })
+    }
+  },
   
   updateWineryField: async (req, res) => {
     try {
