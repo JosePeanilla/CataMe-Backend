@@ -13,10 +13,8 @@ const {
 /***************************************************** Sub-Routes *****************************************************/
 const { consumersRouter } = require("./consumers/consumersRouter.js");
 const { wineriesRouter } = require("./wineries/wineriesRouter.js");
-const { wineRouter } = require("./wines/wineRouter.js");
 usersRouter.use("/consumers", consumersRouter);
 usersRouter.use("/wineries", wineriesRouter);
-usersRouter.use("/wines", wineRouter);
 
 /***************************************************** Endpoints ******************************************************/
 const { authController } = require("../auth/authController.js");

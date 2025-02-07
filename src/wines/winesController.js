@@ -1,9 +1,9 @@
-const { wineService } = require("./wineService.js");
+const { winesService } = require("./winesService.js");
 
-const wineController = {
+const winesController = {
   getAllWines: async (req, res) => {
     try {
-      const wines = await wineService.getAllWines();
+      const wines = await winesService.getAllWines();
       res
         .status(200)
         .json({ message: "Wines retrieved successfully!", data: wines });
@@ -15,7 +15,7 @@ const wineController = {
   getWineById: async (req, res) => {
     try {
       const { id } = req.params;
-      const wine = await wineService.getWineById({ id });
+      const wine = await winesService.getWineById({ id });
       res
         .status(200)
         .json({ message: "Wine retrieved successfully!", data: wine });
@@ -26,7 +26,7 @@ const wineController = {
 
   createWine: async (req, res) => {
     try {
-      const newWine = await wineService.createWine(req.body);
+      const newWine = await winesService.createWine(req.body);
       res
         .status(201)
         .json({ message: "Wine created successfully!", data: newWine });
@@ -38,7 +38,7 @@ const wineController = {
   updateWine: async (req, res) => {
     try {
       const { id } = req.params;
-      const updatedWine = await wineService.updateWine({ id, ...req.body });
+      const updatedWine = await winesService.updateWine({ id, ...req.body });
       res
         .status(200)
         .json({ message: "Wine updated successfully!", data: updatedWine });
@@ -50,7 +50,7 @@ const wineController = {
   deleteWine: async (req, res) => {
     try {
       const { id } = req.params;
-      const deletedWine = await wineService.deleteWine({ id });
+      const deletedWine = await winesService.deleteWine({ id });
       res
         .status(200)
         .json({ message: "Wine deleted successfully!", data: deletedWine });
@@ -60,4 +60,4 @@ const wineController = {
   },
 };
 
-module.exports = { wineController };
+module.exports = { winesController };

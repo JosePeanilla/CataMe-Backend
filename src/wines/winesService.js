@@ -1,7 +1,7 @@
 const { WineModel } = require("./WineModel.js");
 
 /* Service which interacts with the 'wine' database */
-const wineService = {
+const winesService = {
   createWine: async (providedWineArgs) => {
     try {
       const newWine = await WineModel.create(providedWineArgs);
@@ -50,4 +50,4 @@ const wineService = {
 };
 
 /*************************************************** Module export ****************************************************/
-module.exports = { wineService };
+module.exports = { winesService };
