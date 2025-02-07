@@ -67,7 +67,7 @@ These endpoints allow obtaining information from ALL the registered consumers:
 These endpoints allow obtaining information from the wine bottles:
 
 - `GET /wines` - Get the list of all the wine bottles.
-- `GET /wines/:id` - Get the information about a specific wine.  
+- `GET /wines/:id` - Get the information about a specific wine bottle.  
     A wine bottle with given ID must exist in the database.
 - `POST /wines` - Register/Create a new wine bottle (requires administrator approval).
 - `PUT /wines/:id` - Update a wine bottle.  
@@ -110,7 +110,7 @@ This collection stores basic information about consumers registered in the platf
 - `role` *(String, immutable)*: User role. Constant default value of `consumer`.
 - `surname` *(String)*: Consumer surname.
 
-####  - Collection **[Consumer Users](https://cloud.mongodb.com/v2/67712e8d74ee353776ed51a7#/metrics/replicaSet/677133a831c8bf6d5272e506/explorer/Database/consumers/find)** - Collection
+####  **[Wine bottles](https://cloud.mongodb.com/v2/67712e8d74ee353776ed51a7#/metrics/replicaSet/677133a831c8bf6d5272e506/explorer/Database/consumers/find)** - Collection
 
 This collection stores the information about the bottles of wine which belong to any of the registered wineries, and their properties are:
 
