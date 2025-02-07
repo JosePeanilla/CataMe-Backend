@@ -1,5 +1,5 @@
 /* Manage MongoDB database accesses */
-const mongoose = require("mongoose");
+const mongoose = require("mongoose")
 
 const WineSchema = new mongoose.Schema(
   {
@@ -12,9 +12,9 @@ const WineSchema = new mongoose.Schema(
     description: { type: String, required: true },
   },
   { timestamps: true }
-);
+)
 
-const WineModel = mongoose.model("Wine", WineSchema);
+const WineModel = mongoose.model("Wine", WineSchema)
 
 /*************************************************** Module export ****************************************************/
-module.exports = { WineModel };
+module.exports = { WineModel }

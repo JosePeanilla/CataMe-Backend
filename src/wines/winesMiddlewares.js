@@ -1,6 +1,6 @@
 const validateWineData = (req, res, next) => {
   const { name, wineryName, type, regionId, year, price, description } =
-    req.body;
+    req.body
 
   if (
     !name ||
@@ -11,10 +11,10 @@ const validateWineData = (req, res, next) => {
     !price ||
     !description
   ) {
-    return res.status(400).json({ error: "Missing required wine fields" });
+    return res.status(400).json({ error: "Missing required wine fields" })
   }
 
-  next();
-};
+  next()
+}
 
-module.exports = { validateWineData };
+module.exports = { validateWineData }

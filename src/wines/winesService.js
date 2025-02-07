@@ -1,38 +1,38 @@
-const { WineModel } = require("./WineModel.js");
+const { WineModel } = require("./WineModel.js")
 
 /* Service which interacts with the 'wine' database */
 const winesService = {
   createWine: async (providedWineArgs) => {
     try {
-      const newWine = await WineModel.create(providedWineArgs);
-      if (!newWine) throw new Error("Failed to create wine");
-      return newWine;
+      const newWine = await WineModel.create(providedWineArgs)
+      if (!newWine) throw new Error("Failed to create wine")
+      return newWine
     } catch (error) {
-      throw new Error(error.message);
+      throw new Error(error.message)
     }
   },
 
   deleteWine: async ({ id }) => {
     try {
-      const deletedWine = await WineModel.findByIdAndDelete(id);
-      if (!deletedWine) throw new Error(`No wine found with ID '${id}'`);
-      return deletedWine;
+      const deletedWine = await WineModel.findByIdAndDelete(id)
+      if (!deletedWine) throw new Error(`No wine found with ID '${id}'`)
+      return deletedWine
     } catch (error) {
-      throw new Error(error.message);
+      throw new Error(error.message)
     }
   },
 
   getAllWines: async () => {
-    return await WineModel.find();
+    return await WineModel.find()
   },
 
   getWineById: async ({ id }) => {
     try {
-      const wine = await WineModel.findById(id);
-      if (!wine) throw new Error(`No wine found with ID '${id}'`);
-      return wine;
+      const wine = await WineModel.findById(id)
+      if (!wine) throw new Error(`No wine found with ID '${id}'`)
+      return wine
     } catch (error) {
-      throw new Error(error.message);
+      throw new Error(error.message)
     }
   },
 
@@ -40,14 +40,14 @@ const winesService = {
     try {
       const updatedWine = await WineModel.findByIdAndUpdate(id, wineArgs, {
         new: true,
-      });
-      if (!updatedWine) throw new Error(`No wine found with ID '${id}'`);
-      return updatedWine;
+      })
+      if (!updatedWine) throw new Error(`No wine found with ID '${id}'`)
+      return updatedWine
     } catch (error) {
-      throw new Error(error.message);
+      throw new Error(error.message)
     }
   },
-};
+}
 
 /*************************************************** Module export ****************************************************/
-module.exports = { winesService };
+module.exports = { winesService }
