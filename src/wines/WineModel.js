@@ -3,13 +3,13 @@ const mongoose = require("mongoose")
 
 const WineSchema = new mongoose.Schema(
   {
-    name: { type: String, required: true },
-    wineryName: { type: String, required: true },
-    type: { type: String, required: true },
-    regionId: { type: String, required: true },
-    year: { type: Number, required: true },
-    price: { type: Number, required: true },
     description: { type: String, required: true },
+    name: { type: String, required: true },
+    price: { type: Number, required: true },
+    region: { type: String, required: true },
+    type: { type: String, required: true },
+    winery: { type: String, required: true },
+    year: { type: Number, required: true },
   },
   { timestamps: true }
 )
