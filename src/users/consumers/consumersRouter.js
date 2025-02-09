@@ -9,7 +9,10 @@ const consumersRouter = express.Router()
 const {
   checkAllConsumerArgsAreProvided,
   checkProvidedConsumerExists,
-  checkProvidedConsumerFieldIsValid
+  checkProvidedConsumerFieldIsValid,
+  checkUpdateFieldsProvided,
+  checkNewValueMatchesConfirmation,
+  checkCurrentValueIsCorrect
 } = require("./consumersMiddlewares.js")
 const { checkProvidedTokenIsValid, checkUserIsAuthorized } = require("../../auth/authMiddlewares.js")
 
@@ -38,23 +41,15 @@ consumersRouter.delete('/:id', consumersController.deleteConsumer)
 
 /* /users/consumers/<id>/<field>/ */
 consumersRouter.patch('/:id/:field',
+  checkProvidedTokenIsValid,
+  checkUserIsAuthorized,
+  checkProvidedConsumerExists,
   checkProvidedConsumerFieldIsValid,
+  checkUpdateFieldsProvided,
+  checkNewValueMatchesConfirmation,
+  checkCurrentValueIsCorrect,
   consumersController.updateConsumerField
-)
-
-/* /users/consumers/:id/email */
-consumersRouter.patch('/:id/email',
-  checkProvidedTokenIsValid,
-  checkUserIsAuthorized, 
-  consumersController.updateConsumerEmail
-)
-
-/* /users/consumers/:id/password */
-consumersRouter.patch('/:id/password',
-  checkProvidedTokenIsValid,
-  checkUserIsAuthorized, 
-  consumersController.updateConsumerPassword
-)
+) 
 
 /*************************************************** Module export ****************************************************/
 module.exports = { consumersRouter }

@@ -85,70 +85,30 @@ const consumersController = {
     }
   },
 
-  updateConsumerEmail: async (req, res) => {
-    const { id } = req.params
-    const { email } = req.body
-
-    try {
-      const updatedConsumer = await consumersService.updateConsumerField({
-        id,
-        field_name: "email",
-        field_value: email
-      })
-
-      if (!updatedConsumer) throw new Error("Error updating consumer email!")
-
-      const successText = "Consumer email updated successfully!"
-      logger.info(successText)
-      res.status(statusCodes.OK).send({ msg: successText, data: updatedConsumer })
-    } catch (error) {
-      const errorText = "Error updating consumer email!"
-      logger.error(errorText, error)
-      res.status(statusCodes.InternalServerError).send({ msg: errorText, error: error.message })
-    }
-  },
-
-  updateConsumerPassword: async (req, res) => {
-    const { id } = req.params
-    const { password } = req.body
-
-    try {
-      const updatedConsumer = await consumersService.updateConsumerField({
-        id,
-        field_name: "password",
-        field_value: password
-      })
-
-      if (!updatedConsumer) throw new Error("Error updating consumer password!")
-
-      const successText = "Consumer password updated successfully!"
-      logger.info(successText)
-      res.status(statusCodes.OK).send({ msg: successText, data: updatedConsumer })
-    } catch (error) {
-      const errorText = "Error updating consumer password!"
-      logger.error(errorText, error)
-      res.status(statusCodes.InternalServerError).send({ msg: errorText, error: error.message })  
-    }
-  },
-
   updateConsumerField: async (req, res) => {
     try {
+      logger.debug(`Updating consumer field: ${req.params.field} with value: ${res.locals.new_value}`)
+      if (!res.locals.new_value) {
+        throw new Error(`New value for field '${req.params.field}' is undefined!`);
+      }
       const updatedConsumer = await consumersService.updateConsumerField({
         id: req.params.id,
         field_name: req.params.field,
-        field_value: req.body[req.params.field]
+        field_value: res.locals.new_value  
       })
-      const successText = "Consumer user field updated successfully!"
-      logger.debug(successText)
-      res.status(statusCodes.OK)
-        .send({ msg: successText, data: updatedConsumer })
+      if (updatedConsumer) {
+        const successText = "Consumer user field updated successfully!"
+        logger.debug(successText)
+        res.status(statusCodes.OK).send({ msg: successText, data: updatedConsumer })
+      } else {
+        throw `Database returned '${updatedConsumer}' when trying to update a Consumer user '${req.params.field}' field with '${req.params.id}' ID!`
+      }
     } catch (error) {
       const errorText = "Consumer user field could not be updated!"
       logger.error(errorText, error)
-      res.status(statusCodes.InternalServerError)
-        .send({ msg: errorText, error: error.message })
+      res.status(statusCodes.InternalServerError).send({ msg: errorText, error: error.message })
     }
-  }
+  }  
 }
 
 /*************************************************** Module export ****************************************************/
