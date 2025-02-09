@@ -76,7 +76,7 @@ const checkNewValueMatchesConfirmation = (req, res, next) => {
 
 const checkCurrentValueIsCorrect = async (req, res, next) => {
   const { id, field } = req.params
-  const { current_value, new_value, confirm_new_value } = req.body
+  const { current_value, new_value } = req.body
   try {
     const consumer = await consumersService.getConsumerById(id)
     if (!consumer) {
@@ -89,11 +89,6 @@ const checkCurrentValueIsCorrect = async (req, res, next) => {
       logger.error(errorText)
       return res.status(statusCodes.Forbidden).send({ error: errorText })
     }
-    if (consumer[field] !== current_value) {
-  const errorText = `Current ${field} does not match registered ${field}!`
-  logger.error(errorText)
-  return res.status(statusCodes.Forbidden).send({ error: errorText })
-} 
     res.locals.new_value = new_value
     logger.debug(`New value for ${field}: ${new_value} successfully stored in res.locals.`)
     next()

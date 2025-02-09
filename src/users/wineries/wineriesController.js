@@ -80,71 +80,30 @@ const wineriesController = {
         .send({ msg: errorText, error: error.message })
     }
   },
-
-  updateWineryEmail: async (req, res) => {
-    const { id } = req.params
-    const { email } = req.body
-
-    try {
-      const updatedWinery = await wineriesService.updateWineryField({
-        id,
-        field_name: "email",
-        field_value: email
-      })
-
-      if (!updatedWinery) throw new Error("Error updating winery email!")
-
-      const successText = "Winery email updated successfully!"
-      logger.info(successText)
-      res.status(statusCodes.OK).send({ msg: successText, data: updatedWinery })
-    } catch (error) {
-      const errorText = "Error updating winery email!"
-      logger.error(errorText, error)
-      res.status(statusCodes.InternalServerError).send({ msg: errorText, error: error.message })
-    }
-  },
-
-  updateWineryPassword: async (req, res) => {
-    const { id } = req.params
-    const { password } = req.body
-
-    try {
-      const updatedWinery = await wineriesService.updateWineryField({
-        id,
-        field_name: "password",
-        field_value: password
-      })
-
-      if (!updatedWinery) throw new Error("Error updating winery password!")
-
-      const successText = "Winery password updated successfully!"
-      logger.info(successText)
-      res.status(statusCodes.OK).send({ msg: successText, data: updatedWinery })
-    } catch (error) {
-      const errorText = "Error updating winery password!"
-      logger.error(errorText, error)
-      res.status(statusCodes.InternalServerError).send({ msg: errorText, error: error.message })
-    }
-  },
-  
   updateWineryField: async (req, res) => {
     try {
+      logger.debug(`Updating winery field: ${req.params.field} with value: ${res.locals.new_value}`)
+      if (!res.locals.new_value) {
+        throw new Error(`New value for field '${req.params.field}' is undefined!`);
+      }
       const updatedWinery = await wineriesService.updateWineryField({
         id: req.params.id,
         field_name: req.params.field,
-        field_value: req.body[req.params.field]
+        field_value: res.locals.new_value  
       })
-      const successText = "Winery user field updated successfully!"
-      logger.debug(successText)
-      res.status(statusCodes.OK)
-        .send({ msg: successText, data: updatedWinery })
+      if (updatedWinery) {
+        const successText = "Winery user field updated successfully!"
+        logger.debug(successText)
+        res.status(statusCodes.OK).send({ msg: successText, data: updatedWinery })
+      } else {
+        throw new Error(`Database returned '${updatedWinery}' when trying to update a Winery user '${req.params.field}' field with '${req.params.id}' ID!`)
+      }
     } catch (error) {
       const errorText = "Winery user field could not be updated!"
       logger.error(errorText, error)
-      res.status(statusCodes.InternalServerError)
-        .send({ msg: errorText, error: error.message })
+      res.status(statusCodes.InternalServerError).send({ msg: errorText, error: error.message })
     }
-  }
+  }  
 }
 
 /*************************************************** Module export ****************************************************/

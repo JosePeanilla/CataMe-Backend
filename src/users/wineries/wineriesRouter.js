@@ -9,7 +9,10 @@ const wineriesRouter = express.Router()
 const {
   checkAllWineryArgsAreProvided,
   checkProvidedWineryExists,
-  checkProvidedWineryFieldIsValid
+  checkProvidedWineryFieldIsValid,
+  checkUpdateFieldsProvided,
+  checkNewValueMatchesConfirmation,
+  checkCurrentValueIsCorrect
 } = require("./wineriesMiddlewares.js")
 const { checkProvidedTokenIsValid, checkUserIsAuthorized } = require("../../auth/authMiddlewares.js")
 
@@ -35,20 +38,13 @@ wineriesRouter.delete('/:id', wineriesController.deleteWinery)
 
 /* /users/wineries/<id>/<field>/ */
 wineriesRouter.patch('/:id/:field',
+  checkProvidedTokenIsValid,
+  checkUserIsAuthorized,
   checkProvidedWineryFieldIsValid,
+  checkUpdateFieldsProvided,
+  checkNewValueMatchesConfirmation,
+  checkCurrentValueIsCorrect,
   wineriesController.updateWineryField
-)
-
-wineriesRouter.patch('/:id/email',
-  checkProvidedTokenIsValid,
-  checkUserIsAuthorized, 
-  wineriesController.updateWineryEmail
-)
-
-wineriesRouter.patch('/:id/password',
-  checkProvidedTokenIsValid,
-  checkUserIsAuthorized, 
-  wineriesController.updateWineryPassword
 )
 
 /*************************************************** Module export ****************************************************/

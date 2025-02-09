@@ -62,7 +62,7 @@ const consumersService = {
         { new: true }
       )
       if (!updatedConsumer) {
-        throw `Database returned '${updatedConsumer}' when trying to update a Consumer user '${field_name}' field with '${id}' ID!`
+        throw new Error(`Database returned '${updatedConsumer}' when trying to update a Consumer user '${field_name}' field with '${id}' ID!`)
       }
       return updatedConsumer
     } catch (error) {

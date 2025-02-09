@@ -40,27 +40,72 @@ const checkProvidedWineryExists = async (req, res, next) => {
 }
 
 const checkProvidedWineryFieldIsValid = (req, res, next) => {
-  const { field } = req.params
-  if (WinerySchema.obj[field]) {
-    if (req.body[field]) next()
-    else {
-      const errorText = `Missing '${field}' field value!`
-      logger.error(errorText)
-      res.status(statusCodes.BadRequest)
-        .send({ error: errorText })
+  const { field } = req.params;
+  try {
+    if (!req.body.new_value) {
+      throw new Error(`Missing '${field}' field value!`);
     }
-  }
-  else {
-    const errorText = `'${field}' is not valid field for a winery user!`
-    logger.error(errorText)
-    res.status(statusCodes.BadRequest)
-      .send({ error: errorText })
+    next();
+  } catch (error) {
+    logger.error(error.message);
+    res.status(statusCodes.BadRequest).send({ error: error.message });
   }
 }
+
+  const checkUpdateFieldsProvided = (req, res, next) => {
+    const { field } = req.params
+    const { current_value, new_value, confirm_new_value } = req.body
+    if (!current_value || !new_value || !confirm_new_value) {
+      const errorText = `Missing required fields: 'current_value', 'new_value', 'confirm_new_value' for ${field}!`
+      logger.error(errorText)
+      return res.status(statusCodes.BadRequest).send({ error: errorText })
+    }
+    next()
+  }
+  
+  const checkNewValueMatchesConfirmation = (req, res, next) => {
+    const { field } = req.params
+    const { new_value, confirm_new_value } = req.body
+    if (new_value !== confirm_new_value) {
+      const errorText = `New ${field} and confirmation ${field} must match!`
+      logger.error(errorText)
+      return res.status(statusCodes.BadRequest).send({ error: errorText })
+    }
+    next()
+  }
+  
+  const checkCurrentValueIsCorrect = async (req, res, next) => {
+    const { id, field } = req.params
+    const { current_value, new_value } = req.body
+    try {
+      const winery = await wineriesService.getWineryById(id)
+      if (!winery) {
+        const errorText = `Winery with ID '${id}' not found!`
+        logger.error(errorText)
+        return res.status(statusCodes.NotFound).send({ error: errorText })
+      }
+      if (winery[field] !== current_value) {
+        const errorText = `Current ${field} does not match registered ${field}!`
+        logger.error(errorText)
+        return res.status(statusCodes.Forbidden).send({ error: errorText })
+      }
+  
+      res.locals.new_value = new_value
+      logger.debug(`New value for ${field}: ${new_value} successfully stored in res.locals.`)
+      next()
+    } catch (error) {
+      const errorText = `Error checking winery ${field}!`
+      logger.error(errorText, error)
+      return res.status(statusCodes.InternalServerError).send({ error: errorText })
+    }
+  }
 
 /*************************************************** Module export ****************************************************/
 module.exports = {
   checkAllWineryArgsAreProvided,
   checkProvidedWineryExists,
-  checkProvidedWineryFieldIsValid
+  checkProvidedWineryFieldIsValid,
+  checkUpdateFieldsProvided,
+  checkNewValueMatchesConfirmation,
+  checkCurrentValueIsCorrect
 }

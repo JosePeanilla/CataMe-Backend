@@ -1,3 +1,7 @@
+/************************************************** Internal logger ***************************************************/
+const { Logger } = require("../../utils/Logger.js")
+const logger = new Logger(__filename)
+
 /************************************************* Internal libraries *************************************************/
 /* Model of 'winery users' entity */
 const { WineryModel } = require("./WineryModel.js")
@@ -25,6 +29,17 @@ const wineriesService = {
   getAllWineries: async () => {
     return await WineryModel.find()
   },
+  getWineryById: async (id) => {
+    try {
+      const winery = await WineryModel.findById(id);
+      if (!winery) {
+        throw new Error(`Winery user with ID '${id}' could not be found!`);
+      }
+      return winery;
+    } catch (error) {
+      throw error;
+    }
+  },
   updateWinery: async ({ id, ...wineryArgs }) => {
     try {
       const updatedWinery = await WineryModel.findByIdAndUpdate(id, wineryArgs, { new: true })
@@ -36,13 +51,23 @@ const wineriesService = {
   },
   updateWineryField: async ({ id, field_name, field_value }) => {
     try {
-      const updatedWinery = await WineryModel.findByIdAndUpdate(id, { [field_name]: field_value }, { new: true })
-      if (updatedWinery) return updatedWinery
-      else throw `Database returned '${updatedWinery}' when trying to update a Winery user '${field_name}' field with '${id}' ID!`
+      if (!field_value) {
+        throw new Error(`Field value for '${field_name}' is undefined!`);
+      }
+      logger.debug(`Updating ID: ${id}, Field: ${field_name}, Value: ${field_value}`)
+      const updatedWinery = await WineryModel.findByIdAndUpdate(
+        id,
+        { [field_name]: field_value },
+        { new: true }
+      )
+      if (!updatedWinery) {
+        throw new Error(`Database returned '${updatedWinery}' when trying to update a Winery user '${field_name}' field with '${id}' ID!`)
+      }
+      return updatedWinery
     } catch (error) {
       throw error
     }
-  }
+  }  
 }
 
 /*************************************************** Module export ****************************************************/
