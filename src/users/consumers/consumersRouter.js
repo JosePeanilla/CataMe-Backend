@@ -43,7 +43,6 @@ consumersRouter.delete('/:id', consumersController.deleteConsumer)
 consumersRouter.patch('/:id/:field',
   checkProvidedTokenIsValid,
   checkUserIsAuthorized,
-  checkProvidedConsumerExists,
   checkProvidedConsumerFieldIsValid,
   checkUpdateFieldsProvided,
   checkNewValueMatchesConfirmation,
