@@ -19,7 +19,7 @@ To initialize the database, below steps were followed:
 
 1. **Create** an organization inside *[MongoDB Atlas](https://cloud.mongodb.com/)* webpage: ```06-fsdesp-1024-equipo-rojo```
 
-2. **Add** users to the *[Organization Access](https://cloud.mongodb.com/v2#/org/67712d85968fd25eb0bd8fa0/access/users)* webpage:
+2. **Add** users to the *[Organization Access](https://cloud.mongodb.com/v2#/org/67a777b4c1a21515f10c8074/access/users)* webpage:
     1. Marti Planaguma - Organization Owner
     2. Jose - Organization Member
     3. Maria - Organization Member
@@ -27,7 +27,7 @@ To initialize the database, below steps were followed:
 
 3. **Create** a project inside the created organization: ``` TFM - Wine Application```
 
-4. **Add** users to the *[Project Access](https://cloud.mongodb.com/v2/67712e8d74ee353776ed51a7#/access)* webpage:
+4. **Add** users to the *[Project Access](https://cloud.mongodb.com/v2/67a777b4c1a21515f10c8093#/access)* webpage:
     1. Marti Planaguma - Project Owner
     2. Jose - Project Data Access Read/Write
     3. Maria - Project Data Access Read/Write
@@ -35,7 +35,7 @@ To initialize the database, below steps were followed:
 
 5. **Create** a cluster inside the created project: ```Cluster```
 
-6. **Add** users to the *[Database Access](https://cloud.mongodb.com/v2/67712e8d74ee353776ed51a7#/security/database/users)* webpage:
+6. **Add** users to the *[Database Access](https://cloud.mongodb.com/v2/67a777b4c1a21515f10c8093#security/database/users)* webpage:
     1. Marti Planaguma - Atlas admin
     2. Jose - Read and write to any database
     3. Maria - Read and write to any database
@@ -45,7 +45,7 @@ To initialize the database, below steps were followed:
     >
     > 5. teacher - Read and write to any database
 
-7. **Configure** the permitted IPs in the *[Network Access](https://cloud.mongodb.com/v2/67712e8d74ee353776ed51a7#/security/network/accessList)* webpage:
+7. **Configure** the permitted IPs in the *[Network Access](https://cloud.mongodb.com/v2/67a777b4c1a21515f10c8093#/security/network/accessList)* webpage:
     1. Marti Planaguma IP
     2. Jose IP
     3. María IP

@@ -91,7 +91,7 @@ These endpoints allow obtaining information from ALL the registered wineries:
 
 The data model is organized into MongoDB collections, which are:
 
-#### **[Consumer Users](https://cloud.mongodb.com/v2/67712e8d74ee353776ed51a7#/metrics/replicaSet/677133a831c8bf6d5272e506/explorer/Database/consumers/find)** - Collection
+#### **[Consumer Users](https://cloud.mongodb.com/v2/67a777b4c1a21515f10c8093#/metrics/replicaSet/67a7791765d5d93ca0617377/explorer/test/consumers/find)** - Collection
 
 This collection stores basic information about consumers registered in the platform, and their properties are:
 
@@ -112,7 +112,7 @@ This collection stores the information about the bottles of wine which belong to
 - `name` *(String)*: Name of the wine.
 - `price` *(Number)*: Price of the bottle.
 
-#### **[Winery Users](https://cloud.mongodb.com/v2/67712e8d74ee353776ed51a7#/metrics/replicaSet/677133a831c8bf6d5272e506/explorer/Database/wineries/find)** - Collection
+#### **[Winery Users](https://cloud.mongodb.com/v2/67a777b4c1a21515f10c8093#/metrics/replicaSet/67a7791765d5d93ca0617377/explorer/test/wineries/find)** - Collection
 
 This collection stores basic information about wineries registered in the platform, and their properties are:
 
