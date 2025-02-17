@@ -14,6 +14,8 @@ It has been developed using the knowledge acquired during the master's program, 
         2. [Wine Bottles](#wine-bottles---endpoints)
         3. [Winery Users](#winery-users---endpoints)
     2. [Database Collections](#database-collections)
+        1. [Consumer Users](#consumer-users---collections)
+        2. [Winery Users](#winery-users---collections)
 3. [Project Structure](#project-structure)
 4. [How to Run the Project](#how-to-run-the-project)
 5. [Authentication and Authorization](#authentication-and-authorization)
@@ -41,7 +43,7 @@ Implemented endpoints are categorized as follows:
 
 ### **Endpoints**
 
-#### **[Consumer Users](https://cloud.mongodb.com/v2/67a777b4c1a21515f10c8093#/metrics/replicaSet/67a7791765d5d93ca0617377/explorer/test/consumers/find)** - Endpoints
+#### **[Consumer Users] - Endpoints**
 
 - `GET /users/consumers` - Retrieves a list of all registered consumers.
 - `GET /users/consumers/:id` - Retrieves information about a specific consumer user.
@@ -56,7 +58,7 @@ Implemented endpoints are categorized as follows:
 - `GET /wines` - Retrieves a list of all wine bottles.
 - `POST /wines` - Registers a new wine bottle (requires administrator approval).
 
-#### **[Winery Users](https://cloud.mongodb.com/v2/67a777b4c1a21515f10c8093#/metrics/replicaSet/67a7791765d5d93ca0617377/explorer/test/wineries/find)** - Endpoints
+#### **[Winery Users] - Endpoints**
 
 - `GET /users/wineries` - Retrieves a list of all registered wineries.
 - `GET /users/wineries/:id` - Retrieves information about a specific winery user.
@@ -67,6 +69,10 @@ Implemented endpoints are categorized as follows:
 - `DELETE /users/wineries/:id` - Deletes a winery user account.
 
 ### **Database Collections**
+
+#### **[Consumer Users](https://cloud.mongodb.com/v2/67a777b4c1a21515f10c8093#/metrics/replicaSet/67a7791765d5d93ca0617377/explorer/test/consumers/find) - Collections**
+
+#### **[Winery Users](https://cloud.mongodb.com/v2/67a777b4c1a21515f10c8093#/metrics/replicaSet/67a7791765d5d93ca0617377/explorer/test/wineries/find) - Collections**
 
 ---
 
