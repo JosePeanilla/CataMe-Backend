@@ -43,7 +43,7 @@ Implemented endpoints are categorized as follows:
 
 ### **Endpoints**
 
-#### [Consumer Users] - Endpoints
+#### Consumer Users - Endpoints
 
 - `GET /users/consumers` - Retrieves a list of all registered consumers.
 - `GET /users/consumers/:id` - Retrieves information about a specific consumer user.
@@ -58,7 +58,7 @@ Implemented endpoints are categorized as follows:
 - `GET /wines` - Retrieves a list of all wine bottles.
 - `POST /wines` - Registers a new wine bottle (requires administrator approval).
 
-#### [Winery Users] - Endpoints
+#### Winery Users - Endpoints
 
 - `GET /users/wineries` - Retrieves a list of all registered wineries.
 - `GET /users/wineries/:id` - Retrieves information about a specific winery user.
