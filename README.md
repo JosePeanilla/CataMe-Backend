@@ -1,253 +1,216 @@
-# Wine Application (Backend) - Grupo Rojo
+# **Wine Application (Backend) - Grupo Rojo**
 
-This project contains the backend part of the final ("*Full-Stack Developer*") master's work.  
-It has been developed with all gathered information and knowledge learnt from the master (Express and JS).
+This project contains the backend part of the final master's project (*Full-Stack Developer*).  
+It has been developed using the knowledge acquired during the master's program, utilizing **Express** and **JavaScript**.
 
-## Table of Contents
+---
+
+## **Table of Contents**
 
 1. [Description](#description)
 2. [Content](#content)
     1. [Endpoints](#endpoints)
-        1. [Consumers](#consumer-users---endpoints)
-        2. [Wine bottles](#wine-bottles---endpoints)
-        3. [Wineries](#winery-users---endpoints)
-    2. [Database collections](#database-collections)
-        1. [Consumers](#consumer-users---collection)
-        2. [Wine bottles](#wine-bottles---collection)
-        3. [Wineries](#winery-users---collection)
-3. [How to run the project](#how-to-run-the-project)
-    1. [Prerequisites](#prerequisites)
-    2. [Execution](#execution)
-4. [How it was created](#how-it-was-created)
-5. [Additional dependencies installed](#additional-dependencies-installed)
-    1. [Cors](#cors)
-    2. [Dotenv](#dotenv)
-    3. [Express](#express)
-    4. [JSON Web Token](#json-web-token)
-    5. [Moment](#moment)
-    6. [Mongoose](#mongoose)
-    7. [Nodemon (dev)](#nodemon)
+        1. [Consumer Users](#consumer-users---endpoints)
+        2. [Wine Bottles](#wine-bottles---endpoints)
+        3. [Winery Users](#winery-users---endpoints)
+    2. [Database Collections](#database-collections)
+3. [Project Structure](#project-structure)
+4. [How to Run the Project](#how-to-run-the-project)
+5. [Authentication and Authorization](#authentication-and-authorization)
+6. [Logging System](#logging-system)
+7. [Additional Dependencies](#additional-dependencies)
 
 ---
 
-## Description
+## **Description**
 
-This project is the backend server of a **wine application**, designed to offer a personalized experience to consumers, approach them to different bottles' reviews made by other users, and give visibility to wineries to promote their products.  
-It provides registration, authentication, information filtering, and content management features related to types of wine, and wine regions, among others.
+This project serves as the **backend server** for a **wine application**, designed to provide a personalized experience for consumers, allow them to access wine bottle reviews from other users, and give wineries visibility to promote their products.  
 
-## Content
+The backend provides functionalities for:
+- **User registration**
+- **Authentication and authorization**
+- **Content and user management**
+- **Filtering information about wines and wine regions**
 
-Below are listed the different endpoints the server is able to accept (so possible requests to make to), and the different entities/collections the database stores:
+---
 
-### Endpoints
+## **Content**
 
-The server is designed to accept HTTP requests, which allow interaction with the information stored in the database.  
-Below can be found the current implemented endpoints, divided by topic:
+The server accepts HTTP requests to interact with the database.  
+Implemented endpoints are categorized as follows:
 
-#### Consumer users - Endpoints
+### **Endpoints**
 
-These endpoints allow obtaining information from ALL the registered consumers:
+#### **Consumer Users - Endpoints**
 
-- `GET /users/consumers` - Get the list of all registered consumers.
-- `GET /users/consumers/:id` - Get the information about a specific consumer user.  
-    A consumer user with given ID must exist in the database.
-- `POST /users/consumers` - Create a new consumer user.  
-    It requires that all necessary arguments are passed in the request body.
-- `POST /users/login` - Consumer User Login.  
-    It requires that all necessary arguments are passed in the request body.    
-- `PUT /users/consumers/:id` - Update a consumer user's profile.  
-    A consumer user with given ID must exist in the database.
-    It requires that all necessary arguments are passed in the request body.
-- `PATCH /users/consumers/:id/:field` - Update a consumer user's profile specific field.  
-    A consumer user with given ID must exist in the database.
-    The given field must be from a consumer user entity.
-- `DELETE /users/consumers/:id` - Delete a consumer user's account.  
-    A consumer user with given ID must exist in the database.
+- `GET /users/consumers` - Retrieves a list of all registered consumers.
+- `GET /users/consumers/:id` - Retrieves information about a specific consumer user.
+- `POST /users/consumers` - Creates a new consumer user.
+- `POST /users/login` - Consumer user login.
+- `PUT /users/consumers/:id` - Updates a consumer user profile.
+- `PATCH /users/consumers/:id/:field` - Updates a specific field of a consumer user profile.
+- `DELETE /users/consumers/:id` - Deletes a consumer user account.
 
-#### Wine bottles - Endpoints
+#### **Wine Bottles - Endpoints**
 
-These endpoints allow obtaining information from the wine bottles:
+- `GET /wines` - Retrieves a list of all wine bottles.
+- `POST /wines` - Registers a new wine bottle (requires administrator approval).
 
-- `GET /wines` - Get the list of all the wine bottles.
-- `POST /wines` - Register a new wine bottle (requires administrator approval).
+#### **Winery Users - Endpoints**
 
-#### Winery users - Endpoints
+- `GET /users/wineries` - Retrieves a list of all registered wineries.
+- `GET /users/wineries/:id` - Retrieves information about a specific winery user.
+- `POST /users/wineries` - Creates a new winery user.
+- `POST /users/login` - Winery user login.
+- `PUT /users/wineries/:id` - Updates a winery user profile.
+- `PATCH /users/wineries/:id/:field` - Updates a specific field of a winery user profile.
+- `DELETE /users/wineries/:id` - Deletes a winery user account.
 
-These endpoints allow obtaining information from ALL the registered wineries:
+---
 
-- `GET /users/wineries` - Get the list of all registered wineries.
-- `GET /users/wineries/:id` - Get the information about a specific winery user.  
-    A winery user with given ID must exist in the database.
-- `POST /users/wineries` - Create a new winery user.  
-    It requires that all necessary arguments are passed in the request body.
-- `POST /users/login` - Winery User Login.  
-    It requires that all necessary arguments are passed in the request body.    
-- `PUT /users/wineries/:id` - Update a winery user's profile.  
-    A winery user with given ID must exist in the database.
-    It requires that all necessary arguments are passed in the request body.
-- `PATCH /users/wineries/:id/:field` - Update a winery user's profile specific field.  
-    A winery user with given ID must exist in the database.
-    The given field must be from a winery user entity.
-- `DELETE /users/wineries/:id` - Delete a winery user's account.  
-    A winery user with given ID must exist in the database.
+## **Project Structure**
 
-### Database collections
+```
+src/
+│-- server.js
+│-- auth/
+│   │-- authController.js
+│   │-- authMiddlewares.js
+│   │-- authService.js
+│-- constants/
+│   │-- statusCodes.js
+│-- data/
+│   │-- dbConnection.js
+│-- users/
+│   │-- usersController.js
+│   │-- usersRouter.js
+│   │-- usersService.js
+│   │-- consumers/
+│   │   │-- ConsumerModel.js
+│   │   │-- consumersController.js
+│   │   │-- consumersMiddlewares.js
+│   │   │-- consumersRouter.js
+│   │   │-- consumersService.js
+│   │-- wineries/
+│   │   │-- WineryModel.js
+│   │   │-- wineriesController.js
+│   │   │-- wineriesMiddlewares.js
+│   │   │-- wineriesRouter.js
+│   │   │-- wineriesService.js
+│-- utils/
+│   │-- Logger.js
+│-- .env
+│-- README.md
+```
 
-The data model is organized into MongoDB collections, which are:
+---
 
-#### **[Consumer Users](https://cloud.mongodb.com/v2/67712e8d74ee353776ed51a7#/metrics/replicaSet/677133a831c8bf6d5272e506/explorer/Database/consumers/find)** - Collection
+## **How to Run the Project**
 
-This collection stores basic information about consumers registered in the platform, and their properties are:
+### **1. Prerequisites**
+These steps are **only required once** to set up the environment:
 
-- `address` *(String, unique)*: Adress user.
-- `city` *(String, unique)*: City user
-- `Country` *(String, unique)*: Country user.
-- `_id` *(String, unique)*: Unique identifier of the consumer user. Provided automatically by MongoDB when creating the item.
-- `email` *(String, unique)*: Consumer user's account email address. Must not be repeated among the database.
-- `is_active` *(Boolean)*: Indicates wheter the user is active or not. Default value is `true`.
-- `name` *(String)*: Consumer name.
-- `password` *(String)*: Consumer user's account password.
-- `role` *(String, immutable)*: User role. Constant default value of `consumer`.
-- `surname` *(String)*: Consumer surname.
-
-#### Wine bottles - Collection
-
-This collection stores the information about the bottles of wine which belong to any of the registered wineries, and their properties are:
-
-- `_id` *(String, unique)*: Unique identifier of the bottle. Provided automatically by MongoDB when creating the item.
-- `description` *(String)*: Brief description of the wine.
-- `name` *(String)*: Name of the wine.
-- `price` *(Number)*: Price of the bottle.
-
-#### **[Winery Users](https://cloud.mongodb.com/v2/67712e8d74ee353776ed51a7#/metrics/replicaSet/677133a831c8bf6d5272e506/explorer/Database/wineries/find)** - Collection
-
-This collection stores basic information about wineries registered in the platform, and their properties are:
-
-- `_id` *(String, unique)*: Unique identifier of the winery user. Provided automatically by MongoDB when creating the item.
-- `description` *(String, optional)*: Brief information about the winery. Default value is a `null`.
-- `email` *(String, unique)*: Winery user's account email address. Must not be repeated among the database.
-- `is_active` *(Boolean)*: Indicates wheter the user is active or not. Default value is `false`.
-- `location` *(String)*: Location (city, country, etc) where it is located the winery.
-- `name` *(String)*: Winery name.
-- `password` *(String)*: Winery user's account password.
-- `phone` *(String, optional)*: Telephone number to contact the winery. Default value is a `null`.
-- `role` *(String, immutable)*: User role. Constant default value of `winery`.
-- `web_page` *(String, optional)*: URL of the winery web page. Default value is a `null`.
-
-## How to run the project
-
-### Prerequisites
-
-These are the steps needed to be **executed only once**, to set the environment:
-
-1. Install the Node packages:
+1. Install dependencies:
     ```bash
     npm install
     ```
-2. Create a .env file at the root of the project:
+2. Create a `.env` file in the project's root directory:
     ```bash
     touch .env
     ```
-3. Fill the created .env file with:
+3. Populate the `.env` file with the following variables:
     ```env
-    DB_CLUSTER=<db_cluster_name>
-    DB_NAME=<db_name>
-    DB_PASSWORD=<db_user_password>
-    DB_USERNAME=<db_username>
-    PORT=<server_port>
+    PORT=3000
+    DB_CLUSTER=<cluster_name>
+    DB_NAME=<database_name>
+    DB_USERNAME=<username>
+    DB_PASSWORD=<password>
+    JWT_SECRET=<secret_key>
+    JWT_DEFAULT_EXPIRATION=1h
     ```
 
-### Execution
+### **2. Execution**
 
-As this is an Express (back-end) application, it is set to be launched simply with:
-- During development - ```npm run dev```.
-- During deployment - ```npm run start```.
+To start the backend server:
 
-Backend (server) should be running, by default, at **http://localhost:3000/**.
-
-## How it was created
-
-To initialize the project, below steps were followed:
-
-1. **Clone** the repository
+- For development:
     ```bash
-    git clone https://github.com/FSDSTR1024/TFM-backend-rojo.git
+    npm run dev
     ```
-
-2. **Navigate** to the project directory
+- For production:
     ```bash
-    cd TFM-backend-rojo
+    npm run start
     ```
 
-3. **Initialize** a *NPM* (Node Package Manager) project:
-    ```bash
-    npm init
-    ```
+The backend will run by default at **http://localhost:3000/**.
 
-4. **Create** the *server.js* file, where the main logic will be hosted:
-    ```bash
-    mkdir src
-    touch src/server.js
-    ```
+---
 
-5. **Extend** the *package.json* file with usual launching scripts commands:
-    - **start**: ```node ./src/server.js```
-    - **dev**: ```npx nodemon ./src/server.js```
+## **Authentication and Authorization**
 
-## Additional dependencies installed
+Authentication and authorization are managed using **JWT (JSON Web Token)**.
 
-### **[Cors](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing)**:
+- Users log in via `POST /users/login`.
+- A **JWT token** is generated for authenticated users.
+- The middleware `checkProvidedTokenIsValid` protects restricted routes.
+- `checkUserIsAuthorized` prevents users from modifying other users' accounts.
 
-This package is used to enable the *Cross-Origin Resource Sharing*, and permit others to connect the server.
+---
 
+## **Logging System**
+
+The logging system is managed by `Logger.js` in the `utils/` folder.
+
+- **Logs each incoming request** (`logRoute` in `server.js`).
+- **Captures errors** (authentication failures, database issues).
+- **Logs successful operations** (user creation, data updates).
+
+Logging levels: **debug, info, warn, error**.
+
+---
+
+## **Additional Dependencies**
+
+### **1. [Cors](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing)**  
+Enables *Cross-Origin Resource Sharing* to allow external connections.
 ```bash
 npm install cors
 ```
 
-### **[Dotenv](https://www.dotenv.org/)**:
-
-This package is used to load *environmental variables* from **.env** files.
-
+### **2. [Dotenv](https://www.dotenv.org/)**  
+Loads environment variables from `.env` files.
 ```bash
 npm install dotenv
 ```
 
-### **[Express](https://expressjs.com/es/)**:
-
-This package is the most important and sets up the infrastructure for the web aplication.
-
+### **3. [Express](https://expressjs.com/)**  
+Web framework for Node.js.
 ```bash
 npm install express
 ```
 
-### **[JSON Web Token](https://jwt.io/)**:
-
-This package is used to generate and verify tokens, which is essential for handling authentication and authorization in the application.
-
+### **4. [JSON Web Token](https://jwt.io/)**  
+Generates and verifies authentication tokens.
 ```bash
 npm install jsonwebtoken
 ```
 
-### **[Moment](https://momentjs.com/)**:
-
-This package is used to get date and time with specific format in a simpler way.
-
+### **5. [Moment](https://momentjs.com/)**  
+Handles dates and times with custom formats.
 ```bash
 npm install moment
 ```
 
-### **[Mongoose](https://mongoosejs.com/)**:
-
-This package is used to provide schemas for the database models.
-
+### **6. [Mongoose](https://mongoosejs.com/)**  
+ODM to manage MongoDB models.
 ```bash
 npm install mongoose
 ```
 
-### **[Nodemon](https://nodemon.io/)**:
-
-This (developer) package is used to restart the server once changes are saved.
-
+### **7. [Nodemon](https://nodemon.io/)**  
+Automatically restarts the server during development.
 ```bash
 npm install nodemon --save-dev
 ```
+
+---
