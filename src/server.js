@@ -23,14 +23,15 @@ app.use(express.json())
 /* Log the route (useful for debugging purposes) */
 const logRoute = (req, res, next) => {
   logger.debug(
-    `Received request route: ${req.method} ${req.originalUrl}`,
-    " - Authorization:", req.headers.authorization,
-    "\n  - Body:", req.body,
-    "\n  - Params:", req.params,
-    "\n  - Query:", req.query)
+    `Received request route: ${req.method} ${req.originalUrl}
+    - Authorization: ${req.headers.authorization}
+    - Body: ${JSON.stringify(req.body)}
+    - Params: ${JSON.stringify(req.params)}
+    - Query: ${JSON.stringify(req.query)}`
+  )
   next()
 }
-// app.use(logRoute)
+app.use(logRoute)
 
 /**************************************************** Middlewares *****************************************************/
 const { checkProvidedTokenIsValid } = require("./auth/authMiddlewares.js")
