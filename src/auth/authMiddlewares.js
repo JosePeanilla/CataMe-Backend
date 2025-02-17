@@ -9,19 +9,23 @@ const jsonwebtoken = require("jsonwebtoken")
 /************************************************* Internal libraries *************************************************/
 const { statusCodes } = require("../constants/statusCodes.js")
 
+/* Regular expression to enforce password policy */
+const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[a-zA-Z]).{8,}$/
+
 const checkAllLoginCredentialsAreProvided = (req, res, next) => {
   const { email, password } = req.body
-
-  if (email && password) {
-    res.locals.loginData = { email, password }
-    next()
-  }
-  else {
+  if (!email || !password) {
     const errorText = "Missing required arguments: email and/or password!"
     logger.error(errorText)
-    res.status(statusCodes.BadRequest)
-      .send({ error: errorText })
+    return res.status(statusCodes.BadRequest).send({ error: errorText })
   }
+  if (!passwordRegex.test(password)) {
+    const errorText = "Invalid password! It must have at least 8 characters, one uppercase letter, and one number."
+    logger.error(errorText)
+    return res.status(statusCodes.BadRequest).send({ error: errorText })
+  }
+  res.locals.loginData = { email, password }
+  next()
 }
 
 const checkProvidedTokenIsValid = (req, res, next) => {
