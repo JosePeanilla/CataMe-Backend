@@ -53,6 +53,8 @@ These endpoints allow obtaining information from ALL the registered consumers:
     A consumer user with given ID must exist in the database.
 - `POST /users/consumers` - Create a new consumer user.  
     It requires that all necessary arguments are passed in the request body.
+- `POST /users/login` - Consumer User Login.  
+    It requires that all necessary arguments are passed in the request body.    
 - `PUT /users/consumers/:id` - Update a consumer user's profile.  
     A consumer user with given ID must exist in the database.
     It requires that all necessary arguments are passed in the request body.
@@ -78,6 +80,8 @@ These endpoints allow obtaining information from ALL the registered wineries:
     A winery user with given ID must exist in the database.
 - `POST /users/wineries` - Create a new winery user.  
     It requires that all necessary arguments are passed in the request body.
+- `POST /users/login` - Winery User Login.  
+    It requires that all necessary arguments are passed in the request body.    
 - `PUT /users/wineries/:id` - Update a winery user's profile.  
     A winery user with given ID must exist in the database.
     It requires that all necessary arguments are passed in the request body.
@@ -95,6 +99,9 @@ The data model is organized into MongoDB collections, which are:
 
 This collection stores basic information about consumers registered in the platform, and their properties are:
 
+- `address` *(String, unique)*: Adress user.
+- `city` *(String, unique)*: City user
+- `Country` *(String, unique)*: Country user.
 - `_id` *(String, unique)*: Unique identifier of the consumer user. Provided automatically by MongoDB when creating the item.
 - `email` *(String, unique)*: Consumer user's account email address. Must not be repeated among the database.
 - `is_active` *(Boolean)*: Indicates wheter the user is active or not. Default value is `true`.
