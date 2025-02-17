@@ -43,7 +43,7 @@ Implemented endpoints are categorized as follows:
 
 ### **Endpoints**
 
-#### **[Consumer Users] - Endpoints**
+#### [Consumer Users] - Endpoints
 
 - `GET /users/consumers` - Retrieves a list of all registered consumers.
 - `GET /users/consumers/:id` - Retrieves information about a specific consumer user.
@@ -53,12 +53,12 @@ Implemented endpoints are categorized as follows:
 - `PATCH /users/consumers/:id/:field` - Updates a specific field of a consumer user profile.
 - `DELETE /users/consumers/:id` - Deletes a consumer user account.
 
-#### **Wine Bottles - Endpoints**
+#### Wine Bottles - Endpoints
 
 - `GET /wines` - Retrieves a list of all wine bottles.
 - `POST /wines` - Registers a new wine bottle (requires administrator approval).
 
-#### **[Winery Users] - Endpoints**
+#### [Winery Users] - Endpoints
 
 - `GET /users/wineries` - Retrieves a list of all registered wineries.
 - `GET /users/wineries/:id` - Retrieves information about a specific winery user.
@@ -70,9 +70,9 @@ Implemented endpoints are categorized as follows:
 
 ### **Database Collections**
 
-#### **[Consumer Users](https://cloud.mongodb.com/v2/67a777b4c1a21515f10c8093#/metrics/replicaSet/67a7791765d5d93ca0617377/explorer/test/consumers/find) - Collections**
+#### **[Consumer Users](https://cloud.mongodb.com/v2/67a777b4c1a21515f10c8093#/metrics/replicaSet/67a7791765d5d93ca0617377/explorer/test/consumers/find)** - Collections
 
-#### **[Winery Users](https://cloud.mongodb.com/v2/67a777b4c1a21515f10c8093#/metrics/replicaSet/67a7791765d5d93ca0617377/explorer/test/wineries/find) - Collections**
+#### **[Winery Users](https://cloud.mongodb.com/v2/67a777b4c1a21515f10c8093#/metrics/replicaSet/67a7791765d5d93ca0617377/explorer/test/wineries/find)** - Collections
 
 ---
 
