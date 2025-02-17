@@ -74,8 +74,6 @@ Implemented endpoints are categorized as follows:
 
 #### **[Winery Users](https://cloud.mongodb.com/v2/67a777b4c1a21515f10c8093#/metrics/replicaSet/67a7791765d5d93ca0617377/explorer/test/wineries/find)** - Collections
 
----
-
 ## **Project Structure**
 
 ```
