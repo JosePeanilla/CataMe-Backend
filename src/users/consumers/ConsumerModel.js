@@ -3,6 +3,9 @@
 const mongoose = require("mongoose")
 
 const ConsumerSchema = new mongoose.Schema({
+  address: { required: false, type: String },
+  city: { required: false, type: String },
+  country: { required: false, type: String },
   email: { required: true, type: String, unique: true },
   is_active: { default: true, type: Boolean },
   name: { required: true, type: String },
