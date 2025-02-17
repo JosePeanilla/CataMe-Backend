@@ -90,6 +90,7 @@ This collection stores basic information about consumers registered in the platf
 
 #### **[Winery Users](https://cloud.mongodb.com/v2/67a777b4c1a21515f10c8093#/metrics/replicaSet/67a7791765d5d93ca0617377/explorer/test/wineries/find)** - Collections
 
+<<<<<<< HEAD
 This collection stores basic information about wineries registered in the platform, and their properties are:
 
 - `_id` *(String, unique)*: Unique identifier of the winery user. Provided automatically by MongoDB when creating the item.
@@ -105,6 +106,8 @@ This collection stores basic information about wineries registered in the platfo
 
 ---
 
+=======
+>>>>>>> d6e8e762452194dda1adcd5716c3c71dc2198513
 ## **Project Structure**
 
 ```
