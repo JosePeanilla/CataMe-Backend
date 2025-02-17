@@ -70,9 +70,38 @@ Implemented endpoints are categorized as follows:
 
 ### **Database Collections**
 
+The data model is organized into MongoDB collections, which are:
+
 #### **[Consumer Users](https://cloud.mongodb.com/v2/67a777b4c1a21515f10c8093#/metrics/replicaSet/67a7791765d5d93ca0617377/explorer/test/consumers/find)** - Collections
 
+This collection stores basic information about consumers registered in the platform, and their properties are:
+
+- `address` *(String)*: Address user
+- `city` *(String)*: City user
+- `country` *(String)*: Country user
+- `_id` *(String, unique)*: Unique identifier of the consumer user. Provided automatically by MongoDB when creating the item.
+- `email` *(String, unique)*: Consumer user's account email address. Must not be repeated among the database.
+- `is_active` *(Boolean)*: Indicates wheter the user is active or not. Default value is `true`.
+- `name` *(String)*: Consumer name.
+- `password` *(String)*: Consumer user's account password.
+- `role` *(String, immutable)*: User role. Constant default value of `consumer`.
+- `surname` *(String)*: Consumer surname.
+
+
 #### **[Winery Users](https://cloud.mongodb.com/v2/67a777b4c1a21515f10c8093#/metrics/replicaSet/67a7791765d5d93ca0617377/explorer/test/wineries/find)** - Collections
+
+This collection stores basic information about wineries registered in the platform, and their properties are:
+
+- `_id` *(String, unique)*: Unique identifier of the winery user. Provided automatically by MongoDB when creating the item.
+- `description` *(String, optional)*: Brief information about the winery. Default value is a `null`.
+- `email` *(String, unique)*: Winery user's account email address. Must not be repeated among the database.
+- `is_active` *(Boolean)*: Indicates wheter the user is active or not. Default value is `false`.
+- `location` *(String)*: Location (city, country, etc) where it is located the winery.
+- `name` *(String)*: Winery name.
+- `password` *(String)*: Winery user's account password.
+- `phone` *(String, optional)*: Telephone number to contact the winery. Default value is a `null`.
+- `role` *(String, immutable)*: User role. Constant default value of `winery`.
+- `web_page` *(String, optional)*: URL of the winery web page. Default value is a `null`.
 
 ---
 
