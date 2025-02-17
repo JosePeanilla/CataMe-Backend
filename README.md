@@ -66,6 +66,8 @@ Implemented endpoints are categorized as follows:
 - `PATCH /users/wineries/:id/:field` - Updates a specific field of a winery user profile.
 - `DELETE /users/wineries/:id` - Deletes a winery user account.
 
+### **Database Collections**
+
 ---
 
 ## **Project Structure**
