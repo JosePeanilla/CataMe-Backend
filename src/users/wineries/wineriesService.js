@@ -10,6 +10,10 @@ const { WineryModel } = require("./WineryModel.js")
 const wineriesService = {
   createWinery: async (providedWineryArgs) => {
     try {
+      const existingWinery = await WineryModel.findOne({ email: providedWineryArgs.email });
+        if (existingWinery) {
+            throw new Error("The user you are trying to register is already registered in the database.");
+        }
       const newWinery = await WineryModel.create(providedWineryArgs)
       if (newWinery) return newWinery
       else throw `Database returned '${newWinery}' when trying to create a Winery user with provided args!`

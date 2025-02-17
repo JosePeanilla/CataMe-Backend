@@ -9,6 +9,10 @@ const { ConsumerModel } = require("./ConsumerModel.js")
 const consumersService = {
   createConsumer: async (providedConsumerArgs) => {
     try {
+      const existingConsumer = await ConsumerModel.findOne({ email: providedConsumerArgs.email })
+        if (existingConsumer) {
+            throw new Error("The user you are trying to register is already registered in the database.")
+        }
       const newConsumer = await ConsumerModel.create(providedConsumerArgs)
       if (newConsumer) return newConsumer
       else throw `Database returned '${newConsumer}' when trying to create a Consumer user with provided args!`
