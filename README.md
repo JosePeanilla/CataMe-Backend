@@ -41,7 +41,7 @@ Implemented endpoints are categorized as follows:
 
 ### **Endpoints**
 
-#### **[Consumer Users](https://cloud.mongodb.com/v2/67a777b4c1a21515f10c8093#/metrics/replicaSet/67a7791765d5d93ca0617377/explorer/test/consumers/find)** - Collection
+#### **[Consumer Users](https://cloud.mongodb.com/v2/67a777b4c1a21515f10c8093#/metrics/replicaSet/67a7791765d5d93ca0617377/explorer/test/consumers/find)** - Endpoints
 
 - `GET /users/consumers` - Retrieves a list of all registered consumers.
 - `GET /users/consumers/:id` - Retrieves information about a specific consumer user.
@@ -56,7 +56,7 @@ Implemented endpoints are categorized as follows:
 - `GET /wines` - Retrieves a list of all wine bottles.
 - `POST /wines` - Registers a new wine bottle (requires administrator approval).
 
-#### **[Winery Users](https://cloud.mongodb.com/v2/67a777b4c1a21515f10c8093#/metrics/replicaSet/67a7791765d5d93ca0617377/explorer/test/wineries/find)** - Collection
+#### **[Winery Users](https://cloud.mongodb.com/v2/67a777b4c1a21515f10c8093#/metrics/replicaSet/67a7791765d5d93ca0617377/explorer/test/wineries/find)** - Endpoints
 
 - `GET /users/wineries` - Retrieves a list of all registered wineries.
 - `GET /users/wineries/:id` - Retrieves information about a specific winery user.
