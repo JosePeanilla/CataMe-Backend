@@ -65,45 +65,69 @@ const wineriesController = {
   },
   updateWinery: async (req, res) => {
     try {
-      const updatedWinery = await wineriesService.updateWinery({
-        id: req.params.id,
-        ...res.locals.providedWineryArgs
-      })
-      const successText = "Winery user updated successfully!"
-      logger.debug(successText)
-      res.status(statusCodes.OK)
-        .send({ msg: successText, data: updatedWinery })
-    } catch (error) {
-      const errorText = "Winery user could not be updated!"
-      logger.error(errorText, error)
-      res.status(statusCodes.InternalServerError)
-        .send({ msg: errorText, error: error.message })
-    }
-  },
-  updateWineryField: async (req, res) => {
-    try {
-      logger.debug(`Updating winery field: ${req.params.field} with value: ${res.locals.new_value}`)
-      if (!res.locals.new_value) {
-        throw new Error(`New value for field '${req.params.field}' is undefined!`);
-      }
-      const updatedWinery = await wineriesService.updateWineryField({
-        id: req.params.id,
-        field_name: req.params.field,
-        field_value: res.locals.new_value  
-      })
-      if (updatedWinery) {
-        const successText = "Winery user field updated successfully!"
+        const currentWinery = await wineriesService.getWineryById(req.params.id)
+        if (!currentWinery) {
+            throw new Error(`Winery user with ID '${req.params.id}' could not be found!`)
+        }
+        const isSameData = Object.keys(res.locals.providedWineryArgs).every(
+            (key) => currentWinery[key] === res.locals.providedWineryArgs[key]
+        )
+        if (isSameData) {
+            const errorText = "No se ha realizado ningún cambio en la información."
+            logger.warn(errorText)
+            return res.status(statusCodes.BadRequest).send({ msg: errorText, error: errorText })
+        }
+        const updatedWinery = await wineriesService.updateWinery({
+            id: req.params.id,
+            ...res.locals.providedWineryArgs
+        })
+        const successText = "Winery user updated successfully!"
         logger.debug(successText)
         res.status(statusCodes.OK).send({ msg: successText, data: updatedWinery })
-      } else {
-        throw new Error(`Database returned '${updatedWinery}' when trying to update a Winery user '${req.params.field}' field with '${req.params.id}' ID!`)
-      }
     } catch (error) {
+        const errorText = "Winery user could not be updated!"
+        logger.error(errorText, error)
+        res.status(statusCodes.InternalServerError).send({ msg: errorText, error: error.message })
+    }
+},
+updateWineryField: async (req, res) => {
+  try {
+      const { id, field } = req.params
+      const newValue = res.locals.new_value
+      logger.debug(`Updating winery field: ${field} with value: ${newValue}`)
+      if (!newValue) {
+          throw new Error(`New value for field '${field}' is undefined!`)
+      }
+      const currentWinery = await wineriesService.getWineryById(id)
+      if (!currentWinery) {
+          throw new Error(`Winery user with ID '${id}' could not be found!`)
+      }
+      if (currentWinery[field] === newValue) {
+          return res.status(statusCodes.BadRequest).send({
+              msg: `The value for '${field}' is already set to '${newValue}', no changes made.`,
+              error: `No changes were made as the value is identical.`,
+          })
+      }
+      const updatedWinery = await wineriesService.updateWineryField({
+          id,
+          field_name: field,
+          field_value: newValue,
+      })
+      if (updatedWinery) {
+          const successText = "Winery user field updated successfully!"
+          logger.debug(successText)
+          return res.status(statusCodes.OK).send({ msg: successText, data: updatedWinery })
+      } else {
+          throw new Error(
+              `Database returned '${updatedWinery}' when trying to update a Winery user '${field}' field with '${id}' ID!`
+          )
+      }
+  } catch (error) {
       const errorText = "Winery user field could not be updated!"
       logger.error(errorText, error)
-      res.status(statusCodes.InternalServerError).send({ msg: errorText, error: error.message })
-    }
-  }  
+      return res.status(statusCodes.InternalServerError).send({ msg: errorText, error: error.message })
+   }
+  }
 }
 
 /*************************************************** Module export ****************************************************/

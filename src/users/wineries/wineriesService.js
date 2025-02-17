@@ -42,32 +42,51 @@ const wineriesService = {
   },
   updateWinery: async ({ id, ...wineryArgs }) => {
     try {
+      const currentWinery = await WineryModel.findById(id)
+      if (!currentWinery) {
+        throw new Error(`Winery user with ID '${id}' could not be found!`)
+      }
+      const isSameData = Object.keys(wineryArgs).every(
+        (key) => currentWinery[key] === wineryArgs[key]
+      )
+      if (isSameData) {
+        throw new Error("No se ha realizado ningún cambio en la información.")
+      }
       const updatedWinery = await WineryModel.findByIdAndUpdate(id, wineryArgs, { new: true })
-      if (updatedWinery) return updatedWinery
-      else throw `Database returned '${updatedWinery}' when trying to update a Winery user with '${id}' ID!`
+      if (!updatedWinery) {
+        throw new Error(`Database returned '${updatedWinery}' when trying to update a Winery user with '${id}' ID!`)
+      }
+      return updatedWinery
     } catch (error) {
       throw error
     }
   },
   updateWineryField: async ({ id, field_name, field_value }) => {
     try {
-      if (!field_value) {
-        throw new Error(`Field value for '${field_name}' is undefined!`);
-      }
-      logger.debug(`Updating ID: ${id}, Field: ${field_name}, Value: ${field_value}`)
-      const updatedWinery = await WineryModel.findByIdAndUpdate(
-        id,
-        { [field_name]: field_value },
-        { new: true }
-      )
-      if (!updatedWinery) {
-        throw new Error(`Database returned '${updatedWinery}' when trying to update a Winery user '${field_name}' field with '${id}' ID!`)
-      }
-      return updatedWinery
-    } catch (error) {
-      throw error
+        if (!field_value) {
+            throw new Error(`Field value for '${field_name}' is undefined!`)
+        }
+        const currentWinery = await WineryModel.findById(id)
+        if (!currentWinery) {
+            throw new Error(`Winery user with ID '${id}' could not be found!`)
+        }
+        if (currentWinery[field_name] === field_value) {
+            throw new Error(`The value for '${field_name}' is already set to '${field_value}', no changes made.`)
+        }
+        logger.debug(`Updating ID: ${id}, Field: ${field_name}, Value: ${field_value}`)
+        const updatedWinery = await WineryModel.findByIdAndUpdate(
+            id,
+            { [field_name]: field_value },
+            { new: true }
+        )
+        if (!updatedWinery) {
+            throw new Error(`Database returned '${updatedWinery}' when trying to update a Winery user '${field_name}' field with '${id}' ID!`)
+        }
+        return updatedWinery
+     } catch (error) {
+        throw error
     }
-  }  
+ }
 }
 
 /*************************************************** Module export ****************************************************/

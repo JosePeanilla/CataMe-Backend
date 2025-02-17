@@ -69,46 +69,67 @@ const consumersController = {
   },
   updateConsumer: async (req, res) => {
     try {
-      const updatedConsumer = await consumersService.updateConsumer({
-        id: req.params.id,
-        ...res.locals.providedConsumerArgs
-      })
-      const successText = "Consumer user updated successfully!"
-      logger.debug(successText)
-      res.status(statusCodes.OK)
-        .send({ msg: successText, data: updatedConsumer })
+        const currentConsumer = await consumersService.getConsumerById(req.params.id)
+        if (!currentConsumer) {
+            return res.status(statusCodes.NotFound)
+                .send({ msg: "Consumer user not found!", error: "Consumer user not found!" })
+        }
+        const isSameData = Object.keys(res.locals.providedConsumerArgs).every(
+            (key) => currentConsumer[key] === res.locals.providedConsumerArgs[key]
+        )
+        if (isSameData) {
+            return res.status(statusCodes.OK)
+                .send({ msg: "No changes detected, update operation skipped." })
+        }
+        const updatedConsumer = await consumersService.updateConsumer({
+            id: req.params.id,
+            ...res.locals.providedConsumerArgs
+        })
+        const successText = "Consumer user updated successfully!"
+        logger.debug(successText)
+        res.status(statusCodes.OK).send({ msg: successText, data: updatedConsumer })
     } catch (error) {
-      const errorText = "Consumer user could not be updated!"
-      logger.error(errorText, error)
-      res.status(statusCodes.InternalServerError)
-        .send({ msg: errorText, error: error.message })
+        const errorText = "Consumer user could not be updated!"
+        logger.error(errorText, error)
+        res.status(statusCodes.InternalServerError)
+            .send({ msg: errorText, error: error.message })
     }
   },
 
   updateConsumerField: async (req, res) => {
     try {
-      logger.debug(`Updating consumer field: ${req.params.field} with value: ${res.locals.new_value}`)
-      if (!res.locals.new_value) {
-        throw new Error(`New value for field '${req.params.field}' is undefined!`);
-      }
-      const updatedConsumer = await consumersService.updateConsumerField({
-        id: req.params.id,
-        field_name: req.params.field,
-        field_value: res.locals.new_value  
-      })
-      if (updatedConsumer) {
-        const successText = "Consumer user field updated successfully!"
+        const { id, field } = req.params
+        const newValue = res.locals.new_value
+        logger.debug(`Updating consumer field: ${field} with value: ${newValue}`)
+        if (!newValue) {
+            throw new Error(`New value for field '${field}' is undefined!`)
+        }
+        const existingConsumer = await consumersService.getConsumerById(id)
+        if (!existingConsumer) {
+            throw new Error(`User with ID '${id}' does not exist in the database.`)
+        }
+        if (existingConsumer[field] === newValue) {
+            const errorText = `Cannot update field '${field}' because the value is the same.`
+            logger.error(errorText)
+            return res.status(statusCodes.BadRequest).send({ msg: errorText, error: errorText })
+        }
+        const updatedConsumer = await consumersService.updateConsumerField({
+            id,
+            field_name: field,
+            field_value: newValue
+        })
+        if (!updatedConsumer) {
+            throw new Error(`Database returned '${updatedConsumer}' when trying to update a Consumer user '${field}' field with '${id}' ID!`)
+        }
+        const successText = `El campo '${field}' ha sido actualizado correctamente.`
         logger.debug(successText)
         res.status(statusCodes.OK).send({ msg: successText, data: updatedConsumer })
-      } else {
-        throw `Database returned '${updatedConsumer}' when trying to update a Consumer user '${req.params.field}' field with '${req.params.id}' ID!`
-      }
-    } catch (error) {
-      const errorText = "Consumer user field could not be updated!"
-      logger.error(errorText, error)
-      res.status(statusCodes.InternalServerError).send({ msg: errorText, error: error.message })
+      } catch (error) {
+        const errorText = "Consumer user field could not be updated!"
+        logger.error(errorText, error)
+        res.status(statusCodes.InternalServerError).send({ msg: errorText, error: error.message })
     }
-  }  
+  },
 }
 
 /*************************************************** Module export ****************************************************/
