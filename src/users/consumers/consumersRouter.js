@@ -9,9 +9,12 @@ const consumersRouter = express.Router()
 const {
   checkAllConsumerArgsAreProvided,
   checkProvidedConsumerExists,
-  checkProvidedConsumerFieldIsValid
+  checkProvidedConsumerFieldIsValid,
+  checkUpdateFieldsProvided,
+  checkNewValueMatchesConfirmation,
+  checkCurrentValueIsCorrect
 } = require("./consumersMiddlewares.js")
-const { checkProvidedTokenIsValid } = require("../../auth/authMiddlewares.js")
+const { checkProvidedTokenIsValid, checkUserIsAuthorized } = require("../../auth/authMiddlewares.js")
 
 /***************************************************** Endpoints ******************************************************/
 const { consumersController } = require("./consumersController.js")
@@ -27,9 +30,10 @@ consumersRouter.post('/',
 )
 
 /* /users/consumers/<id>/ */
-consumersRouter.use("/:id", checkProvidedConsumerExists)
+consumersRouter.use("/:id", checkProvidedTokenIsValid, checkProvidedConsumerExists)
 consumersRouter.get('/:id', consumersController.getConsumer)
 consumersRouter.put('/:id',
+  checkUserIsAuthorized,
   checkAllConsumerArgsAreProvided,
   consumersController.updateConsumer
 )
@@ -37,9 +41,14 @@ consumersRouter.delete('/:id', consumersController.deleteConsumer)
 
 /* /users/consumers/<id>/<field>/ */
 consumersRouter.patch('/:id/:field',
+  checkProvidedTokenIsValid,
+  checkUserIsAuthorized,
   checkProvidedConsumerFieldIsValid,
+  checkUpdateFieldsProvided,
+  checkNewValueMatchesConfirmation,
+  checkCurrentValueIsCorrect,
   consumersController.updateConsumerField
-)
+) 
 
 /*************************************************** Module export ****************************************************/
 module.exports = { consumersRouter }

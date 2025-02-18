@@ -1,3 +1,6 @@
+/************************************************** Internal logger ***************************************************/
+const { Logger } = require("../../utils/Logger.js")
+const logger = new Logger(__filename)
 /************************************************* Internal libraries *************************************************/
 /* Model of 'consumer users' entity */
 const { ConsumerModel } = require("./ConsumerModel.js")
@@ -6,6 +9,10 @@ const { ConsumerModel } = require("./ConsumerModel.js")
 const consumersService = {
   createConsumer: async (providedConsumerArgs) => {
     try {
+      const existingConsumer = await ConsumerModel.findOne({ email: providedConsumerArgs.email })
+        if (existingConsumer) {
+            throw new Error("The user you are trying to register is already registered in the database.")
+        }
       const newConsumer = await ConsumerModel.create(providedConsumerArgs)
       if (newConsumer) return newConsumer
       else throw `Database returned '${newConsumer}' when trying to create a Consumer user with provided args!`
@@ -25,24 +32,66 @@ const consumersService = {
   getAllConsumers: async () => {
     return await ConsumerModel.find()
   },
-  updateConsumer: async ({ id, ...consumerArgs }) => {
+  
+  getConsumerById: async (id) => {
     try {
-      const updatedConsumer = await ConsumerModel.findByIdAndUpdate(id, consumerArgs, { new: true })
-      if (updatedConsumer) return updatedConsumer
-      else throw `Database returned '${updatedConsumer}' when trying to update a Consumer user with '${id}' ID!`
+      const consumer = await ConsumerModel.findById(id)
+      if (!consumer) {
+        throw `Consumer user with ID '${id}' could not be found!`
+      }
+      return consumer
     } catch (error) {
       throw error
     }
   },
+
+  updateConsumer: async ({ id, ...consumerArgs }) => {
+    try {
+        const currentConsumer = await ConsumerModel.findById(id)
+        if (!currentConsumer) {
+            throw new Error(`Consumer user with ID '${id}' could not be found!`)
+        }
+        const isSameData = Object.keys(consumerArgs).every(
+            (key) => currentConsumer[key] === consumerArgs[key]
+        )
+        if (isSameData) {
+            throw new Error("No changes detected, update operation skipped.")
+        }
+        const updatedConsumer = await ConsumerModel.findByIdAndUpdate(id, consumerArgs, { new: true })
+        if (updatedConsumer) return updatedConsumer
+        else throw new Error(`Database returned '${updatedConsumer}' when trying to update a Consumer user with '${id}' ID!`)
+        
+    } catch (error) {
+        throw error
+    }
+},
+
   updateConsumerField: async ({ id, field_name, field_value }) => {
     try {
-      const updatedConsumer = await ConsumerModel.findByIdAndUpdate(id, { [field_name]: field_value }, { new: true })
-      if (updatedConsumer) return updatedConsumer
-      else throw `Database returned '${updatedConsumer}' when trying to update a Consumer user '${field_name}' field with '${id}' ID!`
+        if (!field_value) {
+            throw new Error(`Field value for '${field_name}' is undefined!`)
+        }
+        const existingConsumer = await ConsumerModel.findById(id)
+        if (!existingConsumer) {
+            throw new Error(`User with ID '${id}' does not exist in the database.`)
+        }
+        if (existingConsumer[field_name] === field_value) {
+            throw new Error(`Cannot update field '${field_name}' because the value is the same.`)
+        }
+        logger.debug(`Updating ID: ${id}, Field: ${field_name}, Value: ${field_value}`)
+        const updatedConsumer = await ConsumerModel.findByIdAndUpdate(
+            id,
+            { [field_name]: field_value },
+            { new: true }
+        )
+        if (!updatedConsumer) {
+            throw new Error(`Database returned '${updatedConsumer}' when trying to update a Consumer user '${field_name}' field with '${id}' ID!`)
+        }
+        return updatedConsumer;
     } catch (error) {
-      throw error
+        throw error
     }
-  }
+  },
 }
 
 /*************************************************** Module export ****************************************************/
