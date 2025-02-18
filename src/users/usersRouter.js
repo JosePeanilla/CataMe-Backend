@@ -19,7 +19,7 @@ const { authController } = require("../auth/authController.js")
 const { usersController } = require("./usersController.js")
 
 /* /users/ */
-usersRouter.get('/', usersController.getAllUsers)
+usersRouter.get("/", usersController.getAllUsers)
 
 /* /users/login/ */
 usersRouter.post("/login",

@@ -55,8 +55,15 @@ Implemented endpoints are categorized as follows:
 
 #### Wine Bottles - Endpoints
 
-- `GET /wines` - Retrieves a list of all wine bottles.
-- `POST /wines` - Registers a new wine bottle (requires administrator approval).
+- `GET /wines` - Get the list of all the wine bottles.
+- `GET /wines/:id` - Get the information about a specific wine bottle.  
+    A wine bottle with given ID must exist in the database.
+- `POST /wines` - Register/Create a new wine bottle (requires administrator approval).
+- `PUT /wines/:id` - Update a wine bottle.  
+    A wine bottle with given ID must exist in the database.
+    It requires that all necessary arguments are passed in the request body.
+- `DELETE /wines/:id` - Delete a wine bottle.  
+    A wine bottle with given ID must exist in the database.
 
 #### Winery Users - Endpoints
 
@@ -87,6 +94,17 @@ This collection stores basic information about consumers registered in the platf
 - `role` *(String, immutable)*: User role. Constant default value of `consumer`.
 - `surname` *(String)*: Consumer surname.
 
+####  **[Wine bottles](https://cloud.mongodb.com/v2/67712e8d74ee353776ed51a7#/metrics/replicaSet/677133a831c8bf6d5272e506/explorer/Database/consumers/find)** - Collection
+
+This collection stores the information about the bottles of wine which belong to any of the registered wineries, and their properties are:
+
+- `_id` *(String, unique)*: Unique identifier of the bottle. Provided automatically by MongoDB when creating the item.
+- `description` *(String)*: Brief description of the wine.
+- `name` *(String)*: Name of the wine.
+- `price` *(Number)*: Price of the bottle.
+- `region` *(String)*: Name of winery.
+- `type` *(String)*: Type of the wine.
+- `year` *(Number)*: Year of the bottle.
 
 #### **[Winery Users](https://cloud.mongodb.com/v2/67a777b4c1a21515f10c8093#/metrics/replicaSet/67a7791765d5d93ca0617377/explorer/test/wineries/find)** - Collections
 

@@ -40,14 +40,14 @@ const { checkProvidedTokenIsValid } = require("./auth/authMiddlewares.js")
 const { usersRouter } = require("./users/usersRouter.js")
 app.use("/users", usersRouter)
 
+const { winesRouter } = require("./wines/winesRouter.js")
+app.use("/wines", winesRouter)
+
 /***************************************************** Endpoints ******************************************************/
 const { usersController } = require("./users/usersController.js")
 
 /* /user/ */
-app.get("/user",
-  checkProvidedTokenIsValid,
-  usersController.getLoggedUser
-)
+app.get("/user", checkProvidedTokenIsValid, usersController.getLoggedUser)
 
 /********************************************* Error-Handling Middlewares *********************************************/
 const { statusCodes } = require("./constants/statusCodes.js")
@@ -57,7 +57,7 @@ app.use((req, res) => {
   const errorText = `Route '[${req.method}] ${req.originalUrl}' could not be found!`
   logger.error(errorText)
   res.status(statusCodes.NotFound)
-    .send({ error: errorText })
+  .send({ error: errorText })
 })
 
 /* Uncontrolled Error */
