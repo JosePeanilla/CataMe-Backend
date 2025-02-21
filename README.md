@@ -102,8 +102,9 @@ This collection stores the information about the bottles of wine which belong to
 - `description` *(String)*: Brief description of the wine.
 - `name` *(String)*: Name of the wine.
 - `price` *(Number)*: Price of the bottle.
-- `region` *(String)*: Name of winery.
+- `region` *(String)*: Name of region.
 - `type` *(String)*: Type of the wine.
+- `winery` *(String)*: Name of winery.
 - `year` *(Number)*: Year of the bottle.
 
 #### **[Winery Users](https://cloud.mongodb.com/v2/67a777b4c1a21515f10c8093#/metrics/replicaSet/67a7791765d5d93ca0617377/explorer/test/wineries/find)** - Collections
