@@ -12,4 +12,5 @@ winesRouter.get("/:id", winesController.getWineById)
 winesRouter.put("/:id", winesController.updateWine)
 winesRouter.delete("/:id", winesController.deleteWine)
 
+/*************************************************** Module export ****************************************************/
 module.exports = { winesRouter }

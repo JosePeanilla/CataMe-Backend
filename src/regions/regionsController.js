@@ -1,6 +1,6 @@
 const { regionsService } = require("./regionsService.js")
 
-const winesController = {
+const regionsController = {
   getAllRegions: async (req, res) => {
     try {
       const regions = await regionsService.getAllRegions()
@@ -12,10 +12,10 @@ const winesController = {
     }
   },
 
-  getRegionByName: async (req, res) => {
+  getRegionById: async (req, res) => {
     try {
       const { id } = req.params
-      const region = await regionsService.getRegionByName({ id })
+      const region = await regionsService.getRegionById({ id })
       res
         .status(200)
         .json({ message: "Region retrieved successfully!", data: region })
@@ -35,7 +35,7 @@ const winesController = {
     }
   },
 
-  updateWine: async (req, res) => {
+  updateRegion: async (req, res) => {
     try {
       const { id } = req.params
       const updatedRegion = await regionsService.updateRegion({ id, ...req.body })
@@ -60,4 +60,5 @@ const winesController = {
   },
 }
 
+/*************************************************** Module export ****************************************************/
 module.exports = { regionsController }

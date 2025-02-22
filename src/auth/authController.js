@@ -17,7 +17,8 @@ const authController = {
       const loggedUser = await authService.login(res.locals.loginData)
       if (!loggedUser) {
         return res.status(statusCodes.Forbidden)
-          .send({ error: "User could not be logged in!" })
+        .send({ error: "Las credenciales de inicio de sesión no son correctas. Por favor, inténtelo de nuevo con los datos correctos." })
+
       }
       else {
         /* Valid user, generate token */

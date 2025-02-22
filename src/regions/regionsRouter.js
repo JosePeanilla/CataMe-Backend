@@ -12,4 +12,5 @@ regionsRouter.get("/:id", regionsController.getRegionById)
 regionsRouter.put("/:id", regionsController.updateRegion)
 regionsRouter.delete("/:id", regionsController.deleteRegion)
 
+/*************************************************** Module export ****************************************************/
 module.exports = { regionsRouter }
