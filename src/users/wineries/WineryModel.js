@@ -21,7 +21,10 @@ const WinerySchema = new mongoose.Schema({
   phone: { default: null, type: String },
   role: { default: "wineries", immutable: true, type: String },
   web_page: { default: null, type: String }
-}, { timestamps: true })
+}, { 
+  timestamps: true,
+  collection: "wineries"
+ })
 
 const WineryModel = mongoose.model("winery", WinerySchema)
 

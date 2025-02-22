@@ -40,6 +40,9 @@ const { checkProvidedTokenIsValid } = require("./auth/authMiddlewares.js")
 const { usersRouter } = require("./users/usersRouter.js")
 app.use("/users", usersRouter)
 
+const { wineriesRouter } = require("./users/wineries/wineriesRouter.js")
+app.use("/wineries", wineriesRouter)
+
 const { winesRouter } = require("./wines/winesRouter.js")
 app.use("/wines", winesRouter)
 

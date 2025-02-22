@@ -24,6 +24,16 @@ const winesController = {
     }
   },
 
+  getWinesByWinery: async (req, res) => {
+    try {
+      const { wineryId } = req.params
+      const wines = await winesService.getWinesByWinery(wineryId)
+      res.status(200).json({ message: "Wines retrieved successfully!", data: wines })
+    } catch (error) {
+      res.status(500).json({ error: error.message })
+    }
+  },  
+
   createWine: async (req, res) => {
     try {
       const newWine = await winesService.createWine(req.body)

@@ -6,6 +6,7 @@ const { validateWineData } = require("./winesMiddlewares.js")
 const { winesController } = require("./winesController.js")
 
 winesRouter.get("/", winesController.getAllWines)
+winesRouter.get('/winery/:wineryId', winesController.getWinesByWinery)
 winesRouter.post("/", validateWineData, winesController.createWine)
 
 winesRouter.get("/:id", winesController.getWineById)

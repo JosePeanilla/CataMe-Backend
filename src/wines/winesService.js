@@ -36,6 +36,15 @@ const winesService = {
     }
   },
 
+  getWinesByWinery: async (wineryId) => {
+    try {
+      const wines = await WineModel.find({ winery: wineryId })
+      return wines;
+    } catch (error) {
+      throw new Error(error.message)
+    }
+  },
+  
   updateWine: async ({ id, ...wineArgs }) => {
     try {
       const updatedWine = await WineModel.findByIdAndUpdate(id, wineArgs, {
