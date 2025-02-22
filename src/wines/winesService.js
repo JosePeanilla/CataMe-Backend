@@ -5,13 +5,14 @@ const { WineModel } = require("./WineModel.js")
 const winesService = {
   createWine: async (providedWineArgs) => {
     try {
-      const newWine = await WineModel.create(providedWineArgs)
-      if (!newWine) throw new Error("Failed to create wine")
-      return newWine
+      console.log("Winery ID recibido en createWine:", providedWineArgs.winery);
+      const newWine = await WineModel.create(providedWineArgs);
+      if (!newWine) throw new Error("Failed to create wine");
+      return newWine;
     } catch (error) {
-      throw new Error(error.message)
+      throw new Error(error.message);
     }
-  },
+},
 
   deleteWine: async ({ id }) => {
     try {
@@ -41,6 +42,7 @@ const winesService = {
     try {
       console.log("Winery ID recibido:", wineryId)
       const wines = await WineModel.find({ winery: new mongoose.Types.ObjectId(wineryId) }).populate("winery")
+      console.log("Vinos encontrados:", wines)
       return wines;
     } catch (error) {
       throw new Error(error.message)

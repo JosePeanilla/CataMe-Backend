@@ -26,7 +26,7 @@ const WinerySchema = new mongoose.Schema({
   collection: "wineries"
  })
 
-const WineryModel = mongoose.model("winery", WinerySchema)
+ const WineryModel = mongoose.model("Winery", WinerySchema)
 
 /*************************************************** Module export ****************************************************/
 module.exports = { WineryModel, WinerySchema }

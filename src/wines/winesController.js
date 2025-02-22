@@ -1,3 +1,4 @@
+const mongoose = require("mongoose")
 const { winesService } = require("./winesService.js")
 
 const winesController = {
@@ -26,11 +27,14 @@ const winesController = {
 
   getWinesByWinery: async (req, res) => {
     try {
-      const { wineryId } = req.params
-      const wines = await winesService.getWinesByWinery(wineryId)
-      res.status(200).json({ message: "Wines retrieved successfully!", data: wines })
+      const { wineryId } = req.params;
+      if (!mongoose.Types.ObjectId.isValid(wineryId)) {
+        return res.status(400).json({ error: "Invalid winery ID" });
+      }
+      const wines = await winesService.getWinesByWinery(wineryId);
+      res.status(200).json({ message: "Wines retrieved successfully!", data: wines });
     } catch (error) {
-      res.status(500).json({ error: error.message })
+      res.status(500).json({ error: error.message });
     }
   },  
 
