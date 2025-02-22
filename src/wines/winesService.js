@@ -1,3 +1,4 @@
+const mongoose = require("mongoose")
 const { WineModel } = require("./WineModel.js")
 
 /* Service which interacts with the 'wine' database */
@@ -38,7 +39,8 @@ const winesService = {
 
   getWinesByWinery: async (wineryId) => {
     try {
-      const wines = await WineModel.find({ winery: wineryId })
+      console.log("Winery ID recibido:", wineryId)
+      const wines = await WineModel.find({ winery: new mongoose.Types.ObjectId(wineryId) }).populate("winery")
       return wines;
     } catch (error) {
       throw new Error(error.message)
