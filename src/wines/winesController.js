@@ -60,4 +60,5 @@ const winesController = {
   },
 }
 
+/*************************************************** Module export ****************************************************/
 module.exports = { winesController }

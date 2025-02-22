@@ -11,4 +11,5 @@ const validateRegionData = (req, res, next) => {
     next()
   }
   
+  /*************************************************** Module export ****************************************************/
   module.exports = { validateRegionData }

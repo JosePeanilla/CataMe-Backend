@@ -17,4 +17,5 @@ const validateWineData = (req, res, next) => {
   next()
 }
 
+/*************************************************** Module export ****************************************************/
 module.exports = { validateWineData }
