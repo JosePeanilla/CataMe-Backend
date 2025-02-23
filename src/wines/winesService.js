@@ -5,7 +5,7 @@ const { WineModel } = require("./WineModel.js")
 const winesService = {
   createWine: async (providedWineArgs) => {
     try {
-      console.log("Winery ID recibido en createWine:", providedWineArgs.winery);
+      ("Winery ID recibido en createWine:", providedWineArgs.winery);
       const newWine = await WineModel.create(providedWineArgs);
       if (!newWine) throw new Error("Failed to create wine");
       return newWine;
@@ -26,11 +26,15 @@ const winesService = {
 
   getAllWines: async () => {
     return await WineModel.find()
+    .populate("region", "name")
+    .populate("winery", "name")
   },
 
   getWineById: async ({ id }) => {
     try {
       const wine = await WineModel.findById(id)
+      .populate("region", "name")
+      .populate("winery", "name")
       if (!wine) throw new Error(`No wine found with ID '${id}'`)
       return wine
     } catch (error) {
@@ -40,9 +44,9 @@ const winesService = {
 
   getWinesByWinery: async (wineryId) => {
     try {
-      console.log("Winery ID recibido:", wineryId)
-      const wines = await WineModel.find({ winery: new mongoose.Types.ObjectId(wineryId) }).populate("winery")
-      console.log("Vinos encontrados:", wines)
+      const wines = await WineModel.find({ winery: new mongoose.Types.ObjectId(wineryId) })
+      .populate("region", "name")
+      .populate("winery", "name")
       return wines;
     } catch (error) {
       throw new Error(error.message)
@@ -54,6 +58,8 @@ const winesService = {
       const updatedWine = await WineModel.findByIdAndUpdate(id, wineArgs, {
         new: true,
       })
+      .populate("region", "name")
+      .populate("winery", "name")
       if (!updatedWine) throw new Error(`No wine found with ID '${id}'`)
       return updatedWine
     } catch (error) {

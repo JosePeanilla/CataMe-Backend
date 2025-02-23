@@ -10,6 +10,8 @@ const WineSchema = new mongoose.Schema(
     type: { type: String, required: true },
     winery: { type: mongoose.Schema.Types.ObjectId, ref: "Winery", required: true },
     year: { type: Number, required: true },
+    country: { type: String, required: true },
+    image: { type: String },
   },
   { timestamps: true }
 )
