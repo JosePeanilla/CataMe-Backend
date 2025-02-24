@@ -50,6 +50,19 @@ const checkProvidedTokenIsValid = (req, res, next) => {
   }
 }
 
+const checkWineryRole = (req, res, next) => {
+  const { role } = res.locals.loggedUserToken
+
+  if (role !== "wineries") {
+    const errorText = "Unauthorized: Only wineries can manage wines."
+    logger.error(errorText)
+    return res.status(statusCodes.Forbidden).send({ error: errorText })
+  }
+
+  next()
+}
+
+
 const checkUserIsAuthorized = (req, res, next) => {
   const { id } = req.params
   const { id: loggedUserId, role } = res.locals.loggedUserToken
@@ -67,5 +80,6 @@ const checkUserIsAuthorized = (req, res, next) => {
 module.exports = {
   checkAllLoginCredentialsAreProvided,
   checkProvidedTokenIsValid,
+  checkWineryRole,
   checkUserIsAuthorized
 }
