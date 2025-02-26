@@ -28,6 +28,7 @@ const winesService = {
     return await WineModel.find()
     .populate("region", "name")
     .populate("winery", "name")
+    .sort({ createdAt: -1 })
   },
 
   getWineById: async ({ id }) => {
