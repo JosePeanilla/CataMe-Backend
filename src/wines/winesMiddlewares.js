@@ -1,5 +1,5 @@
 const validateWineData = (req, res, next) => {
-  const { name, winery, type, region, year, price, description } =
+  const { name, winery, type, region, year, price, description, additionalDescription } =
     req.body
 
   if (
