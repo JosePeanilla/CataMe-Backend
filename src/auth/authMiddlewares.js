@@ -8,6 +8,7 @@ const jsonwebtoken = require("jsonwebtoken")
 
 /************************************************* Internal libraries *************************************************/
 const { statusCodes } = require("../constants/statusCodes.js")
+const { ReviewModel } = require("../reviews/ReviewModel.js")
 
 /* Regular expression to enforce password policy */
 const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[a-zA-Z]).{8,}$/
@@ -63,17 +64,25 @@ const checkWineryRole = (req, res, next) => {
 }
 
 
-const checkUserIsAuthorized = (req, res, next) => {
-  const { id } = req.params
-  const { id: loggedUserId, role } = res.locals.loggedUserToken
+const checkUserIsAuthorized = async (req, res, next) => {
+  try {
+    const { id } = req.params; // ID de la review
+    const { id: loggedUserId } = res.locals.loggedUserToken;
 
-  if (id !== loggedUserId) {
-    const errorText = "You are not authorized to modify this profile!"
-    logger.error(errorText)
-    return res.status(statusCodes.Forbidden).send({ error: errorText })
+    const review = await ReviewModel.findById(id);
+    if (!review) {
+      return res.status(statusCodes.NotFound).send({ error: "Review not found!" });
+    }
+
+    if (review.user.toString() !== loggedUserId) {
+      return res.status(statusCodes.Forbidden).send({ error: "You are not authorized to modify this review!" });
+    }
+
+    next();
+  } catch (error) {
+    logger.error("Authorization check failed!", error);
+    res.status(statusCodes.InternalServerError).send({ error: "Internal Server Error" });
   }
-
-  next()
 }
 
 /*************************************************** Module export ****************************************************/

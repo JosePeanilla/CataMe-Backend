@@ -23,7 +23,7 @@ const ConsumerSchema = new mongoose.Schema({
   surname: { required: true, type: String }
 }, { timestamps: true })
 
-const ConsumerModel = mongoose.model("consumer", ConsumerSchema)
+const ConsumerModel = mongoose.model("Consumer", ConsumerSchema)
 
 /*************************************************** Module export ****************************************************/
 module.exports = { ConsumerModel, ConsumerSchema }

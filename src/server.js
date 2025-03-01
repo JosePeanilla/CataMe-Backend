@@ -49,6 +49,9 @@ app.use("/wines", winesRouter)
 const { regionsRouter } = require("./regions/regionsRouter.js")
 app.use("/regions", regionsRouter)
 
+const { reviewsRouter } = require("./reviews/reviewsRouter.js") 
+app.use("/reviews", reviewsRouter)
+
 /***************************************************** Endpoints ******************************************************/
 const { usersController } = require("./users/usersController.js")
 

@@ -1,5 +1,5 @@
 const mongoose = require("mongoose")
-const { WineModel } = require("./WineModel.js")
+const { WineModel } = require("./WineModel.js") 
 
 /* Service which interacts with the 'wine' database */
 const winesService = {
@@ -25,10 +25,24 @@ const winesService = {
   },
 
   getAllWines: async () => {
-    return await WineModel.find()
-    .populate("region", "name")
-    .populate("winery", "name")
-    .sort({ createdAt: -1 })
+    try {
+      const wines = await WineModel.find()
+        .populate("region", "name")
+        .populate("winery", "name")
+        .populate("reviews", "rating createdAt")
+        .sort({ "reviews.createdAt": -1 })
+      const winesWithRatings = wines.map((wine) => {
+        const totalReviews = wine.reviews.length
+        const avgRating =
+          totalReviews > 0
+            ? wine.reviews.reduce((sum, review) => sum + review.rating, 0) / totalReviews
+            : 0;
+        return { ...wine.toObject(), averageRating: avgRating.toFixed(1) }
+      })
+      return winesWithRatings
+    } catch (error) {
+      throw new Error(error.message)
+    }
   },
 
   getWineById: async ({ id }) => {
@@ -36,19 +50,35 @@ const winesService = {
       const wine = await WineModel.findById(id)
       .populate("region", "name")
       .populate("winery", "name")
+      .populate("reviews", "rating createdAt")
+      .sort({ "reviews.createdAt": -1 })
       if (!wine) throw new Error(`No wine found with ID '${id}'`)
-      return wine
+      const totalReviews = wine.reviews.length
+      const avgRating = totalReviews
+        ? wine.reviews.reduce((sum, review) => sum + review.rating, 0) / totalReviews
+        : 0
+      return { ...wine.toObject(), averageRating: avgRating.toFixed(1) };
     } catch (error) {
       throw new Error(error.message)
-    }
+    }    
   },
 
   getWinesByWinery: async (wineryId) => {
     try {
       const wines = await WineModel.find({ winery: new mongoose.Types.ObjectId(wineryId) })
-      .populate("region", "name")
-      .populate("winery", "name")
-      return wines;
+        .populate("region", "name")
+        .populate("winery", "name")
+        .populate("reviews", "rating createdAt")
+        .sort({ "reviews.createdAt": -1 })
+      const winesWithRatings = wines.map(wine => {
+        const totalReviews = wine.reviews.length
+        const avgRating =
+          totalReviews > 0
+            ? wine.reviews.reduce((sum, review) => sum + review.rating, 0) / totalReviews
+            : 0;
+        return { ...wine.toObject(), averageRating: avgRating.toFixed(1) }
+      })
+      return winesWithRatings
     } catch (error) {
       throw new Error(error.message)
     }
@@ -57,12 +87,19 @@ const winesService = {
   updateWine: async ({ id, ...wineArgs }) => {
     try {
       const updatedWine = await WineModel.findByIdAndUpdate(id, wineArgs, {
-        new: true,
+        new: true, 
       })
-      .populate("region", "name")
-      .populate("winery", "name")
+        .populate("region", "name")
+        .populate("winery", "name")
+        .populate("reviews", "rating createdAt")
+        .sort({ "reviews.createdAt": -1 })
       if (!updatedWine) throw new Error(`No wine found with ID '${id}'`)
-      return updatedWine
+      const totalReviews = updatedWine.reviews.length
+      const avgRating =
+        totalReviews > 0
+          ? updatedWine.reviews.reduce((sum, review) => sum + review.rating, 0) / totalReviews
+          : 0
+      return { ...updatedWine.toObject(), averageRating: avgRating.toFixed(1) }
     } catch (error) {
       throw new Error(error.message)
     }
