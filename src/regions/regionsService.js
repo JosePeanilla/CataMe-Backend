@@ -23,7 +23,7 @@ const regionsService = {
   },
 
   getAllRegions: async () => {
-    return await RegionModel.find()
+    return await RegionModel.find().sort({ name: 1 })
   },
 
   getRegionById: async ({ id }) => {
