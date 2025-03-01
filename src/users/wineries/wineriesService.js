@@ -31,7 +31,11 @@ const wineriesService = {
     }
   },
   getAllWineries: async () => {
-    return await WineryModel.find()
+    try {
+      return await WineryModel.find()
+    } catch (error) {
+      throw new Error("Error retrieving wineries: " + error.message)
+    }
   },
   getWineryById: async (id) => {
     try {
