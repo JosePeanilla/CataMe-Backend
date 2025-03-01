@@ -27,10 +27,15 @@ const winesService = {
   getAllWines: async () => {
     try {
       const wines = await WineModel.find()
-        .populate("region", "name")
-        .populate("winery", "name")
-        .populate("reviews", "rating createdAt")
-        .sort({ "reviews.createdAt": -1 })
+      .populate("region", "name")
+      .populate("winery", "name")
+      .populate({
+        path: "reviews",
+        model: "Review",  
+        select: "rating comment user",
+        populate: { path: "user", select: "name surname" } 
+      })
+      .sort({ createdAt: -1 })
       const winesWithRatings = wines.map((wine) => {
         const totalReviews = wine.reviews.length
         const avgRating =
