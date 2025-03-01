@@ -74,24 +74,23 @@ const reviewsService = {
         }
     },
 
-    updateReview: async (id, reviewData) => {
+    updateReview: async (id, userId, reviewData) => {
         try {
-            const updatedReview = await ReviewModel.findByIdAndUpdate(
-                id,
+            const updatedReview = await ReviewModel.findOneAndUpdate(
+                { _id: id, user: userId }, 
                 reviewData,
-                { new: true, runValidators: true } 
+                { new: true, runValidators: true }
             )
             .populate({ path: "user", select: "name surname", model: ConsumerModel })
-            .populate("wine", "name")
+            .populate("wine", "name");
     
             if (!updatedReview) {
-                throw new Error(`No review found with ID '${id}'`)
+                throw new Error(`No review found with ID '${id}' or unauthorized user`);
             }
     
             return updatedReview;
         } catch (error) {
-            logger.error("Error updating review:", error)
-            throw new Error("Could not update review. Please try again.")
+            throw new Error("Could not update review. Please try again.");
         }
     },    
 
