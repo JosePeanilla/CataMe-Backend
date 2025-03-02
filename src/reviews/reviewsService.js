@@ -6,19 +6,29 @@ const logger = new Logger(__filename)
 /* Model of 'reviews' entity */
 const { ReviewModel } = require("./ReviewModel.js")
 const { ConsumerModel } = require("../users/consumers/ConsumerModel.js")
+const { WineModel } = require("../wines/WineModel.js")
 const mongoose = require("mongoose")
 
 /* Service which interacts with the 'reviews' database */
 const reviewsService = {
     createReview: async (reviewData) => {
         try {
-            const newReview = await ReviewModel.create(reviewData)
-            return newReview
+            // Crear la nueva review
+            const newReview = await ReviewModel.create(reviewData);
+    
+            // Agregar la review al array de reviews del vino
+            await WineModel.findByIdAndUpdate(
+                reviewData.wine, 
+                { $push: { reviews: newReview._id } }, 
+                { new: true }
+            );
+    
+            return newReview;
         } catch (error) {
-            logger.error("Error creating review:", error)
-            throw new Error("Could not create review. Please try again.")
-        }      
-    },
+            logger.error("Error creating review:", error);
+            throw new Error("Could not create review. Please try again.");
+        }
+    },    
 
     getAllReviews: async () => {
         try {
