@@ -77,7 +77,7 @@ const checkUserIsAuthorized = async (req, res, next) => {
   try {
     const { id } = req.params
     const { id: loggedUserId } = res.locals.loggedUserToken
-    const resourceType = req.originalUrl.includes("/users/") ? req.originalUrl.split("/")[3] : req.originalUrl.split("/")[1]
+    const resourceType = req.originalUrl.includes("/users/") ? req.originalUrl.split("/")[2] : req.originalUrl.split("/")[1]
     if (!models[resourceType]) {
       return res.status(400).json({ error: "Invalid request type!" })
     }
