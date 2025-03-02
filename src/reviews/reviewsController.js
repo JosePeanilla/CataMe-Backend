@@ -23,6 +23,20 @@ const reviewsController = {
         }
     },
 
+    getReviewById: async (req, res) => {
+        try {
+            const { id } = req.params
+            const review = await reviewsService.getReviewById(id)
+            const successText = "Review retrieved successfully!"
+            logger.debug(successText)
+            res.status(200).json({ message: successText, data: review })
+        } catch (error) {
+            const errorText = "Review could not be retrieved!"
+            logger.error(errorText, error)
+            res.status(404).json({ message: errorText, error: error.message })
+        }
+    },
+
     getReviewsByWine: async (req, res) => {
         try {
             const { wineId } = req.params

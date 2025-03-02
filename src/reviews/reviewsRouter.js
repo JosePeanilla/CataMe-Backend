@@ -22,6 +22,8 @@ reviewsRouter.post('/',
 
 reviewsRouter.get("/", reviewsController.getAllReviews)
 
+reviewsRouter.get("/:id", reviewsController.getReviewById)
+
 reviewsRouter.get("/wine/:wineId", reviewsController.getReviewsByWine)
 
 reviewsRouter.get("/user/:userId", reviewsController.getReviewsByUser)
