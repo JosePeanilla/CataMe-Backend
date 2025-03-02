@@ -9,9 +9,18 @@ const jsonwebtoken = require("jsonwebtoken")
 /************************************************* Internal libraries *************************************************/
 const { statusCodes } = require("../constants/statusCodes.js")
 const { ReviewModel } = require("../reviews/ReviewModel.js")
+const { ConsumerModel } = require("../users/consumers/ConsumerModel.js")
+const { WineryModel } = require("../users/wineries/WineryModel.js")
+const { WineModel } = require("../wines/WineModel.js")
 
 /* Regular expression to enforce password policy */
 const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[a-zA-Z]).{8,}$/
+const models = {
+  consumers: ConsumerModel,
+  wineries: WineryModel,
+  wines: WineModel,
+  reviews: ReviewModel,
+}
 
 const checkAllLoginCredentialsAreProvided = (req, res, next) => {
   const { email, password } = req.body
@@ -66,22 +75,26 @@ const checkWineryRole = (req, res, next) => {
 
 const checkUserIsAuthorized = async (req, res, next) => {
   try {
-    const { id } = req.params; // ID de la review
-    const { id: loggedUserId } = res.locals.loggedUserToken;
-
-    const review = await ReviewModel.findById(id);
-    if (!review) {
-      return res.status(statusCodes.NotFound).send({ error: "Review not found!" });
+    const { id } = req.params
+    const { id: loggedUserId } = res.locals.loggedUserToken
+    const resourceType = req.originalUrl.includes("/users/") ? req.originalUrl.split("/")[3] : req.originalUrl.split("/")[1]
+    if (!models[resourceType]) {
+      return res.status(400).json({ error: "Invalid request type!" })
     }
-
-    if (review.user.toString() !== loggedUserId) {
-      return res.status(statusCodes.Forbidden).send({ error: "You are not authorized to modify this review!" });
+    const resource = resourceType === "wines" 
+      ? await models[resourceType].findById(id).populate("winery")
+      : await models[resourceType].findById(id)
+    if (!resource) {
+      return res.status(404).json({ error: `${resourceType.slice(0, -1)} not found!` })
     }
-
-    next();
+    const ownerId = resourceType === "wines" ? resource.winery._id.toString() : resource.user?.toString() || resource._id.toString()
+    if (ownerId !== loggedUserId) {
+      return res.status(403).json({ error: `You are not authorized to modify this ${resourceType.slice(0, -1)}!` })
+    }
+    next()
   } catch (error) {
-    logger.error("Authorization check failed!", error);
-    res.status(statusCodes.InternalServerError).send({ error: "Internal Server Error" });
+    console.error("Authorization check failed!", error)
+    res.status(500).json({ error: "Internal Server Error" })
   }
 }
 

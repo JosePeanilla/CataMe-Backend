@@ -13,20 +13,16 @@ const mongoose = require("mongoose")
 const reviewsService = {
     createReview: async (reviewData) => {
         try {
-            // Crear la nueva review
-            const newReview = await ReviewModel.create(reviewData);
-    
-            // Agregar la review al array de reviews del vino
+            const newReview = await ReviewModel.create(reviewData)
             await WineModel.findByIdAndUpdate(
                 reviewData.wine, 
                 { $push: { reviews: newReview._id } }, 
                 { new: true }
-            );
-    
+            )
             return newReview;
         } catch (error) {
-            logger.error("Error creating review:", error);
-            throw new Error("Could not create review. Please try again.");
+            logger.error("Error creating review:", error)
+            throw new Error("Could not create review. Please try again.")
         }
     },    
 
