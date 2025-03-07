@@ -20,6 +20,10 @@ const port = process.env.PORT || 3000
 app.use(cors())
 /* Parse the incoming requests/responses in JSON payloads */
 app.use(express.json())
+
+/*Despliegue*/
+app.get("/", (req, res) => { res.status(200).json({ message: "Welcome to the Wine API 🍷" }); })
+
 /* Log the route (useful for debugging purposes) */
 const logRoute = (req, res, next) => {
   logger.debug(
