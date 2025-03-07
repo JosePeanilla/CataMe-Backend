@@ -11,8 +11,8 @@ const dbConnection = async () => {
   const dbName = process.env.DB_NAME
   const dbUsername = process.env.DB_USERNAME
   const dbPassword = process.env.DB_PASSWORD
-  const dbConnectionURI = `mongodb+srv://${dbUsername}:${dbPassword}@wineapp.2l1f5.mongodb.net/${dbName}?retryWrites=true&w=majority&appName=WineApp`
-
+  const dbConnectionURI = `mongodb+srv://${dbUsername}:${dbPassword}@${dbCluster}.mongodb.net/${dbName}?retryWrites=true&w=majority`
+  
   try {
     const dbConnection = await mongoose.connect(dbConnectionURI)
     logger.info(
