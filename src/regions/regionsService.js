@@ -30,6 +30,11 @@ const regionsService = {
     try {
       const region = await RegionModel.findById(id)
       if (!region) throw new Error(`No region found with ID '${id}'`)
+
+        if (!region.image) {
+            region.image = "https://via.placeholder.com/600x400"
+        }
+        
       return region
     } catch (error) {
       throw new Error(error.message)
