@@ -10,6 +10,7 @@ const WineSchema = new mongoose.Schema(
     name: { type: String, required: true },
     price: { type: Number, required: true },
     region: { type: mongoose.Schema.Types.ObjectId, ref: "Region", required: true },
+    reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: "Review" }],
     type: { type: String, required: true },
     winery: { type: mongoose.Schema.Types.ObjectId, ref: "Winery", required: true },
     year: { type: Number, required: true },
