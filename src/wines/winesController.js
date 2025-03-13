@@ -4,7 +4,8 @@ const { winesService } = require("./winesService.js")
 const winesController = {
   getAllWines: async (req, res) => {
     try {
-      const wines = await winesService.getAllWines()
+      const { name, type, region, winery, minPrice, maxPrice, minYear, maxYear, minRating } = req.query
+      const wines = await winesService.getAllWines({ name, type, region, winery, minPrice, maxPrice, minYear, maxYear, minRating })
       res
         .status(200)
         .json({ message: "Wines retrieved successfully!", data: wines })
@@ -68,6 +69,16 @@ const winesController = {
       res
         .status(200)
         .json({ message: "Wine deleted successfully!", data: deletedWine })
+    } catch (error) {
+      res.status(500).json({ error: error.message })
+    }
+  },
+
+  filterWines: async (req, res) => {
+    try {
+      const filters = req.query
+      const wines = await winesService.filterWines(filters)
+      res.status(200).json({ message: "Wines retrieved successfully!", data: wines })
     } catch (error) {
       res.status(500).json({ error: error.message })
     }
