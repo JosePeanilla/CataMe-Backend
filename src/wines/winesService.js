@@ -1,5 +1,7 @@
 const mongoose = require("mongoose")
 const { WineModel } = require("./WineModel.js") 
+const { RegionModel } = require("../regions/RegionModel.js")
+const { WineryModel } = require("../users/wineries/WineryModel.js")
 
 /* Service which interacts with the 'wine' database */
 const winesService = {
@@ -29,8 +31,25 @@ const winesService = {
       const query = {}
       if (filters.name) query.name = { $regex: filters.name, $options: "i" }
       if (filters.type) query.type = filters.type
-      if (filters.region) query.region = filters.region
-      if (filters.winery) query.winery = filters.winery
+      if (filters.region) {
+        const regionDoc = await RegionModel.findOne({ name: { $regex: filters.region, $options: "i" } })
+        if (regionDoc) {
+          query.region = regionDoc._id
+        } else {
+          return []
+        }
+      }
+      if (filters.winery) {
+        console.log("Looking for winery with name:", filters.winery)
+        const wineryDoc = await WineryModel.findOne({ name: { $regex: filters.winery.trim(), $options: "i" } })
+        console.log("Found winery:", wineryDoc)
+        if (wineryDoc) {
+          query.winery = wineryDoc._id
+        } else {
+          console.log("No matching winery found")
+          return []
+        }
+      }
       if (filters.minPrice) query.price = { ...query.price, $gte: Number(filters.minPrice) }
       if (filters.maxPrice) query.price = { ...query.price, $lte: Number(filters.maxPrice) }
       if (filters.minYear) query.year = { ...query.year, $gte: Number(filters.minYear) }
