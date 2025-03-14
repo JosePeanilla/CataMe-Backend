@@ -21,8 +21,8 @@ app.use(cors())
 /* Parse the incoming requests/responses in JSON payloads */
 app.use(express.json())
 
-/*Despliegue*/
-app.get("/", (req, res) => { res.status(200).json({ message: "Welcome to the Wine API 🍷" }); })
+/******Despliegue******/
+app.get("/", (req, res) => { res.status(200).json({ message: "Welcome to the Wine API" }); })
 
 /* Log the route (useful for debugging purposes) */
 const logRoute = (req, res, next) => {
@@ -105,3 +105,44 @@ const startServer = async () => {
   }
 }
 const server = startServer()
+
+
+/* Email Sending */
+const app2 = express();
+const brevo = require('@getbrevo/brevo');
+const PORT2 = process.env.PORT2 || 3001
+
+const apiInstance = new brevo.TransactionalEmailsApi();
+
+apiInstance.setApiKey(
+  brevo.TransactionalEmailsApiApiKeys.apiKey,
+  process.env.BREV_API
+);
+
+app2.get("/send-email", (req, res) => {
+  const sendSmtpEmail = new brevo.SendSmtpEmail();
+  sendSmtpEmail.subject = "My {{params.subject}}";
+  sendSmtpEmail.htmlContent = "<html><body><h1>Common: This is my first transactional email {{params.parameter}}</h1></body></html>";
+  sendSmtpEmail.sender = { 
+    name: "maria", 
+    email: "zamora.mariac@gmail.com" };
+  sendSmtpEmail.to = [
+      { "email": "gruporojo.nuclioc@gmail.com", 
+      "name": "Nuclio Rojo" }
+    ];
+  sendSmtpEmail.replyTo = { "email": "shubham.upadhyay@sendinblue.com", "name": "Shubham Upadhyay" };
+  sendSmtpEmail.params = { 
+    parameter: "My param value",
+    subject: "brevo test" };  
+    apiInstance.sendTransacEmail(sendSmtpEmail).then(function (data) {
+      console.log('API called successfully. Returned data: ' + JSON.stringify(data));
+      res.send('email sent correctly')
+    }, function (error) {
+      console.error(error);
+      res.status(500).send('ha habido un error en en el envio del mail')
+    });
+});
+
+app2.listen(PORT2, () => {
+  console.log(`Server working in port ${PORT2}`);
+});
