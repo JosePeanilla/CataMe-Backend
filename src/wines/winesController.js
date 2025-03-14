@@ -4,8 +4,8 @@ const { winesService } = require("./winesService.js")
 const winesController = {
   getAllWines: async (req, res) => {
     try {
-      const { name, type, region, winery, minPrice, maxPrice, minYear, maxYear, minRating } = req.query
-      const wines = await winesService.getAllWines({ name, type, region, winery, minPrice, maxPrice, minYear, maxYear, minRating })
+      const { name, type, grapeType, region, winery, minPrice, maxPrice, minYear, maxYear, minRating } = req.query
+      const wines = await winesService.getAllWines({ name, type, grapeType, region, winery, minPrice, maxPrice, minYear, maxYear, minRating })
       res
         .status(200)
         .json({ message: "Wines retrieved successfully!", data: wines })

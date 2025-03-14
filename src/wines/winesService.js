@@ -7,12 +7,12 @@ const { WineryModel } = require("../users/wineries/WineryModel.js")
 const winesService = {
   createWine: async (providedWineArgs) => {
     try {
-      ("Winery ID recibido en createWine:", providedWineArgs.winery);
-      const newWine = await WineModel.create(providedWineArgs);
-      if (!newWine) throw new Error("Failed to create wine");
-      return newWine;
+      ("Winery ID recibido en createWine:", providedWineArgs.winery)
+      const newWine = await WineModel.create(providedWineArgs)
+      if (!newWine) throw new Error("Failed to create wine")
+      return newWine
     } catch (error) {
-      throw new Error(error.message);
+      throw new Error(error.message)
     }
 },
 
@@ -31,6 +31,7 @@ const winesService = {
       const query = {}
       if (filters.name) query.name = { $regex: filters.name, $options: "i" }
       if (filters.type) query.type = filters.type
+      if (filters.grapeType) query.grapeType = { $regex: filters.grapeType, $options: "i" }
       if (filters.region) {
         const regionDoc = await RegionModel.findOne({ name: { $regex: filters.region, $options: "i" } })
         if (regionDoc) {
