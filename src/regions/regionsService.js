@@ -23,13 +23,18 @@ const regionsService = {
   },
 
   getAllRegions: async () => {
-    return await RegionModel.find()
+    return await RegionModel.find().sort({ name: 1 })
   },
 
   getRegionById: async ({ id }) => {
     try {
       const region = await RegionModel.findById(id)
       if (!region) throw new Error(`No region found with ID '${id}'`)
+
+        if (!region.image) {
+            region.image = "https://via.placeholder.com/600x400"
+        }
+        
       return region
     } catch (error) {
       throw new Error(error.message)
