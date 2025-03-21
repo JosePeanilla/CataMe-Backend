@@ -1,4 +1,5 @@
 const { RegionModel } = require("./RegionModel.js")
+const { WineModel } = require("../wines/WineModel.js")
 
 /* Service which interacts with the 'wine' database */
 const regionsService = {
@@ -39,6 +40,16 @@ const regionsService = {
     } catch (error) {
       throw new Error(error.message)
     }
+  },
+
+  getWinesByRegion: async (regionName) => {
+    const region = await RegionModel.findOne({ name: regionName });
+
+    if (!region) {
+      throw new Error("Región no encontrada");
+    }
+
+    return await WineModel.find({ region: region._id });
   },
 
   updateRegion: async ({ id, ...regionArgs }) => {

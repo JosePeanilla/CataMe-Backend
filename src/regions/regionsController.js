@@ -24,6 +24,21 @@ const regionsController = {
     }
   },
 
+  getWinesByRegion: async (req, res) => {
+    try {
+      const { regionName } = req.params;
+      const wines = await regionsService.getWinesByRegion(regionName);
+
+      if (!wines.length) {
+        return res.status(404).json({ error: "No se encontraron vinos para esta región" });
+      }
+
+      res.status(200).json({ data: wines });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  },
+
   createRegion: async (req, res) => {
     try {
       const newRegion = await regionsService.createRegion(req.body)
