@@ -1,4 +1,3 @@
-/* Codes extracted from: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status */
 const statusCodes = {
   /* Successful responses */
   OK: 200,
