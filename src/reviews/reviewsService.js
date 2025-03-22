@@ -3,23 +3,39 @@ const { Logger } = require("../utils/Logger.js")
 const logger = new Logger(__filename)
 
 /************************************************* Internal libraries *************************************************/
-/* Model of 'reviews' entity */
+// Model of 'reviews' entity
 const { ReviewModel } = require("./ReviewModel.js")
 const { ConsumerModel } = require("../users/consumers/ConsumerModel.js")
 const { WineModel } = require("../wines/WineModel.js")
 const mongoose = require("mongoose")
+const { getIO } = require("../socket/socket.js")
 
 /* Service which interacts with the 'reviews' database */
 const reviewsService = {
     createReview: async (reviewData) => {
         try {
             const newReview = await ReviewModel.create(reviewData)
-            await WineModel.findByIdAndUpdate(
+            const updatedWine = await WineModel.findByIdAndUpdate(
                 reviewData.wine, 
                 { $push: { reviews: newReview._id } }, 
                 { new: true }
-            )
-            return newReview;
+            ).populate("winery")
+
+            if (updatedWine && updatedWine.winery) {
+                const io = getIO()
+                const wineryId = updatedWine.winery._id.toString()
+                logger.info(`Emitting "new-review" event to winery room: ${wineryId}`)
+                io.to(wineryId).emit("new-review", {
+                    message: "Has recibido una nueva valoración",
+                    review: newReview,
+                    wine: {
+                        id: updatedWine._id,
+                        name: updatedWine.name
+                    }
+                })
+            }
+
+            return newReview
         } catch (error) {
             logger.error("Error creating review:", error)
             throw new Error("Could not create review. Please try again.")
@@ -88,15 +104,15 @@ const reviewsService = {
                 { new: true, runValidators: true }
             )
             .populate({ path: "user", select: "name surname", model: ConsumerModel })
-            .populate("wine", "name");
+            .populate("wine", "name")
     
             if (!updatedReview) {
-                throw new Error(`No review found with ID '${id}' or unauthorized user`);
+                throw new Error(`No review found with ID '${id}' or unauthorized user`)
             }
     
-            return updatedReview;
+            return updatedReview
         } catch (error) {
-            throw new Error("Could not update review. Please try again.");
+            throw new Error("Could not update review. Please try again.")
         }
     },    
 
