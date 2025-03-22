@@ -11,11 +11,13 @@ It has been developed using the knowledge acquired during the master's program, 
 2. [Content](#content)
     1. [Endpoints](#endpoints)
         1. [Consumer Users](#consumer-users---endpoints)
-        2. [Wine Bottles](#wine-bottles---endpoints)
-        3. [Winery Users](#winery-users---endpoints)
+        2. [Regions](#regions---endpoints)
+        3. [Wine Bottles](#wine-bottles---endpoints)
+        4. [Winery Users](#winery-users---endpoints)
     2. [Database Collections](#database-collections)
         1. [Consumer Users](#consumer-users---collections)
-        2. [Winery Users](#winery-users---collections)
+        2. [Regions](#regions---collections)
+        3. [Winery Users](#winery-users---collections)
 3. [Project Structure](#project-structure)
 4. [How to Run the Project](#how-to-run-the-project)
 5. [Authentication and Authorization](#authentication-and-authorization)
@@ -52,6 +54,16 @@ Implemented endpoints are categorized as follows:
 - `PUT /users/consumers/:id` - Updates a consumer user profile.
 - `PATCH /users/consumers/:id/:field` - Updates a specific field of a consumer user profile.
 - `DELETE /users/consumers/:id` - Deletes a consumer user account.
+
+#### Regions - Endpoints
+
+- `GET /regions` - Get the list of all regions.
+- `GET /regions/:id` - Get the information about a specific region.  
+    A region with given ID must exist in the database.
+- `POST /regions` - Register a new region (requires administrator approval).
+- `PUT /regions/:id` - Update a current region.
+- `DELETE /regions/:id` - Delete a region.  
+    A region with given ID must exist in the database.
 
 #### Wine Bottles - Endpoints
 
@@ -93,6 +105,13 @@ This collection stores basic information about consumers registered in the platf
 - `password` *(String)*: Consumer user's account password.
 - `role` *(String, immutable)*: User role. Constant default value of `consumer`.
 - `surname` *(String)*: Consumer surname.
+
+#### **[Regions](https://cloud.mongodb.com/v2/YOUR_CLUSTER_ID/explorer/test/regions/find)** - Collection
+
+- `_id` *(String, unique)*: Unique identifier of the region. Provided automatically by MongoDB when creating the item.
+- `country` *(String, required)*: Name of the region's country.
+- `image` *(String, optional)*: URL of the region's image.
+- `name` *(String, required)*: Name of the region.
 
 ####  **[Wine bottles](https://cloud.mongodb.com/v2/67712e8d74ee353776ed51a7#/metrics/replicaSet/677133a831c8bf6d5272e506/explorer/Database/consumers/find)** - Collection
 

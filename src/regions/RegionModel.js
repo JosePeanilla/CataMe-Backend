@@ -4,6 +4,8 @@ const mongoose = require("mongoose")
 const RegionSchema = new mongoose.Schema(
   { 
     country: { type: String, required: true },
+    description: { type: String },
+    image: { type: String, required: false },
     name: { type: String, required: true },
   },
   { timestamps: true }
