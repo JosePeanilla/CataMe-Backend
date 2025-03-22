@@ -122,15 +122,15 @@ apiInstance.setApiKey(
 app2.get("/send-email", (req, res) => {
   const sendSmtpEmail = new brevo.SendSmtpEmail();
   sendSmtpEmail.subject = "My {{params.subject}}";
-  sendSmtpEmail.htmlContent = "<html><body><h1>Common: This is my first transactional email {{params.parameter}}</h1></body></html>";
+  sendSmtpEmail.htmlContent = "<html><body><h1>Common: This is my first transactional email {{params.parameter}}</h1></body></html>"; //button validacion here
   sendSmtpEmail.sender = { 
-    name: "maria", 
-    email: "zamora.mariac@gmail.com" };
+    name: "Nuclio Grupo Rojo", 
+    email: "brevo@galu.cat" }; //correo verificado
   sendSmtpEmail.to = [
-      { "email": "gruporojo.nuclioc@gmail.com", 
+      { "email": "gruporojo.nuclio@gmail.com", //usuario
       "name": "Nuclio Rojo" }
     ];
-  sendSmtpEmail.replyTo = { "email": "shubham.upadhyay@sendinblue.com", "name": "Shubham Upadhyay" };
+  sendSmtpEmail.replyTo = { "email": "gruporojo.nuclio@gmail.com", "name": "Nuclio Grupo Rojo" };
   sendSmtpEmail.params = { 
     parameter: "My param value",
     subject: "brevo test" };  
