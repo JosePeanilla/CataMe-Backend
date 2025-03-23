@@ -122,7 +122,7 @@ apiInstance.setApiKey(
 app2.get("/send-email", (req, res) => {
   const sendSmtpEmail = new brevo.SendSmtpEmail();
   sendSmtpEmail.subject = "My {{params.subject}}";
-  sendSmtpEmail.htmlContent = "<html><body><h1>Common: This is my first transactional email {{params.parameter}}</h1></body></html>"; //button validacion here
+  sendSmtpEmail.htmlContent = "<html><body><h1>Common: Bienvenidos a WineApp {{params.parameter}}</h1></body></html>"; //button validacion goes here
   sendSmtpEmail.sender = { 
     name: "Nuclio Grupo Rojo", 
     email: "brevo@galu.cat" }; //correo verificado
