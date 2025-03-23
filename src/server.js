@@ -105,44 +105,4 @@ const startServer = async () => {
   }
 }
 const server = startServer()
-
-
-/* Email Sending */
-const app2 = express();
-const brevo = require('@getbrevo/brevo');
-const PORT2 = process.env.PORT2 || 3001
-
-const apiInstance = new brevo.TransactionalEmailsApi();
-
-apiInstance.setApiKey(
-  brevo.TransactionalEmailsApiApiKeys.apiKey,
-  process.env.BREV_API
-);
-
-app2.get("/send-email", (req, res) => {
-  const sendSmtpEmail = new brevo.SendSmtpEmail();
-  sendSmtpEmail.subject = "My {{params.subject}}";
-  sendSmtpEmail.htmlContent = "<html><body><h1>Common: Bienvenidos a WineApp {{params.parameter}}</h1></body></html>"; //button validacion goes here
-  sendSmtpEmail.sender = { 
-    name: "Nuclio Grupo Rojo", 
-    email: "brevo@galu.cat" }; //correo verificado de Jordi _ usar este
-  sendSmtpEmail.to = [
-      { "email": "gruporojo.nuclio@gmail.com", //usuario
-      "name": "WineApp Nuclio Rojo" }
-    ];
-  sendSmtpEmail.replyTo = { "email": "gruporojo.nuclio@gmail.com", "name": "Nuclio Grupo Rojo" };
-  sendSmtpEmail.params = { 
-    parameter: "My param value",
-    subject: "brevo test" };  
-    apiInstance.sendTransacEmail(sendSmtpEmail).then(function (data) {
-      console.log('API called successfully. Returned data: ' + JSON.stringify(data));
-      res.send('email sent correctly')
-    }, function (error) {
-      console.error(error);
-      res.status(500).send('ha habido un error en en el envio del mail')
-    });
-});
-
-app2.listen(PORT2, () => {
-  console.log(`Server working in port ${PORT2}`);
-});
+const { emailService } = require("./emailService/emailService.js") 
