@@ -9,7 +9,7 @@ const jsonwebtoken = require("jsonwebtoken")
 /************************************************* Internal libraries *************************************************/
 const { consumersService } = require("./consumersService.js")
 const { statusCodes } = require("../../constants/statusCodes.js")
-const { sendWelcomeEmail } = require("../../emailService/emailService.js") // ✅ Import email function
+const { sendWelcomeEmail } = require("../../emailService/emailService.js") 
 
 /* Controller of the 'consumer users' requests and responses handling */
 const consumersController = {
@@ -21,8 +21,8 @@ const consumersController = {
 
       // Sends welcome email after successful user creation
       sendWelcomeEmail(newConsumer.email, newConsumer.name)
-        .then(() => logger.debug("✅ Welcome email sent successfully"))
-        .catch(err => logger.error("❌ Failed to send email", err));
+        .then(() => logger.debug("Welcome email sent successfully"))
+        .catch(err => logger.error("Failed to send email", err));
 
       res.status(statusCodes.Created)
         .send({ msg: successText, data: newConsumer._id }) 
