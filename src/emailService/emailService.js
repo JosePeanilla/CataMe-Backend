@@ -16,7 +16,7 @@ async function sendWelcomeEmail(toEmail, toName) {
       <p>Bienvenidos a un experiencia unica entre vinos y bodegas. 
       <br>Descubre WineApp.</p>
       <p>Estamos muy contentos de tenerte con nosotros!</p>
-      <button href="https://wineapp-rojo.netlify.app">WineApp</button>
+      <button><a href="https://wineapp-rojo.netlify.app">WineApp</a></button>
     </body></html>`;
     
     sendSmtpEmail.sender = { 
