@@ -7,6 +7,7 @@ const { regionsController } = require("./regionsController.js")
 
 regionsRouter.get("/", regionsController.getAllRegions)
 regionsRouter.post("/", validateRegionData, regionsController.createRegion)
+regionsRouter.get("/:regionName/wines", regionsController.getWinesByRegion);
 
 regionsRouter.get("/:id", regionsController.getRegionById)
 regionsRouter.put("/:id", regionsController.updateRegion)
