@@ -125,10 +125,10 @@ app2.get("/send-email", (req, res) => {
   sendSmtpEmail.htmlContent = "<html><body><h1>Common: Bienvenidos a WineApp {{params.parameter}}</h1></body></html>"; //button validacion goes here
   sendSmtpEmail.sender = { 
     name: "Nuclio Grupo Rojo", 
-    email: "brevo@galu.cat" }; //correo verificado
+    email: "brevo@galu.cat" }; //correo verificado de Jordi _ usar este
   sendSmtpEmail.to = [
       { "email": "gruporojo.nuclio@gmail.com", //usuario
-      "name": "Nuclio Rojo" }
+      "name": "WineApp Nuclio Rojo" }
     ];
   sendSmtpEmail.replyTo = { "email": "gruporojo.nuclio@gmail.com", "name": "Nuclio Grupo Rojo" };
   sendSmtpEmail.params = { 
