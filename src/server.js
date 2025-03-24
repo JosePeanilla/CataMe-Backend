@@ -6,17 +6,16 @@ const { Logger } = require("./utils/Logger.js")
 const logger = new Logger(__filename)
 
 /************************************************ Node modules needed *************************************************/
-/* Permit CORS (Cross-Origin Resource Sharing) */
 const cors = require("cors")
-/* Used to create an ExpressJS application */
 const express = require("express")
+const http = require("http") // Required to create the HTTP server
 
 /******************************************** ExpressJS application object ********************************************/
 const app = express()
 const port = process.env.PORT || 3000
 
-/********************* Common Middlewares (to be executed at the very beggining of all endpoints) **********************/
-/* Enable CORS for all requests */
+/********************* Common Middlewares (to be executed at the very beginning of all endpoints) **********************/
+/* Permit CORS (Cross-Origin Resource Sharing) */
 app.use(cors())
 /* Parse the incoming requests/responses in JSON payloads */
 app.use(express.json())
@@ -69,17 +68,23 @@ const { statusCodes } = require("./constants/statusCodes.js")
 app.use((req, res) => {
   const errorText = `Route '[${req.method}] ${req.originalUrl}' could not be found!`
   logger.error(errorText)
-  res.status(statusCodes.NotFound)
-  .send({ error: errorText })
+  res.status(statusCodes.NotFound).send({ error: errorText })
 })
 
 /* Uncontrolled Error */
 app.use((err, req, res, next) => {
   const errorText = "Some uncontrolled internal error happened!"
   logger.error(errorText, err)
-  res.status(statusCodes.InternalServerError)
-    .send({ msg: errorText, error: err.message })
+  res.status(statusCodes.InternalServerError).send({ msg: errorText, error: err.message })
 })
+
+/*************************************************** Socket.io *******************************************************/
+// Create the HTTP server from the Express app
+const server = http.createServer(app)
+
+// Initialize Socket.io with our 'socket.js' module
+const { initializeSocket } = require("./socket/socket.js")
+initializeSocket(server)
 
 /*************************************************** Run the server ***************************************************/
 const startServer = async () => {
@@ -89,13 +94,12 @@ const startServer = async () => {
     /* ... and connect to the (MongoDB) database */
     await dbConnection()
 
-    /* Start express (HTTP) server listening for incoming requests */
-    const server = app.listen(port, (error) => {
+    /* Start the HTTP server listening for incoming requests */
+    server.listen(port, (error) => {
       if (error) {
         logger.error("The Express server couldn't get started!", error)
         return null
       }
-      /* The ExpressJS application is running, and ... */
       logger.info(`The HTTP server is listening for incoming requests on: http://localhost:${port}`)
     })
     return server
@@ -105,4 +109,3 @@ const startServer = async () => {
   }
 }
 const server = startServer()
-const { emailService } = require("./emailService/emailService.js") 

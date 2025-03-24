@@ -1,6 +1,7 @@
+const { statusCodes } = require("../constants/statusCodes.js")
+
 const validateWineData = (req, res, next) => {
-  const { name, winery, type, region, year, price, description, additionalDescription, grapeType } =
-    req.body
+  const { name, winery, type, region, year, price, description, additionalDescription, grapeType } = req.body
 
   if (
     !name ||
@@ -12,7 +13,7 @@ const validateWineData = (req, res, next) => {
     !description ||
     !grapeType
   ) {
-    return res.status(400).json({ error: "Missing required wine fields" })
+    return res.status(statusCodes.BadRequest).json({ error: "Missing required wine fields" })
   }
 
   next()
