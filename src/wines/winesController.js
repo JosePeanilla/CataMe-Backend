@@ -40,6 +40,19 @@ const winesController = {
     }
   },
 
+  getWinesByRegion: async (req, res) => {
+    try {
+      const { regionName } = req.params
+      const wines = await winesService.getWinesByRegion(regionName)
+      if (!wines.length) {
+        return res.status(statusCodes.NotFound).json({ error: "No se encontraron vinos para esta región" })
+      }
+      res.status(statusCodes.OK).json({ data: wines })
+    } catch (error) {
+      res.status(statusCodes.InternalServerError).json({ error: error.message })
+    }
+  },
+
   createWine: async (req, res) => {
     try {
       const newWine = await winesService.createWine(req.body)
