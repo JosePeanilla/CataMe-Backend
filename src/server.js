@@ -108,4 +108,4 @@ const startServer = async () => {
     return null
   }
 }
-const server = startServer()
+startServer()

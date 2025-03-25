@@ -1,11 +1,10 @@
 const brevo = require('@getbrevo/brevo');
 require('dotenv').config();
 
+// Configurar la API key en la instancia global
+brevo.ApiClient.instance.authentications['api-key'].apiKey = process.env.BREV_API;
+
 const apiInstance = new brevo.TransactionalEmailsApi();
-apiInstance.setApiKey(
-  brevo.TransactionalEmailsApiApiKeys.apiKey,
-  process.env.BREV_API
-);
 
 async function sendWelcomeEmail(toEmail, toName) {
   try {
@@ -13,7 +12,7 @@ async function sendWelcomeEmail(toEmail, toName) {
     sendSmtpEmail.subject = "Welcome to WineApp!";
     sendSmtpEmail.htmlContent = `<html><body>
       <h1>Hola, ${toName}!</h1>
-      <p>Bienvenidos a un experiencia unica entre vinos y bodegas. 
+      <p>Bienvenidos a una experiencia única entre vinos y bodegas. 
       <br>Descubre WineApp.</p>
       <p>Estamos muy contentos de tenerte con nosotros!</p>
       <button><a href="https://wineapp-rojo.netlify.app">WineApp</a></button>
