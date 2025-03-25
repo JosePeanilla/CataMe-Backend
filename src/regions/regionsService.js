@@ -42,16 +42,6 @@ const regionsService = {
     }
   },
 
-  getWinesByRegion: async (regionName) => {
-    const region = await RegionModel.findOne({ name: regionName });
-
-    if (!region) {
-      throw new Error("Región no encontrada");
-    }
-
-    return await WineModel.find({ region: region._id });
-  },
-
   updateRegion: async ({ id, ...regionArgs }) => {
     try {
       const updatedRegion = await RegionModel.findByIdAndUpdate(id, regionArgs, {

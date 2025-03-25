@@ -120,6 +120,23 @@ const winesService = {
       throw new Error(error.message)
     }
   },
+
+  getWinesByRegion: async (regionName) => {
+    const region = await RegionModel.findOne({ name: regionName })
+    if (!region) {
+      throw new Error("Región no encontrada")
+    }
+    return await WineModel.find({ region: region._id })
+      .populate("region", "name")
+      .populate("winery", "name")
+      .populate({
+        path: "reviews",
+        model: "Review",
+        select: "rating comment user",
+        populate: { path: "user", select: "name surname" },
+      })
+      .sort({ "reviews.createdAt": -1 })
+  },
   
   updateWine: async ({ id, ...wineArgs }) => {
     try {

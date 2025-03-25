@@ -10,6 +10,7 @@ const { checkProvidedTokenIsValid, checkWineryRole } = require("../auth/authMidd
 
 winesRouter.get("/", winesController.getAllWines)
 winesRouter.get('/winery/:wineryId', winesController.getWinesByWinery)
+winesRouter.get("/region/:regionName", winesController.getWinesByRegion)
 winesRouter.get("/:id", winesController.getWineById) 
 
 winesRouter.post("/", checkProvidedTokenIsValid, checkWineryRole, validateWineData, winesController.createWine)
