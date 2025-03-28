@@ -5,7 +5,7 @@ const logger = new Logger(__filename)
 /************************************************* Internal libraries *************************************************/
 const { statusCodes } = require("../../constants/statusCodes.js")
 const { wineriesService } = require("./wineriesService.js")
-const { sendWelcomeEmail } = require("../../emailService/emailService.js") 
+const { sendVerificationEmail } = require("../../emailService/sendVerificationEmail.js") 
 
 /* Controller of the 'winery users' requests and responses handling */
 const wineriesController = {
@@ -14,11 +14,11 @@ const wineriesController = {
       const newWinery = await wineriesService.createWinery(res.locals.providedWineryArgs)
       const successText = "Winery user created successfully!"
       logger.debug(successText)
-
-    // Sends welcome email after successful user creation
-    sendWelcomeEmail(newWinery.email, newWinery.name)
-        .then(() => logger.debug("Welcome email sent successfully"))
-        .catch(err => logger.error("Failed to send email", err));
+  
+      // Send verification email after successful user creation
+      sendVerificationEmail(newWinery.email, newWinery.name, newWinery._id)
+        .then(() => logger.debug("Verification email sent successfully"))
+        .catch(err => logger.error("Failed to send verification email", err))
   
       res.status(statusCodes.Created)
         .send({ msg: successText, data: newWinery._id })

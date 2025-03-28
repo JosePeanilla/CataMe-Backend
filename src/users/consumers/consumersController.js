@@ -9,7 +9,7 @@ const jsonwebtoken = require("jsonwebtoken")
 /************************************************* Internal libraries *************************************************/
 const { consumersService } = require("./consumersService.js")
 const { statusCodes } = require("../../constants/statusCodes.js")
-const { sendWelcomeEmail } = require("../../emailService/emailService.js") 
+const { sendVerificationEmail } = require("../../emailService/sendVerificationEmail.js")
 
 /* Controller of the 'consumer users' requests and responses handling */
 const consumersController = {
@@ -18,14 +18,14 @@ const consumersController = {
       const newConsumer = await consumersService.createConsumer(res.locals.providedConsumerArgs)
       const successText = "Consumer user created successfully!"
       logger.debug(successText)
-
-      // Sends welcome email after successful user creation
-      sendWelcomeEmail(newConsumer.email, newConsumer.name)
-        .then(() => logger.debug("Welcome email sent successfully"))
-        .catch(err => logger.error("Failed to send email", err));
-
+  
+      // Send email verification instead of welcome
+      sendVerificationEmail(newConsumer.email, newConsumer.name, newConsumer._id)
+        .then(() => logger.debug("Verification email sent successfully"))
+        .catch(err => logger.error("Failed to send verification email", err))
+  
       res.status(statusCodes.Created)
-        .send({ msg: successText, data: newConsumer._id }) 
+        .send({ msg: successText, data: newConsumer._id })
     } catch (error) {
       const errorText = "Consumer user could not be created!"
       logger.error(errorText, error)

@@ -7,7 +7,7 @@ const ConsumerSchema = new mongoose.Schema({
   city: { required: false, type: String },
   country: { required: false, type: String },
   email: { required: true, type: String, unique: true },
-  is_active: { default: true, type: Boolean },
+  is_verified: { default: false, type: Boolean },
   name: { required: true, type: String },
   password: { 
     required: true, 

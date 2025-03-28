@@ -55,6 +55,9 @@ app.use("/regions", regionsRouter)
 const { reviewsRouter } = require("./reviews/reviewsRouter.js") 
 app.use("/reviews", reviewsRouter)
 
+const { authRouter } = require("./auth/authRouter.js")
+app.use("/auth", authRouter)
+
 /***************************************************** Endpoints ******************************************************/
 const { usersController } = require("./users/usersController.js")
 

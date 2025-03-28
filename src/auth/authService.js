@@ -24,9 +24,9 @@ const authService = {
         return null
       }
 
-      /* Check if the logged user is active */
-      if (!loggedUser.is_active) {
-        logger.error("User account is not active!")
+      /* Check if the logged user is verified */
+      if (!loggedUser.is_verified) {
+        logger.error("User not verified!")
         return null
       }
 
