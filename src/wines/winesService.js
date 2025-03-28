@@ -56,7 +56,7 @@ const winesService = {
       if (filters.minYear) query.year = { ...query.year, $gte: Number(filters.minYear) }
       if (filters.maxYear) query.year = { ...query.year, $lte: Number(filters.maxYear) }
       const wines = await WineModel.find(query)
-        .populate("region", "name")
+        .populate("region")
         .populate("winery", "name")
         .populate({
           path: "reviews",
@@ -85,7 +85,7 @@ const winesService = {
   getWineById: async ({ id }) => {
     try {
       const wine = await WineModel.findById(id)
-      .populate("region", "name")
+      .populate("region")
       .populate("winery", "name")
       .populate("reviews", "rating createdAt")
       .sort({ "reviews.createdAt": -1 })
@@ -103,7 +103,7 @@ const winesService = {
   getWinesByWinery: async (wineryId) => {
     try {
       const wines = await WineModel.find({ winery: new mongoose.Types.ObjectId(wineryId) })
-        .populate("region", "name")
+        .populate("region")
         .populate("winery", "name")
         .populate("reviews", "rating createdAt")
         .sort({ "reviews.createdAt": -1 })
@@ -127,7 +127,7 @@ const winesService = {
       throw new Error("Región no encontrada")
     }
     return await WineModel.find({ region: region._id })
-      .populate("region", "name")
+      .populate("region")
       .populate("winery", "name")
       .populate({
         path: "reviews",
@@ -143,7 +143,7 @@ const winesService = {
       const updatedWine = await WineModel.findByIdAndUpdate(id, wineArgs, {
         new: true, 
       })
-        .populate("region", "name")
+        .populate("region")
         .populate("winery", "name")
         .populate("reviews", "rating createdAt")
         .sort({ "reviews.createdAt": -1 })

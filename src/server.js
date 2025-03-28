@@ -64,6 +64,9 @@ const { usersController } = require("./users/usersController.js")
 /* /user/ */
 app.get("/user", checkProvidedTokenIsValid, usersController.getLoggedUser)
 
+// Avoid logging favicon.ico requests as 404 errors
+app.get("/favicon.ico", (req, res) => res.status(204).end())
+
 /********************************************* Error-Handling Middlewares *********************************************/
 const { statusCodes } = require("./constants/statusCodes.js")
 
