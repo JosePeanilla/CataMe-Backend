@@ -1,38 +1,43 @@
-/************************************************** Internal logger ***************************************************/
+/************************************************** Internal Logger ***************************************************/
 const { Logger } = require("../utils/Logger.js")
 const logger = new Logger(__filename)
 
-/************************************************* Internal libraries *************************************************/
+/************************************************* Internal Libraries *************************************************/
 /* Model of 'consumer users' entity */
 const { ConsumerModel } = require("../users/consumers/ConsumerModel.js")
 /* Model of 'winery users' entity */
 const { WineryModel } = require("../users/wineries/WineryModel.js")
 
+/* Service that handles authentication logic */
 const authService = {
   login: async ({ email, password }) => {
     try {
-      /* Get the user (among the different user models) that matches the provided email, if any */
       let loggedUser = null
-      for (userModel of [ConsumerModel, WineryModel]){
+
+      for (const userModel of [ConsumerModel, WineryModel]) {
         loggedUser = await userModel.findOne({ email })
         if (loggedUser) break
       }
 
-      /* Check if it exists a user with provided email and password */
-      if (!loggedUser || loggedUser.password !== password) {
-        logger.error("Invalid email or password!")
-        return null
+      if (!loggedUser) {
+        logger.warn("Login failed: email not found")
+        return { error: "not_found" }
       }
 
-      /* Check if the logged user is verified */
+      if (loggedUser.password !== password) {
+        logger.warn("Login failed: incorrect password")
+        return { error: "invalid_password" }
+      }
+
       if (!loggedUser.is_verified) {
-        logger.error("User not verified!")
-        return null
+        logger.warn("Login failed: user not verified")
+        return { error: "not_verified" }
       }
 
-      /* Returns the user as it is valid and active */
-      return loggedUser
+      return { user: loggedUser }
+
     } catch (error) {
+      logger.error("Login error", error)
       throw error
     }
   }

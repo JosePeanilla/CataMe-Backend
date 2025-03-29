@@ -1,27 +1,33 @@
+/************************************************** HTTP Status Code Constants ****************************************/
+/**
+ * Centralized list of commonly used HTTP status codes for consistent API responses.
+ * Improves readability and maintainability across controllers and services.
+ */
+
 const statusCodes = {
-  /* Successful responses */
-  OK: 200,
-  Created: 201,
+  /******************************************** 2XX - Successful Responses ********************************************/
+  OK: 200,                         // Request succeeded
+  Created: 201,                    // Resource successfully created
 
-  /* Redirections */
-  MovedPermanently: 301,
-  Found: 302,
+  /*********************************************** 3XX - Redirections ************************************************/
+  MovedPermanently: 301,           // Resource has been moved permanently
+  Found: 302,                      // Resource has been found at a different URI
 
-  /* Client error responses */
-  BadRequest: 400,
-  Unauthorized: 401,
-  Forbidden: 403,
-  NotFound: 404,
-  MethodNotAllowed: 405,
-  Conflict: 409,
-  UnprocessableEntity: 422,
-  TooManyRequests: 429,
+  /******************************************** 4XX - Client Error Responses *****************************************/
+  BadRequest: 400,                 // Request is malformed or invalid
+  Unauthorized: 401,              // Authentication required or failed
+  Forbidden: 403,                 // Authenticated, but not authorized
+  NotFound: 404,                  // Requested resource not found
+  MethodNotAllowed: 405,          // HTTP method not supported on this route
+  Conflict: 409,                  // Conflict with current state of resource
+  UnprocessableEntity: 422,       // Validation failed or semantic error
+  TooManyRequests: 429,           // Rate limit exceeded
 
-  /* Server error responses */
-  InternalServerError: 500,
-  ServiceUnavailable: 503,
-  GatewayTimeout: 504
+  /******************************************** 5XX - Server Error Responses ******************************************/
+  InternalServerError: 500,       // General server-side error
+  ServiceUnavailable: 503,        // Server is temporarily unavailable
+  GatewayTimeout: 504             // Timeout waiting for upstream server
 }
 
-/*************************************************** Module export ****************************************************/
+/*************************************************** Module Export ****************************************************/
 module.exports = { statusCodes }

@@ -1,28 +1,38 @@
-/************************************************ Node modules needed *************************************************/
-/* Handle date and time with desired format */
+/*********************************************** Node Modules Needed ****************************************************/
+/* Handle date and time formatting */
 const moment = require('moment')
 
+/**************************************************** Logger Class ******************************************************/
+/**
+ * Custom logger class to output standardized log messages with timestamp, file name,
+ * and log level. Supports debug, info, warn, and error levels.
+ */
 class Logger {
   constructor(filePath) {
+    // Extract only the file name from the full file path
     this.fileName = filePath.split("\\").pop()
   }
 
+  // Private method: Get current datetime in formatted string
   #getFormattedDateTime() {
     return moment().format('YYYY/MM/DD HH:mm:ss')
   }
 
+  // Private method: Format the beginning of the log message
   #getFormattedLogStart(level) {
     const formattedDateTime = this.#getFormattedDateTime()
-    const maxFileNameLength = 0
+    const maxFileNameLength = 0 // Not used now but can be helpful for padding consistency
     const formattedFileName = this.fileName.padStart(maxFileNameLength, ' ')
     const maxLevelLength = 0
     const formattedLevel = level.toUpperCase().padEnd(maxLevelLength, ' ')
     return `[${formattedDateTime}][${formattedFileName}][${formattedLevel}]`
   }
 
+  // Private method: Centralized log formatter and dispatcher
   #log(level = "info", message, ...additionalParams) {
     const formattedLogStart = this.#getFormattedLogStart(level)
-    const formattedMessage = additionalParams?`${message}\n`:message
+    const formattedMessage = additionalParams.length ? `${message}\n` : message
+
     switch (level) {
       case "debug":
         console.debug(formattedLogStart, formattedMessage, ...additionalParams)
@@ -42,6 +52,7 @@ class Logger {
     }
   }
 
+  // Public methods for each log level
   debug(message, ...additionalParams) {
     this.#log("debug", message, ...additionalParams)
   }
@@ -59,5 +70,5 @@ class Logger {
   }
 }
 
-/*************************************************** Module export ****************************************************/
+/*************************************************** Module Export ******************************************************/
 module.exports = { Logger }
