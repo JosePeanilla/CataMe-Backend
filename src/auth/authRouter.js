@@ -28,6 +28,7 @@ const { statusCodes } = require("../constants/statusCodes.js")
  */
 router.get("/verify-email", async (req, res) => {
   const { token } = req.query
+  const frontendUrl = process.env.FRONTEND_URL || "http://localhost:5173"
 
   try {
     // Verify and decode the token
@@ -41,14 +42,14 @@ router.get("/verify-email", async (req, res) => {
     if (!user) {
       const errorText = "Usuario no encontrado."
       logger.error(errorText)
-      return res.status(statusCodes.NotFound).json({ error: errorText })
+      return res.redirect(`${frontendUrl}/email-verified?msg=${encodeURIComponent(errorText)}`)
     }
 
     // If already verified
     if (user.is_verified) {
       const infoText = "Cuenta ya verificada."
       logger.info(infoText)
-      return res.status(statusCodes.OK).json({ message: infoText })
+      return res.redirect(`${frontendUrl}/email-verified?msg=${encodeURIComponent(infoText)}`)
     }
 
     // Update and save user verification status
@@ -57,12 +58,12 @@ router.get("/verify-email", async (req, res) => {
 
     const successText = "Cuenta verificada correctamente."
     logger.info(successText)
-    return res.status(statusCodes.OK).json({ message: successText })
+    return res.redirect(`${frontendUrl}/email-verified?msg=${encodeURIComponent(successText)}`)
 
   } catch (error) {
     const errorText = "Token inválido o expirado."
     logger.error(errorText, error)
-    return res.status(statusCodes.BadRequest).json({ error: errorText })
+    return res.redirect(`${frontendUrl}/email-verified?msg=${encodeURIComponent(errorText)}`)
   }
 })
 
