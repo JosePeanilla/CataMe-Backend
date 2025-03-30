@@ -1,13 +1,22 @@
-/************************************************** Internal logger ***************************************************/
+/************************************************** Internal Logger *****************************************************/
 const { Logger } = require("../utils/Logger.js")
 const logger = new Logger(__filename)
 
-/************************************************* Internal libraries *************************************************/
-/* Model of 'reviews' entity */
+/************************************************* Internal Libraries ***************************************************/
+/* Review service and HTTP status codes */
 const { reviewsService } = require("./reviewsService.js")
 const { statusCodes } = require("../constants/statusCodes.js")
 
+/*********************************************** Reviews Controller: Request Handlers ***********************************/
+/**
+ * Handles HTTP requests related to wine reviews.
+ */
+
 const reviewsController = {
+  /**
+   * POST /reviews
+   * Create a new review for a wine
+   */
   createReview: async (req, res) => {
     try {
       const { wine, rating, comment } = req.body
@@ -24,6 +33,10 @@ const reviewsController = {
     }
   },
 
+  /**
+   * GET /reviews/:id
+   * Get a review by its ID
+   */
   getReviewById: async (req, res) => {
     try {
       const { id } = req.params
@@ -38,6 +51,10 @@ const reviewsController = {
     }
   },
 
+  /**
+   * GET /reviews/wine/:wineId
+   * Get all reviews for a specific wine
+   */
   getReviewsByWine: async (req, res) => {
     try {
       const { wineId } = req.params
@@ -52,6 +69,10 @@ const reviewsController = {
     }
   },
 
+  /**
+   * GET /reviews
+   * Get all reviews in the system
+   */
   getAllReviews: async (req, res) => {
     try {
       const reviews = await reviewsService.getAllReviews()
@@ -65,6 +86,10 @@ const reviewsController = {
     }
   },
 
+  /**
+   * GET /reviews/user/:userId
+   * Get all reviews written by a specific user
+   */
   getReviewsByUser: async (req, res) => {
     try {
       const { userId } = req.params
@@ -79,6 +104,10 @@ const reviewsController = {
     }
   },
 
+  /**
+   * PUT /reviews/:id
+   * Update a review (only if the user is the owner)
+   */
   updateReview: async (req, res) => {
     try {
       const { id } = req.params
@@ -94,6 +123,10 @@ const reviewsController = {
     }
   },
 
+  /**
+   * DELETE /reviews/:id
+   * Delete a review (only if the user is the owner)
+   */
   deleteReview: async (req, res) => {
     try {
       const { id } = req.params
@@ -110,5 +143,5 @@ const reviewsController = {
   }
 }
 
-/*************************************************** Module export ****************************************************/
+/*************************************************** Module Export ******************************************************/
 module.exports = { reviewsController }

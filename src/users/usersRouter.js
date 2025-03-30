@@ -1,31 +1,57 @@
-/************************************************ Node modules needed *************************************************/
+/*********************************************** Node Modules Needed ****************************************************/
 /* Used to create an ExpressJS router */
 const express = require("express")
 
-/********************************************** ExpressJS router object ***********************************************/
+/************************************************ Logger Setup **********************************************************/
+const { Logger } = require("../utils/Logger.js")
+const logger = new Logger(__filename)
+
+/********************************************* ExpressJS Router Object **************************************************/
 const usersRouter = express.Router()
 
-/**************************************************** Middlewares *****************************************************/
+/**************************************************** Middlewares *******************************************************/
+/* Validate login credentials (email & password) */
 const { checkAllLoginCredentialsAreProvided } = require("../auth/authMiddlewares.js")
 
-/***************************************************** Sub-Routes *****************************************************/
+/**************************************************** Sub-Routes ********************************************************/
+/* Mount sub-routes for consumer and winery users */
 const { consumersRouter } = require("./consumers/consumersRouter.js")
 const { wineriesRouter } = require("./wineries/wineriesRouter.js")
-usersRouter.use("/consumers", consumersRouter)
-usersRouter.use("/wineries", wineriesRouter)
 
-/***************************************************** Endpoints ******************************************************/
+usersRouter.use("/consumers", (req, res, next) => {
+  logger.info("Routing request to /users/consumers")
+  next()
+}, consumersRouter)
+
+usersRouter.use("/wineries", (req, res, next) => {
+  logger.info("Routing request to /users/wineries")
+  next()
+}, wineriesRouter)
+
+/****************************************************** Endpoints *******************************************************/
 const { authController } = require("../auth/authController.js")
 const { usersController } = require("./usersController.js")
 
-/* /users/ */
-usersRouter.get("/", usersController.getAllUsers)
+/**
+ * GET /users
+ * Get all users (consumers and wineries)
+ */
+usersRouter.get("/", (req, res, next) => {
+  logger.info("GET /users - Fetching all users")
+  usersController.getAllUsers(req, res, next)
+})
 
-/* /users/login/ */
+/**
+ * POST /users/login
+ * Handle user login (consumers or wineries)
+ */
 usersRouter.post("/login",
   checkAllLoginCredentialsAreProvided,
-  authController.login
+  (req, res, next) => {
+    logger.info("POST /users/login - Attempting login")
+    authController.login(req, res, next)
+  }
 )
 
-/*************************************************** Module export ****************************************************/
+/*************************************************** Module Export ******************************************************/
 module.exports = { usersRouter }

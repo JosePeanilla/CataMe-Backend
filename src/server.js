@@ -1,29 +1,39 @@
-/**************************** Load environment variables from a .env file into process.env ****************************/
+/*********************************************************************************************
+ * Main server entry point: Sets up Express app, routes, middlewares, error handling,
+ * and starts the HTTP server (with Socket.io and MongoDB connection).
+ *********************************************************************************************/
+
+/********************************* Load environment variables from .env into process.env *********************************/
 require("dotenv").config()
 
-/************************************************** Internal logger ***************************************************/
+/***************************************************** Internal Modules ***************************************************/
 const { Logger } = require("./utils/Logger.js")
-const logger = new Logger(__filename)
+const { checkProvidedTokenIsValid } = require("./auth/authMiddlewares.js")
 
-/************************************************ Node modules needed *************************************************/
+/***************************************************** External Modules ***************************************************/
 const cors = require("cors")
 const express = require("express")
 const http = require("http") // Required to create the HTTP server
 
-/******************************************** ExpressJS application object ********************************************/
+/********************************************* Create ExpressJS application object *****************************************/
 const app = express()
 const port = process.env.PORT || 3000
 
-/********************* Common Middlewares (to be executed at the very beginning of all endpoints) **********************/
-/* Permit CORS (Cross-Origin Resource Sharing) */
+/*********************************************** Global Middlewares *******************************************************/
+/* Enable CORS (Cross-Origin Resource Sharing) */
 app.use(cors())
-/* Parse the incoming requests/responses in JSON payloads */
+
+/* Automatically parse JSON payloads from incoming requests */
 app.use(express.json())
 
-/******Despliegue******/
-app.get("/", (req, res) => { res.status(200).json({ message: "Welcome to the Wine API" }); })
+/******************************** Root Endpoint to check server is up and running ******************************************/
+app.get("/", (req, res) => {
+  res.status(200).json({ message: "Welcome to the Wine API" })
+})
 
-/* Log the route (useful for debugging purposes) */
+/********************************************** Route Logging Middleware ***************************************************/
+/* Logs useful information about each incoming request */
+const logger = new Logger(__filename)
 const logRoute = (req, res, next) => {
   logger.debug(
     `Received request route: ${req.method} ${req.originalUrl}
@@ -36,10 +46,7 @@ const logRoute = (req, res, next) => {
 }
 app.use(logRoute)
 
-/**************************************************** Middlewares *****************************************************/
-const { checkProvidedTokenIsValid } = require("./auth/authMiddlewares.js")
-
-/******************************************************* Routes *******************************************************/
+/******************************************************* Routers **********************************************************/
 const { usersRouter } = require("./users/usersRouter.js")
 app.use("/users", usersRouter)
 
@@ -55,46 +62,47 @@ app.use("/regions", regionsRouter)
 const { reviewsRouter } = require("./reviews/reviewsRouter.js") 
 app.use("/reviews", reviewsRouter)
 
-/***************************************************** Endpoints ******************************************************/
-const { usersController } = require("./users/usersController.js")
+const { authRouter } = require("./auth/authRouter.js")
+app.use("/auth", authRouter)
 
-/* /user/ */
+/*********************************************** Protected Endpoints ******************************************************/
+/* Get current user data from token */
+const { usersController } = require("./users/usersController.js")
 app.get("/user", checkProvidedTokenIsValid, usersController.getLoggedUser)
 
-/********************************************* Error-Handling Middlewares *********************************************/
-const { statusCodes } = require("./constants/statusCodes.js")
+/* Ignore favicon.ico requests to avoid 404 log noise */
+app.get("/favicon.ico", (req, res) => res.status(204).end())
 
-/* Route Not Found Error */
+/********************************************* Error Handling Middlewares *************************************************/
+/* Handle 404 - Route Not Found */
+const { statusCodes } = require("./constants/statusCodes.js")
 app.use((req, res) => {
   const errorText = `Route '[${req.method}] ${req.originalUrl}' could not be found!`
   logger.error(errorText)
   res.status(statusCodes.NotFound).send({ error: errorText })
 })
 
-/* Uncontrolled Error */
+/* Handle 500 - Uncaught Internal Errors */
 app.use((err, req, res, next) => {
   const errorText = "Some uncontrolled internal error happened!"
   logger.error(errorText, err)
   res.status(statusCodes.InternalServerError).send({ msg: errorText, error: err.message })
 })
 
-/*************************************************** Socket.io *******************************************************/
-// Create the HTTP server from the Express app
+/***************************************************** WebSockets *********************************************************/
+/* Create HTTP server and initialize Socket.io */
 const server = http.createServer(app)
-
-// Initialize Socket.io with our 'socket.js' module
 const { initializeSocket } = require("./socket/socket.js")
 initializeSocket(server)
 
-/*************************************************** Run the server ***************************************************/
+/**************************************************** Start Server ********************************************************/
 const startServer = async () => {
   try {
-    /* Import the database connection configuration ... */
+    /* Connect to the database before starting the server */
     const { dbConnection } = require("./data/dbConnection.js")
-    /* ... and connect to the (MongoDB) database */
     await dbConnection()
 
-    /* Start the HTTP server listening for incoming requests */
+    /* Start HTTP server and listen on configured port */
     server.listen(port, (error) => {
       if (error) {
         logger.error("The Express server couldn't get started!", error)
@@ -102,6 +110,7 @@ const startServer = async () => {
       }
       logger.info(`The HTTP server is listening for incoming requests on: http://localhost:${port}`)
     })
+
     return server
   } catch (error) {
     logger.error("It could not be connected to the database!", error)
